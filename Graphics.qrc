@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>star.svg</file>
+        <file>star2.svg</file>
+        <file>Stars.qml</file>
+        <file>music.xml</file>
+    </qresource>
+</RCC>

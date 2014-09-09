@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Star.qml</file>
+        <file>Stars.qml</file>
+        <file>ControlBar.qml</file>
+        <file>PlaylistView.qml</file>
+        <file>InformationPanel.qml</file>
+    </qresource>
+</RCC>
