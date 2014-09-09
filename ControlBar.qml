@@ -6,7 +6,7 @@ ListView {
     id: listContext
 
     delegate:         Item {
-        width: listContext.width; height: Screen.height/30
+        width: listContext.width; height: Screen.height/25
         id : controlItem
 
         Text { text: name

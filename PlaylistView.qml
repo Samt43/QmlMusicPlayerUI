@@ -39,7 +39,7 @@ ScrollView{
                     Rectangle {
 
                         Layout.fillHeight: true
-                        width: 50
+                        Layout.preferredWidth: height
                         color: "white"
                         border.color: "black"
                         border.width: 1
@@ -49,6 +49,7 @@ ScrollView{
                             anchors.margins: 2
                             source: "image://jacket/album/"+song.album.name
                             smooth: true
+                            asynchronous: true
                         }
                     }
 

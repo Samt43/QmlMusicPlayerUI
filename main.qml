@@ -2,6 +2,7 @@ import QtQuick 2.2
 import QtQuick.Window 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
+import QtGraphicalEffects 1.0
 
 import Song 1.0
 import Album 1.0
@@ -16,6 +17,8 @@ ApplicationWindow {
     SystemPalette {id: syspal}
     color: syspal.window
 
+    // 5.3.2 for android
+    //visibility: "FullScreen"
 
 
     ColumnLayout
@@ -26,24 +29,44 @@ ApplicationWindow {
 
         Rectangle
         {
-            Layout.preferredHeight: win.height*20/100
-            Layout.fillWidth:true
-            color: "white"
+
+            GaussianBlur {
+                anchors.fill: trackHeader
+                source: immmm
+                radius: 90
+                samples: 32
+
+            }
+
+
             id : trackHeader
-
-
-        }
-        Rectangle
-        {
-            height:20
-            Layout.preferredHeight: win.height*5/100
+            Image {
+                id : immmm
+                source: "image://jacket/album/"+player.nowPlayingSong.album.name
+                fillMode: Image.PreserveAspectCrop
+                anchors.fill: parent
+                visible: false
+            }
+            Layout.preferredHeight: win.height*30/100
             Layout.fillWidth:true
-            color: syspal.window
-            id : trackControler
+
+            Rectangle
+            {
+                height:win.height*9/100
+                width: parent.width
+
+                id : trackControler
+                anchors.bottom: parent.bottom
+                opacity: 0.5
+                color: syspal.window
+
+
+            }
 
 
 
         }
+
 
 
 
