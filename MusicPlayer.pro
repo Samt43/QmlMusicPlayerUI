@@ -1,6 +1,8 @@
 TEMPLATE = app
 
-QT += qml quick widgets xml
+QT += qml quick widgets xml svg
+
+QTPLUGIN += qsvg
 
 SOURCES += main.cpp \
     Model/album.cpp \

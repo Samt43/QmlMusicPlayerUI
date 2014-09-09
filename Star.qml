@@ -1,8 +1,8 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import QtGraphicalEffects 1.0
 
 Item {
-    property int pourcentage : 50
+    property real pourcentage : 50
     height: 300
     width: 300
     id : cadre

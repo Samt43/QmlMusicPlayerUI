@@ -1,5 +1,6 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Layouts 1.1
+
 
 Item {
     property double score : 0
@@ -72,6 +73,7 @@ Item {
 
         for (var i = 0 ; i < Math.floor(etoiles);i++)
         {
+
             rep.itemAt(i).pourcentage = 100
 
         }

@@ -1,16 +1,19 @@
-import QtQuick 2.0
+import QtQuick 2.2
+import QtQuick.Window 2.1
 
 ListView {
     model: contextModel
     id: listContext
 
     delegate:         Item {
-        width: listContext.width; height: 30
+        width: listContext.width; height: Screen.height/30
+        id : controlItem
 
         Text { text: name
             color: (listContext.currentIndex === index ? 'white':'black' )
             anchors.verticalCenter: parent.verticalCenter
             x:10
+            font.pixelSize: controlItem.height/2
         }
         MouseArea {
             anchors.fill: parent

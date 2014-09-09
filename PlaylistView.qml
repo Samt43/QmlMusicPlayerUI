@@ -1,7 +1,7 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
-import QtQuick.XmlListModel 2.0
+import QtQuick.Window 2.1
 import Song 1.0
 import Album 1.0
 import Artist 1.0
@@ -15,8 +15,8 @@ ScrollView{
 
 
         delegate:         Item {
-            width: listContext.width; height:42
-
+            width: listContext.width; height: Screen.height/20
+            id : songItem
             property Song song: obj
 
             MouseArea {
@@ -56,6 +56,8 @@ ScrollView{
                             color: (listContext.currentIndex === index ? 'grey':'black' )
                             Layout.fillWidth: true
                             Layout.fillHeight: true
+                            font.pixelSize: songItem.height/3
+
                         }
 
                         Text { text: 'Duration'
@@ -63,6 +65,7 @@ ScrollView{
                             horizontalAlignment: Text.AlignRight
                             Layout.fillWidth: true
                             Layout.fillHeight: true
+                            font.pixelSize: songItem.height/3.5
                         }
 
 
@@ -71,6 +74,7 @@ ScrollView{
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             verticalAlignment: Text.AlignVCenter
+                            font.pixelSize: songItem.height/3.5
                         }
 
                         Stars {

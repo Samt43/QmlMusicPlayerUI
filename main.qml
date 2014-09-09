@@ -1,7 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Window 2.1
 import QtQuick.Controls 1.1
-import QtQuick.XmlListModel 2.0
 import QtQuick.Layouts 1.1
 
 import Song 1.0
@@ -39,7 +38,7 @@ ApplicationWindow {
             height:20
             Layout.preferredHeight: win.height*5/100
             Layout.fillWidth:true
-            color: "grey"
+            color: syspal.window
             id : trackControler
 
 
