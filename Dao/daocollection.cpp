@@ -47,7 +47,7 @@ bool DAOCollection::openCollection(QString path)
       // We know how to treat appearance and geometry
       if (child.tagName() == "artist")
       {
-        Artist * a = new Artist(child.attribute("name"),child.attribute("infos"));
+        Artist * a = new Artist(child.attribute("name"),child.attribute("infos"),QImage(":/"+child.attribute("image")));
         // We traverse children
         QDomElement albums=child.firstChild().toElement();
         while(!albums.isNull())
@@ -55,7 +55,7 @@ bool DAOCollection::openCollection(QString path)
 
             if (albums.tagName() == "album")
             {
-                Album * ab = new Album(albums.attribute("title"),QImage(),a);
+                Album * ab = new Album(albums.attribute("title"),QImage(":/"+albums.attribute("image")),a);
 
                 QDomElement songs=albums.firstChild().toElement();
                 while(!songs.isNull())
@@ -109,4 +109,29 @@ const QList<Song *> DAOCollection::getAllSongs()
     return songs;
 }
 
+
+const Album * DAOCollection::getAlbumFromId(QString album)
+{
+    QList<const Artist *> artists = getAllArtists();
+    foreach (const Artist * a, artists) {
+        const QList<Album * >& abs = a->getAlbums();
+        foreach (const Album * a, abs) {
+            if (a->getName()==album)
+                return a;
+
+        }
+    }
+
+    return NULL;
+}
+
+const Artist * DAOCollection::getArtistFromId(QString name)
+{
+    QList<const Artist *> artists = getAllArtists();
+    foreach (const Artist * a, artists) {
+        if (a->getName()==name)
+            return a;
+    }
+    return NULL;
+}
 

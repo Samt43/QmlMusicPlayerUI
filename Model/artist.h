@@ -2,6 +2,7 @@
 #define ARTIST_H
 
 #include <QObject>
+#include <QImage>
 class Album;
 
 class Artist : public QObject
@@ -11,14 +12,16 @@ class Artist : public QObject
     Q_PROPERTY(QString name READ getName CONSTANT)
     Q_PROPERTY(QList<Album*> albums READ getAlbums CONSTANT)
 
+
 public:
-    explicit Artist(QString Name, QString Infos, QObject *parent = 0);
+    explicit Artist(QString Name, QString Infos,QImage img, QObject *parent = 0);
     Artist(QObject *parent = 0);
 
     const QList<Album * >&  getAlbums() const;
     const QString& getName() const;
     const QString& getInfos() const;
     void addAlbum(Album *a);
+    const QImage & getJacket() const;
 
 signals:
 
@@ -28,6 +31,7 @@ protected:
     QString mName;
     QString mInfos;
     QList<Album *> mAlbums;
+    QImage mJacket;
 
 };
 

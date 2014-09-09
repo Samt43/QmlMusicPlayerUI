@@ -1,6 +1,6 @@
 #include "artist.h"
 
-Artist::Artist(QString Name, QString Infos, QObject *parent) : mName(Name),mInfos(Infos),QObject(parent)
+Artist::Artist(QString Name, QString Infos, QImage img, QObject *parent) : mName(Name),mInfos(Infos),mJacket(img),QObject(parent)
 {
 
 }
@@ -27,3 +27,9 @@ const QList<Album *> &Artist::getAlbums() const
 {
     return mAlbums;
 }
+
+const QImage& Artist::getJacket() const
+{
+    return mJacket;
+}
+

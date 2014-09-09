@@ -21,6 +21,9 @@ public:
     const QList<const Song *> searchSongs(QString s);
     const QList<const Song *> searchSongsByArtist(QString s);
     const QList<const Song *> searchSongsByAlbum(QString s);
+    const Album * getAlbumFromId(QString album);
+    const Artist * getArtistFromId(QString name);
+
 
 signals:
 

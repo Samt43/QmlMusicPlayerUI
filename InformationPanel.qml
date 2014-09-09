@@ -7,11 +7,11 @@ Item {
         anchors.fill: parent
         anchors.margins: 4
 
-        Rectangle {
+        Image {
             id: artistImage
             height: width * 9/16
             width: parent.width
-            color: "grey"
+            source: "image://jacket/artist/"+player.nowPlayingSong.album.artist.name
         }
 
         Rectangle {

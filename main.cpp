@@ -3,6 +3,7 @@
 #include "Model/album.h"
 #include "Dao/daocollection.h"
 #include "Player/player.h"
+#include "Service/jacketprovider.h"
 #include <QtQml>
 
 int main(int argc, char *argv[])
@@ -17,14 +18,18 @@ int main(int argc, char *argv[])
     qmlRegisterType<Artist>("Artist", 1, 0, "Artist");
 
     QQmlApplicationEngine engine;
+
+    Player p;
+    engine.rootContext()->setContextProperty("player",&p);
+    engine.addImageProvider("jacket", new JacketProvider);
+
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
 
 
 
 
-    Player p;
-    engine.rootContext()->setContextProperty("player",&p);
+
 
 
     return app.exec();

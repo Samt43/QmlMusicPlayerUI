@@ -40,10 +40,16 @@ ScrollView{
 
                         Layout.fillHeight: true
                         width: 50
-                        color: Qt.rgba(Math.random(), Math.random(), Math.random(), 1)
+                        color: "white"
                         border.color: "black"
                         border.width: 1
                         radius: 2
+                        Image {
+                            anchors.fill: parent
+                            anchors.margins: 2
+                            source: "image://jacket/album/"+song.album.name
+                            smooth: true
+                        }
                     }
 
                     GridLayout {

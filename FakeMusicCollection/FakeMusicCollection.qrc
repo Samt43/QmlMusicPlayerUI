@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>music.xml</file>
+        <file>Dummy.jpg</file>
+        <file>OK_Computer.jpg</file>
+        <file>portishead.jpg</file>
+        <file>radiohead.jpg</file>
+        <file>The_king_of_limbs.jpg</file>
+        <file>Third.png</file>
+    </qresource>
+</RCC>

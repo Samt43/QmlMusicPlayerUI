@@ -12,10 +12,12 @@ SOURCES += main.cpp \
     Dao/daocollection.cpp \
     Player/player.cpp \
     Player/playlistmodel.cpp \
-    Service/servicecollection.cpp
+    Service/servicecollection.cpp \
+    Service/jacketprovider.cpp
 
 RESOURCES += qml.qrc \
-    Graphics.qrc
+    Graphics.qrc \
+    FakeMusicCollection/FakeMusicCollection.qrc
 
 CONFIG+=qml_debug
 
@@ -33,4 +35,5 @@ HEADERS += \
     Dao/daocollection.h \
     Player/player.h \
     Player/playlistmodel.h \
-    Service/servicecollection.h
+    Service/servicecollection.h \
+    Service/jacketprovider.h

@@ -11,6 +11,8 @@ public:
     static ServiceCollection * getInstance();
     const QList<const Artist *> getAllArtists();
     const QList<Song *> getAllSongs();
+    const Album * getAlbumFromId(QString album);
+    const Artist * getArtistFromId(QString name);
 
 protected :
     static ServiceCollection * mInstance;

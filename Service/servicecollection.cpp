@@ -25,7 +25,22 @@ const QList<const Artist *> ServiceCollection::getAllArtists()
 
 }
 
+
+
+
 const QList<Song *> ServiceCollection::getAllSongs()
 {
     return mDaoCollection->getAllSongs();
+}
+
+const Album *ServiceCollection::getAlbumFromId(QString album)
+{
+    return mDaoCollection->getAlbumFromId(album);
+
+}
+
+const Artist *ServiceCollection::getArtistFromId(QString name)
+{
+    return mDaoCollection->getArtistFromId(name);
+
 }
