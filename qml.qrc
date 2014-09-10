@@ -6,5 +6,6 @@
         <file>ControlBar.qml</file>
         <file>PlaylistView.qml</file>
         <file>InformationPanel.qml</file>
+        <file>TrackHeader.qml</file>
     </qresource>
 </RCC>

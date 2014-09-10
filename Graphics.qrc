@@ -3,5 +3,13 @@
         <file>star.svg</file>
         <file>star2.svg</file>
         <file>Stars.qml</file>
+        <file>player-volume.svgz</file>
+        <file>media-playback-stop.svgz</file>
+        <file>media-playback-start.svgz</file>
+        <file>media-playback-pause.svgz</file>
+        <file>media-skip-backward.svgz</file>
+        <file>media-skip-forward.svgz</file>
+        <file>go-up.svgz</file>
+        <file>go-down.svgz</file>
     </qresource>
 </RCC>

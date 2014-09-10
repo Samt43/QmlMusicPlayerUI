@@ -14,6 +14,7 @@ ScrollView{
         spacing : 2
 
 
+
         delegate:         Item {
             width: listContext.width; height: Screen.height/20
             id : songItem

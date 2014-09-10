@@ -2,7 +2,7 @@ import QtQuick 2.2
 import QtQuick.Window 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import QtGraphicalEffects 1.0
+
 
 import Song 1.0
 import Album 1.0
@@ -27,45 +27,11 @@ ApplicationWindow {
         spacing: 0
 
 
-        Rectangle
-        {
+     TrackHeader {
+         Layout.preferredHeight: win.height*30/100
+         Layout.fillWidth:true
 
-            GaussianBlur {
-                anchors.fill: trackHeader
-                source: immmm
-                radius: 90
-                samples: 32
-
-            }
-
-
-            id : trackHeader
-            Image {
-                id : immmm
-                source: "image://jacket/album/"+player.nowPlayingSong.album.name
-                fillMode: Image.PreserveAspectCrop
-                anchors.fill: parent
-                visible: false
-            }
-            Layout.preferredHeight: win.height*30/100
-            Layout.fillWidth:true
-
-            Rectangle
-            {
-                height:win.height*9/100
-                width: parent.width
-
-                id : trackControler
-                anchors.bottom: parent.bottom
-                opacity: 0.5
-                color: syspal.window
-
-
-            }
-
-
-
-        }
+     }
 
 
 
@@ -76,14 +42,15 @@ ApplicationWindow {
             orientation: Qt.Horizontal
 
             ControlBar {
-
-                Layout.minimumWidth: win.width*30/100
-
+                Layout.preferredWidth: win.width*20/100
+                Layout.minimumWidth: win.width*20/100
             }
 
             Rectangle {
+
                 Layout.fillWidth: true
-                Layout.minimumWidth: win.width*20/100
+                Layout.minimumWidth: win.width * 20 /100
+
 
             PlaylistView {
 
@@ -96,6 +63,7 @@ ApplicationWindow {
 
             Rectangle {
                 id:trackInformation
+                Layout.preferredWidth: win.width*20/100
                 Layout.minimumWidth: win.width*20/100
                 color: syspal.window
                 InformationPanel
