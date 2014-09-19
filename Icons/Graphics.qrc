@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>star.svg</file>
         <file>star2.svg</file>
-        <file>Stars.qml</file>
         <file>player-volume.svgz</file>
         <file>media-playback-stop.svgz</file>
         <file>media-playback-start.svgz</file>
