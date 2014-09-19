@@ -15,8 +15,8 @@ SOURCES += main.cpp \
     Service/servicecollection.cpp \
     Service/jacketprovider.cpp
 
-RESOURCES += qml.qrc \
-    Graphics.qrc \
+RESOURCES += QML/qml.qrc \
+    Icons/Graphics.qrc \
     FakeMusicCollection/FakeMusicCollection.qrc
 
 CONFIG+=qml_debug
