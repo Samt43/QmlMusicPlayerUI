@@ -1,6 +1,7 @@
 #include "servicecollection.h"
 #include "Dao/daocollection.h"
-
+#include "Model/album.h"
+#include "Model/artist.h"
 
 
 ServiceCollection::ServiceCollection(CollectionType type)
@@ -52,3 +53,12 @@ const Artist *ServiceCollection::getArtistFromId(QString name)
     return mAbstractCollection->getArtistFromId(name);
 
 }
+ const QImage ServiceCollection::getJacketFromAlbum(const Album *a)
+ {
+    return a->getJacket();
+ }
+
+  const QImage ServiceCollection::getJacketFromArtist(const Artist *a)
+  {
+      return a->getJacket();
+  }

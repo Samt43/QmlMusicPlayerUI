@@ -21,6 +21,8 @@ public:
     const Album * getAlbumFromId(QString album);
     const Artist * getArtistFromId(QString name);
     const QString getCollectionID();
+    const QImage getJacketFromAlbum(const Album *a);
+    const QImage getJacketFromArtist(const Artist *a);
 
 
 

@@ -25,11 +25,13 @@ while ((pos = rx.indexIn(id, pos)) != -1 && rx.cap(0) != "") {
 
 if (list.at(0) == "album")
 {
-   retour =  CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getAlbumFromId(list.at(1))->getJacket();
+   const Album *ab = CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getAlbumFromId(list.at(1));
+   retour =  CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getJacketFromAlbum(ab);
 }
 else if (list.at(0) == "artist")
 {
-   retour = CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getArtistFromId(list.at(1))->getJacket();
+   const Artist *a = CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getArtistFromId(list.at(1));
+   retour = CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getJacketFromArtist(a);
 }
 
 return retour;
