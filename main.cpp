@@ -4,6 +4,10 @@
 #include "Dao/daocollection.h"
 #include "Player/player.h"
 #include "Service/jacketprovider.h"
+#include "Model/song.h"
+#include "Model/artist.h"
+#include "Model/collection.h"
+
 #include <QtQml>
 
 int main(int argc, char *argv[])

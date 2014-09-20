@@ -5,10 +5,12 @@
 #include <QTime>
 #include <QString>
 
+#include "abstractcollectionitem.h"
+
 
 class Album;
 
-class Song : public QObject
+class Song : public AbstractCollectionItem
 {
     Q_OBJECT
     Q_PROPERTY(QTime duration READ getDuration CONSTANT)
@@ -17,7 +19,7 @@ class Song : public QObject
     Q_PROPERTY(Album * album READ getAlbum CONSTANT)
 
 public:
-    explicit Song(QString Name, Album * a,QObject *parent = 0);
+    explicit Song(QString collectionID,QString Name, Album * a,QObject *parent = 0);
     Song(QObject *parent = 0);
     const QTime getDuration();
     const QString getName();

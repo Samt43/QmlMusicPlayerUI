@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include "playlistmodel.h"
+#include "Dao/abstractcollection.h"
+
 
 class Player : public QObject
 {

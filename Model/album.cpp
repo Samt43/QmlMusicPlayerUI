@@ -1,6 +1,7 @@
 #include "album.h"
 
-Album::Album(QString Name, QImage j,Artist * m ,QObject *parent) :mArtist(m),mName(Name),mJacket(j),QObject(parent)
+
+Album::Album(QString idCollection,QString Name, Artist * m ,QImage jacket, QObject *parent) :AbstractCollectionItem(idCollection,parent),mArtist(m),mName(Name),mJacket(jacket)
 {
 }
 
@@ -12,10 +13,6 @@ const QList<Song*>& Album::getSongs() const
     return mSongs;
 }
 
-const QImage& Album::getJacket() const
-{
-    return mJacket;
-}
 
 
 void Album::addSong(Song *s)
@@ -32,4 +29,9 @@ Artist *Album::getArtist() const
 {
 
     return mArtist;
+}
+
+QImage Album::getJacket() const
+{
+    return mJacket;
 }

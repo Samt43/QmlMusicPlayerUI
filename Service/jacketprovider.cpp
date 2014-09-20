@@ -2,6 +2,8 @@
 #include "servicecollection.h"
 #include "Model/song.h"
 #include"Model/album.h"
+#include"Model/artist.h"
+#include "collectionmanager.h"
 
 JacketProvider::JacketProvider():QQuickImageProvider(QQuickImageProvider::Image)
 {
@@ -23,11 +25,11 @@ while ((pos = rx.indexIn(id, pos)) != -1 && rx.cap(0) != "") {
 
 if (list.at(0) == "album")
 {
-   retour = ServiceCollection::getInstance()->getAlbumFromId(list.at(1))->getJacket();
+   retour =  CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getAlbumFromId(list.at(1))->getJacket();
 }
 else if (list.at(0) == "artist")
 {
-   retour = ServiceCollection::getInstance()->getArtistFromId(list.at(1))->getJacket();
+   retour = CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getArtistFromId(list.at(1))->getJacket();
 }
 
 return retour;

@@ -8,7 +8,7 @@ PlaylistModel::PlaylistModel(QObject *parent) :
 {
 
 
-    mPlaylistSongs = ServiceCollection::getInstance()->getAllSongs();
+
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
@@ -22,6 +22,13 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
 {
     return mPlaylistSongs.count();
 }
+
+void PlaylistModel::addSongs(QList<Song *> s)
+{
+
+    mPlaylistSongs.append(s);
+}
+
 
 QHash<int, QByteArray> PlaylistModel::roleNames() const
 {

@@ -2,21 +2,31 @@
 #define SERVICECOLLECTION_H
 
 #include <QObject>
-#include "Dao/daocollection.h"
+
+class Collection;
+class AbstractCollection;
+class Artist;
+class Album;
+class Song;
 
 class ServiceCollection : public QObject
 {
+
 public:
-    ServiceCollection();
-    static ServiceCollection * getInstance();
+    enum CollectionType {LocalCollection,DeezerCollection};
+
+    ServiceCollection(CollectionType type);
     const QList<const Artist *> getAllArtists();
     const QList<Song *> getAllSongs();
     const Album * getAlbumFromId(QString album);
     const Artist * getArtistFromId(QString name);
+    const QString getCollectionID();
+
+
 
 protected :
-    static ServiceCollection * mInstance;
-    DAOCollection * mDaoCollection;
+    AbstractCollection * mAbstractCollection;
+    QString mCollectionId;
 
 };
 

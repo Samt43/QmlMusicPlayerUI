@@ -1,11 +1,11 @@
 #ifndef ARTIST_H
 #define ARTIST_H
 
-#include <QObject>
+#include "abstractcollectionitem.h"
 #include <QImage>
 class Album;
 
-class Artist : public QObject
+class Artist : public AbstractCollectionItem
 {
     Q_OBJECT
     Q_PROPERTY(QString infos READ getInfos CONSTANT)
@@ -14,7 +14,7 @@ class Artist : public QObject
 
 
 public:
-    explicit Artist(QString Name, QString Infos,QImage img, QObject *parent = 0);
+    explicit Artist(QString collectionID,QString Name, QString Infos, QImage img,QObject *parent=0);
     Artist(QObject *parent = 0);
 
     const QList<Album * >&  getAlbums() const;

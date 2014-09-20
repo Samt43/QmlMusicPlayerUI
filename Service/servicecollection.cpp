@@ -1,46 +1,54 @@
 #include "servicecollection.h"
+#include "Dao/daocollection.h"
 
-ServiceCollection * ServiceCollection::mInstance= NULL;
 
-ServiceCollection::ServiceCollection()
+
+ServiceCollection::ServiceCollection(CollectionType type)
 {
-      mDaoCollection = new DAOCollection(":/music.xml");
-}
-
-ServiceCollection * ServiceCollection::getInstance()
-{
-    if (!mInstance)
-    {
-        mInstance = new ServiceCollection;
-
+    switch (type) {
+    case LocalCollection:
+        mCollectionId = "FakeDatabase";
+        mAbstractCollection = new DAOCollection(":/music.xml",mCollectionId);
+        break;
+    case DeezerCollection:
+        mCollectionId = "DeezerDatabase";
+        mAbstractCollection = new DAOCollection(":/music.xml",mCollectionId);
+        break;
+    default:
+        break;
     }
-    return mInstance;
+
 }
+
 
 const QList<const Artist *> ServiceCollection::getAllArtists()
 {
-    return mDaoCollection->getAllArtists();
+    return mAbstractCollection->getAllArtists();
 
 
 
 }
 
 
+const QString ServiceCollection::getCollectionID()
+{
 
+    return mCollectionId;
+}
 
 const QList<Song *> ServiceCollection::getAllSongs()
 {
-    return mDaoCollection->getAllSongs();
+    return mAbstractCollection->getAllSongs();
 }
 
 const Album *ServiceCollection::getAlbumFromId(QString album)
 {
-    return mDaoCollection->getAlbumFromId(album);
+    return mAbstractCollection->getAlbumFromId(album);
 
 }
 
 const Artist *ServiceCollection::getArtistFromId(QString name)
 {
-    return mDaoCollection->getArtistFromId(name);
+    return mAbstractCollection->getArtistFromId(name);
 
 }

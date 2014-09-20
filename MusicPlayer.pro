@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     Player/player.cpp \
     Player/playlistmodel.cpp \
     Service/servicecollection.cpp \
-    Service/jacketprovider.cpp
+    Service/jacketprovider.cpp \
+    Service/collectionmanager.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -36,4 +37,7 @@ HEADERS += \
     Player/player.h \
     Player/playlistmodel.h \
     Service/servicecollection.h \
-    Service/jacketprovider.h
+    Service/jacketprovider.h \
+    Dao/abstractcollection.h \
+    Model/abstractcollectionitem.h \
+    Service/collectionmanager.h

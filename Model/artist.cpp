@@ -1,6 +1,6 @@
 #include "artist.h"
 
-Artist::Artist(QString Name, QString Infos, QImage img, QObject *parent) : mName(Name),mInfos(Infos),mJacket(img),QObject(parent)
+Artist::Artist(QString collectionID,QString Name, QString Infos, QImage img,QObject *parent) : mName(Name),mInfos(Infos),mJacket(img),AbstractCollectionItem(collectionID,parent)
 {
 
 }

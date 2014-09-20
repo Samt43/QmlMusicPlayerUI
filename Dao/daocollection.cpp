@@ -8,8 +8,8 @@
 #include "Model/song.h"
 
 
-DAOCollection::DAOCollection(QString path,QObject *parent) :
-    QObject(parent)
+DAOCollection::DAOCollection(QString path,QString sCollectionID,QObject *parent) :
+    AbstractCollection(sCollectionID,parent),mCollection(sCollectionID)
 {
     if (openCollection(path))
         qDebug()<< "Collection is opened !!";
@@ -47,7 +47,7 @@ bool DAOCollection::openCollection(QString path)
       // We know how to treat appearance and geometry
       if (child.tagName() == "artist")
       {
-        Artist * a = new Artist(child.attribute("name"),child.attribute("infos"),QImage(":/"+child.attribute("image")));
+        Artist * a = new Artist(mCollectionId,child.attribute("name"),child.attribute("infos"),QImage(":/"+child.attribute("image")));
         // We traverse children
         QDomElement albums=child.firstChild().toElement();
         while(!albums.isNull())
@@ -55,7 +55,7 @@ bool DAOCollection::openCollection(QString path)
 
             if (albums.tagName() == "album")
             {
-                Album * ab = new Album(albums.attribute("title"),QImage(":/"+albums.attribute("image")),a);
+                Album * ab = new Album(mCollectionId,albums.attribute("title"),a,QImage(":/"+albums.attribute("image")));
 
                 QDomElement songs=albums.firstChild().toElement();
                 while(!songs.isNull())
@@ -63,9 +63,8 @@ bool DAOCollection::openCollection(QString path)
                     qDebug()<<songs.tagName();
                     if (songs.tagName() == "song")
                     {
-                    Song * s = new Song(songs.attribute("title"),ab);
+                    Song * s = new Song(mCollectionId,songs.attribute("title"),ab);
                     ab->addSong(s);
-
                     }
                     songs = songs.nextSiblingElement();
                 }
@@ -133,5 +132,26 @@ const Artist * DAOCollection::getArtistFromId(QString name)
             return a;
     }
     return NULL;
+
+}
+
+
+const QList<const Artist *> DAOCollection::searchArtists(QString s)
+{
+
+    return QList<const Artist *>();
+}
+
+
+const QList<const Song *> DAOCollection::searchSongs(QString s) {
+    return QList<const Song *>();
+}
+const QList<const Song *> DAOCollection::searchSongsByArtist(QString s)
+{
+    QList<const Song *>();
+}
+const QList<const Song *> DAOCollection::searchSongsByAlbum(QString s)
+{
+    QList<const Song *>();
 }
 

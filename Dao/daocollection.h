@@ -2,21 +2,22 @@
 #define DAOCOLLECTION_H
 
 #include <QObject>
+#include "abstractcollection.h"
 #include "Model/collection.h"
 
 class Artist;
 class Song;
 class Album;
 
-class DAOCollection : public QObject
+
+class DAOCollection :  public AbstractCollection
 {
     Q_OBJECT
 public:
-    explicit DAOCollection(QString path,QObject *parent = 0);
+    explicit DAOCollection(QString path, QString sCollectionID, QObject *parent = 0);
 
     const QList<const Artist *> getAllArtists();
     const QList<Song *> getAllSongs();
-    const Artist * getArtistByName();
     const QList<const Artist *> searchArtists(QString s);
     const QList<const Song *> searchSongs(QString s);
     const QList<const Song *> searchSongsByArtist(QString s);
