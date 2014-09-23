@@ -1,12 +1,14 @@
 #include "artist.h"
 
-Artist::Artist(QString collectionID,QString Name, QString Infos, QImage img,QObject *parent) : mName(Name),mInfos(Infos),mJacket(img),AbstractCollectionItem(collectionID,parent)
+Artist::Artist(int id,QString collectionID,QString Name, QString Infos, QUrl img,QObject *parent) : mName(Name),mInfos(Infos),mJacket(img),AbstractCollectionItem(id,collectionID,parent)
 {
 
 }
 
 Artist::Artist(QObject *parent)
-{}
+{
+    mName = "Undefined !!";
+}
 
 void Artist::addAlbum(Album *a)
 {
@@ -28,7 +30,7 @@ const QList<Album *> &Artist::getAlbums() const
     return mAlbums;
 }
 
-const QImage& Artist::getJacket() const
+const QUrl &Artist::getJacket() const
 {
     return mJacket;
 }

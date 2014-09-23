@@ -1,5 +1,6 @@
 #include "servicecollection.h"
 #include "Dao/daocollection.h"
+#include "Dao/daodeezercollection.h"
 #include "Model/album.h"
 #include "Model/artist.h"
 
@@ -13,7 +14,7 @@ ServiceCollection::ServiceCollection(CollectionType type)
         break;
     case DeezerCollection:
         mCollectionId = "DeezerDatabase";
-        mAbstractCollection = new DAOCollection(":/music.xml",mCollectionId);
+        mAbstractCollection = new DAODeezerCollection(mCollectionId);
         break;
     default:
         break;
@@ -42,23 +43,24 @@ const QList<Song *> ServiceCollection::getAllSongs()
     return mAbstractCollection->getAllSongs();
 }
 
-const Album *ServiceCollection::getAlbumFromId(QString album)
+const Album *ServiceCollection::getAlbumFromId(int id)
 {
-    return mAbstractCollection->getAlbumFromId(album);
+    return mAbstractCollection->getAlbumFromId(id);
 
 }
 
-const Artist *ServiceCollection::getArtistFromId(QString name)
+const Artist *ServiceCollection::getArtistFromId(int id)
 {
-    return mAbstractCollection->getArtistFromId(name);
+    return mAbstractCollection->getArtistFromId(id);
 
 }
  const QImage ServiceCollection::getJacketFromAlbum(const Album *a)
  {
-    return a->getJacket();
+
+    return mAbstractCollection->getJacketFromAlbum(a);
  }
 
   const QImage ServiceCollection::getJacketFromArtist(const Artist *a)
   {
-      return a->getJacket();
+      return mAbstractCollection->getJacketFromArtist(a);
   }

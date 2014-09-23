@@ -47,7 +47,7 @@ bool DAOCollection::openCollection(QString path)
       // We know how to treat appearance and geometry
       if (child.tagName() == "artist")
       {
-        Artist * a = new Artist(mCollectionId,child.attribute("name"),child.attribute("infos"),QImage(":/"+child.attribute("image")));
+        Artist * a = new Artist(child.attribute("id").toInt(),mCollectionId,child.attribute("name"),child.attribute("infos"),QUrl(child.attribute("image")));
         // We traverse children
         QDomElement albums=child.firstChild().toElement();
         while(!albums.isNull())
@@ -55,7 +55,7 @@ bool DAOCollection::openCollection(QString path)
 
             if (albums.tagName() == "album")
             {
-                Album * ab = new Album(mCollectionId,albums.attribute("title"),a,QImage(":/"+albums.attribute("image")));
+                Album * ab = new Album(child.attribute("id").toInt(),mCollectionId,albums.attribute("title"),a,QUrl(albums.attribute("image")));
 
                 QDomElement songs=albums.firstChild().toElement();
                 while(!songs.isNull())
@@ -63,7 +63,7 @@ bool DAOCollection::openCollection(QString path)
                     qDebug()<<songs.tagName();
                     if (songs.tagName() == "song")
                     {
-                    Song * s = new Song(mCollectionId,songs.attribute("title"),ab);
+                    Song * s = new Song(child.attribute("id").toInt(),mCollectionId,songs.attribute("title"),ab);
                     ab->addSong(s);
                     }
                     songs = songs.nextSiblingElement();
@@ -109,13 +109,13 @@ const QList<Song *> DAOCollection::getAllSongs()
 }
 
 
-const Album * DAOCollection::getAlbumFromId(QString album)
+const Album * DAOCollection::getAlbumFromId(int id)
 {
     QList<const Artist *> artists = getAllArtists();
     foreach (const Artist * a, artists) {
         const QList<Album * >& abs = a->getAlbums();
         foreach (const Album * a, abs) {
-            if (a->getName()==album)
+            if (a->getItemId() ==id)
                 return a;
 
         }
@@ -124,11 +124,11 @@ const Album * DAOCollection::getAlbumFromId(QString album)
     return NULL;
 }
 
-const Artist * DAOCollection::getArtistFromId(QString name)
+const Artist * DAOCollection::getArtistFromId(int id)
 {
     QList<const Artist *> artists = getAllArtists();
     foreach (const Artist * a, artists) {
-        if (a->getName()==name)
+        if (a->getItemId() == id)
             return a;
     }
     return NULL;
@@ -155,3 +155,15 @@ const QList<const Song *> DAOCollection::searchSongsByAlbum(QString s)
     QList<const Song *>();
 }
 
+const QImage DAOCollection::getJacketFromAlbum(const Album *a)
+{
+    qDebug()<<a->getJacket().toString();
+    QImage i(":/"+a->getJacket().toString());
+    return i;
+}
+
+const QImage DAOCollection::getJacketFromArtist(const Artist *a)
+{
+    QImage i(":/"+a->getJacket().toString());
+    return i;
+}

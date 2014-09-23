@@ -19,12 +19,13 @@ class Song : public AbstractCollectionItem
     Q_PROPERTY(Album * album READ getAlbum CONSTANT)
 
 public:
-    explicit Song(QString collectionID,QString Name, Album * a,QObject *parent = 0);
+    explicit Song(int id,QString collectionID,QString Name, Album * a,QObject *parent = 0);
     Song(QObject *parent = 0);
     const QTime getDuration();
     const QString getName();
     const double getNote();
     Album * getAlbum();
+
 
 
 signals:

@@ -11,7 +11,8 @@ Item {
             id: artistImage
             height: width * 9/16
             width: parent.width
-            source: "image://jacket/artist/"+player.nowPlayingSong.album.artist.name
+            //source: "image://jacket/artist/"+player.nowPlayingSong.album.artist.itemID+"/"+player.nowPlayingSong.collectionID
+            source: player.nowPlayingSong.album.artist.jacket
             smooth: true
             asynchronous: true
 
@@ -31,8 +32,6 @@ Item {
             verticalAlignment: Text.AlignVCenter
             font.bold: true
 
-
-
         }
         }
 
@@ -46,13 +45,6 @@ Item {
             horizontalAlignment : Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.bold: true
-
-
-
         }
-
-
-
-
     }
 }

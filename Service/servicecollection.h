@@ -18,8 +18,8 @@ public:
     ServiceCollection(CollectionType type);
     const QList<const Artist *> getAllArtists();
     const QList<Song *> getAllSongs();
-    const Album * getAlbumFromId(QString album);
-    const Artist * getArtistFromId(QString name);
+    const Album * getAlbumFromId(int id);
+    const Artist * getArtistFromId(int id);
     const QString getCollectionID();
     const QImage getJacketFromAlbum(const Album *a);
     const QImage getJacketFromArtist(const Artist *a);

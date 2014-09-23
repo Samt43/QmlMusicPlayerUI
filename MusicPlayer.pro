@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     Player/playlistmodel.cpp \
     Service/servicecollection.cpp \
     Service/jacketprovider.cpp \
-    Service/collectionmanager.cpp
+    Service/collectionmanager.cpp \
+    Dao/daodeezercollection.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -40,4 +41,5 @@ HEADERS += \
     Service/jacketprovider.h \
     Dao/abstractcollection.h \
     Model/abstractcollectionitem.h \
-    Service/collectionmanager.h
+    Service/collectionmanager.h \
+    Dao/daodeezercollection.h

@@ -18,8 +18,9 @@ ScrollView{
         delegate:         Item {
             width: listContext.width; height: Screen.height/20
             id : songItem
-            property Song song: obj
 
+
+            property Song song: obj
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
@@ -48,7 +49,7 @@ ScrollView{
                         Image {
                             anchors.fill: parent
                             anchors.margins: 2
-                            source: "image://jacket/album/"+song.album.name
+                            source: obj.album.jacket
                             smooth: true
                             asynchronous: true
                         }

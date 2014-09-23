@@ -23,8 +23,11 @@ public:
     virtual const QList<const Song *> searchSongs(QString s) = 0;
     virtual const QList<const Song *> searchSongsByArtist(QString s) = 0;
     virtual const QList<const Song *> searchSongsByAlbum(QString s) = 0;
-    virtual const Album * getAlbumFromId(QString album) = 0;
-    virtual const Artist * getArtistFromId(QString name) = 0;
+    virtual const Album * getAlbumFromId(int id) = 0;
+    virtual const Artist * getArtistFromId(int id) = 0;
+    virtual const QImage getJacketFromAlbum(const Album *a) = 0;
+    virtual const QImage getJacketFromArtist(const Artist *a) = 0;
+
 
 signals:
 

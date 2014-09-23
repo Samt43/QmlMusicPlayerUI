@@ -24,10 +24,12 @@ Rectangle
 
     Image {
         id : immmm
-        source: "image://jacket/album/"+player.nowPlayingSong.album.name
+        //source: "image://jacket/album/"+player.nowPlayingSong.album.itemID+"/"+player.nowPlayingSong.collectionID
+        source: player.nowPlayingSong.album.jacket
         fillMode: Image.PreserveAspectCrop
         anchors.fill: parent
         visible: false
+        asynchronous: true
     }
 
     ColumnLayout
@@ -64,7 +66,8 @@ Rectangle
                                Image {
                                    anchors.fill: parent
                                    anchors.margins: 2
-                                   source: "image://jacket/album/"+player.nowPlayingSong.album.name
+                                   //source: "image://jacket/album/"+player.nowPlayingSong.album.itemID+"/"+player.nowPlayingSong.collectionID
+                                   source:player.nowPlayingSong.album.jacket
                                    smooth: true
                                    asynchronous: true
                                }

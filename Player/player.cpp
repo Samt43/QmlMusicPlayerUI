@@ -13,6 +13,7 @@ Player::Player(QObject *parent) :
     CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::DeezerCollection));
 
     mPlaylistModel->addSongs(CollectionManager::getInstance()->getServiceCollection("DeezerDatabase")->getAllSongs());
+    mPlaylistModel->addSongs(CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getAllSongs());
     mNowPlayingSong = NULL;
 
 }

@@ -3,7 +3,8 @@
 
 #include <QImage>
 #include "abstractcollectionitem.h"
-#include <QImage>
+#include <QUrl>
+
 class Song;
 class Artist;
 class Collection;
@@ -14,15 +15,16 @@ class Album : public AbstractCollectionItem
     Q_PROPERTY(const QList<Song *> songs READ getSongs CONSTANT)
     Q_PROPERTY(Artist * artist READ getArtist CONSTANT)
     Q_PROPERTY(QString name READ getName CONSTANT)
+    Q_PROPERTY(QUrl jacket READ getJacket CONSTANT)
 
 public:
-    explicit Album(QString idCollection,QString Name, Artist * m , QImage jacket,QObject *parent=0);
+    explicit Album(int id,QString idCollection, QString Name, Artist * m , QUrl jacket, QObject *parent=0);
     Album(QObject *parent = 0);
     const QList<Song *> &getSongs() const;
     Artist * getArtist() const;
     void addSong(Song *s);
     const QString& getName() const;
-    QImage getJacket() const;
+    QUrl getJacket() const;
 
 
 signals:
@@ -34,7 +36,7 @@ protected:
     Artist * mArtist;
     QString * mCollectionId;
     QString mName;
-    QImage mJacket;
+    QUrl mJacket;
 
 
 };
