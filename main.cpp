@@ -7,6 +7,7 @@
 #include "Model/song.h"
 #include "Model/artist.h"
 #include "Model/collection.h"
+#include "Player/audiostreammediaplayer.h"
 
 #include <QtQml>
 
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Album>("Album", 1, 0, "Album");
     qmlRegisterType<Song>("Song", 1, 0, "Song");
     qmlRegisterType<Artist>("Artist", 1, 0, "Artist");
+    qmlRegisterType<AudioStreamMediaPlayer>("AudioStreamMediaPlayer", 1, 0, "AudioStreamMediaPlayer");
 
     QQmlApplicationEngine engine;
 

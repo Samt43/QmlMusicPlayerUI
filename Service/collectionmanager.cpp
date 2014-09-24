@@ -15,13 +15,14 @@ CollectionManager * CollectionManager::getInstance()
     return mCollectionManager;
 }
 
-bool CollectionManager::addCollection(ServiceCollection *s)
+bool CollectionManager::addCollection(ServiceCollection *s, AbstractMediaPlayer *player)
 {
     bool retour = false;
 
     if (!mAvailableServices.contains(s->getCollectionID()))
     {
         mAvailableServices[s->getCollectionID()] = s;
+        mAvailableMediaPlayer[s->getCollectionID()] = player;
     }
 
     return retour;
@@ -36,4 +37,16 @@ ServiceCollection * CollectionManager::getServiceCollection(QString IDCollection
     }
 
     return retour;
+}
+
+AbstractMediaPlayer * CollectionManager::getMediaPlayerCollection(QString IDCollection)
+{
+    AbstractMediaPlayer * retour = NULL;
+    if (mAvailableMediaPlayer.contains(IDCollection))
+    {
+        retour = mAvailableMediaPlayer[IDCollection];
+    }
+
+    return retour;
+
 }

@@ -29,7 +29,7 @@ ScrollView{
                 onClicked: {
                     parent.ListView.view.currentIndex = index
                     parent.forceActiveFocus()
-                    player.nowPlayingSong = song
+                    player.play(song)
                 }
 
 

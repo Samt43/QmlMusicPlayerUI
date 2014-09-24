@@ -85,12 +85,13 @@ Song * DAODeezerCollection::getSongFromJson(QJsonObject songObject)
 
            qDebug()<< songObject.keys();
            QString title = songObject.value("title").toString();
+           QString url = songObject.value("preview").toString();
            int id = songObject.value("id").toInt();
            QJsonObject artistJs = songObject.value("artist").toObject();
            Artist * a = getArtistFromJson(artistJs);
            QJsonObject albumJs = songObject.value("album").toObject();
            Album * ab = getAlbumFromJson(albumJs,a);
-           Song * s = new Song(id,mCollectionId,title,ab);
+           Song * s = new Song(id,mCollectionId,title,ab,QUrl(url));
 
            mapSong[id] = s;
     return s;

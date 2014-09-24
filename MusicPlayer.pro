@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets xml svg
+QT += qml quick widgets xml svg multimedia
 
 QTPLUGIN += qsvg
 
@@ -15,7 +15,9 @@ SOURCES += main.cpp \
     Service/servicecollection.cpp \
     Service/jacketprovider.cpp \
     Service/collectionmanager.cpp \
-    Dao/daodeezercollection.cpp
+    Dao/daodeezercollection.cpp \
+    Player/abstractmediaplayer.cpp \
+    Player/audiostreammediaplayer.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -42,4 +44,6 @@ HEADERS += \
     Dao/abstractcollection.h \
     Model/abstractcollectionitem.h \
     Service/collectionmanager.h \
-    Dao/daodeezercollection.h
+    Dao/daodeezercollection.h \
+    Player/abstractmediaplayer.h \
+    Player/audiostreammediaplayer.h

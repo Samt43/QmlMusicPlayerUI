@@ -1,0 +1,29 @@
+#ifndef ABSTRACTMEDIAPLAYER_H
+#define ABSTRACTMEDIAPLAYER_H
+
+#include <QObject>
+
+class Song;
+
+class AbstractMediaPlayer : public QObject
+{
+    Q_OBJECT
+
+public:
+
+    explicit AbstractMediaPlayer(QObject *parent = 0);
+    virtual bool play(Song * s) = 0;
+    virtual void pause() =0;
+    virtual void stop() = 0;
+
+
+
+public slots:
+
+
+
+};
+
+
+
+#endif // ABSTRACTMEDIAPLAYER_H
