@@ -12,7 +12,7 @@ bool AudioStreamMediaPlayer::play(Song *s)
     qDebug()<<"mp3 url : "+ s->getSongUrl().toString();
 
     mPlayer.setMedia(s->getSongUrl());
-    mPlayer.setVolume(100);
+    mPlayer.setVolume(90);
     mPlayer.play();
 }
 
@@ -25,4 +25,9 @@ void AudioStreamMediaPlayer::stop()
 {
     mPlayer.stop();
 
+}
+
+int AudioStreamMediaPlayer::getCurrentTime()
+{
+    return mPlayer.position()/1000;
 }

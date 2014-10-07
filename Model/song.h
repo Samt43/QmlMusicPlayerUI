@@ -14,15 +14,15 @@ class Album;
 class Song : public AbstractCollectionItem
 {
     Q_OBJECT
-    Q_PROPERTY(QTime duration READ getDuration CONSTANT)
+    Q_PROPERTY(int duration READ getDuration CONSTANT)
     Q_PROPERTY(QString name READ getName CONSTANT)
     Q_PROPERTY(double note READ getNote CONSTANT)
     Q_PROPERTY(Album * album READ getAlbum CONSTANT)
 
 public:
-    explicit Song(int id,QString collectionID,QString Name, Album * a,QUrl url,QObject *parent = 0);
+    explicit Song(int id, QString collectionID, QString name, int Duration, Album * a, QUrl url, QObject *parent=0);
     Song(QObject *parent = 0);
-    const QTime getDuration();
+    const int getDuration();
     const QString getName();
     const double getNote();
     Album * getAlbum();
@@ -35,7 +35,7 @@ public slots:
 
 protected :
     QString mName;
-    QTime mDuration;
+    int mDuration;
     Album * mAlbum;
     double mNote;
     QUrl mSongUrl;

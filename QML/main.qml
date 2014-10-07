@@ -33,32 +33,35 @@ ApplicationWindow {
 
      }
 
-
-
-
         SplitView {
             Layout.fillWidth:true
             Layout.fillHeight:true
             orientation: Qt.Horizontal
 
             ControlBar {
+                id : controlBar
                 Layout.preferredWidth: win.width*20/100
                 Layout.minimumWidth: win.width*20/100
             }
 
-            Rectangle {
-
+            TabView {
                 Layout.fillWidth: true
                 Layout.minimumWidth: win.width * 20 /100
+                frameVisible: false
+                tabsVisible: false
+
+                id:centralView
+                Component.onCompleted:
+                {
+                    centralView.insertTab(0,"TrackView",trackView)
+                    centralView.insertTab(1,"TrackView",trackView)
+                    centralView.insertTab(2,"ArtistsView",artistView)
 
 
-            PlaylistView {
-
+                }
 
 
             }
-            }
-
 
 
             Rectangle {
@@ -74,7 +77,29 @@ ApplicationWindow {
     }
 
 
+    Connections {
+        target: controlBar
+        onCurrentIndexChanged :
+            centralView.currentIndex = controlBar.currentIndex
 
+
+    }
+
+
+    Component {
+        id:trackView
+     PlaylistView{
+
+     }
+
+    }
+    Component {
+        id:artistView
+     ArtistView{
+
+     }
+
+    }
 
 }
 

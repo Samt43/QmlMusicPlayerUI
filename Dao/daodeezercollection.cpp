@@ -28,8 +28,8 @@ const QList<const Artist *> DAODeezerCollection::getAllArtists()
 const QList<Song *> DAODeezerCollection::getAllSongs()
 {
     QList<Song *> songs;
-    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=200"));
-
+    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=200"));
+    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/playlist/216322211"));
     qDebug()<<j.keys();
 
     QJsonArray a = j["tracks"].toObject()["data"].toArray();
@@ -87,11 +87,12 @@ Song * DAODeezerCollection::getSongFromJson(QJsonObject songObject)
            QString title = songObject.value("title").toString();
            QString url = songObject.value("preview").toString();
            int id = songObject.value("id").toInt();
+           int duration = songObject.value("duration").toInt();
            QJsonObject artistJs = songObject.value("artist").toObject();
            Artist * a = getArtistFromJson(artistJs);
            QJsonObject albumJs = songObject.value("album").toObject();
            Album * ab = getAlbumFromJson(albumJs,a);
-           Song * s = new Song(id,mCollectionId,title,ab,QUrl(url));
+           Song * s = new Song(id,mCollectionId,title,duration,ab,QUrl(url));
 
            mapSong[id] = s;
     return s;

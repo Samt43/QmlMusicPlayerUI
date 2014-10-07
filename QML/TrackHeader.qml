@@ -174,18 +174,24 @@ Rectangle
                     sourceSize.height:  height
 
                 }
-                Image {
+                MouseArea {
                     Layout.fillHeight: true
                     Layout.preferredWidth: height
+                    onClicked: player.playNextSong()
+                Image {
+                    anchors.fill: parent
                     source: "media-skip-forward.svgz"
                     sourceSize.width:  width
                     sourceSize.height:  height
 
-                }
+                }}
                 Slider {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     opacity: 0.5
+                    minimumValue: 0
+                    maximumValue: player.nowPlayingSong.duration
+                    value: player.currentTime
 
                 }
                 Image {

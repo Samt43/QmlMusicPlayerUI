@@ -1,8 +1,8 @@
 #include "song.h"
 #include<qalgorithms.h>
 
-Song::Song(int id, QString collectionID, QString name, Album * a, QUrl url, QObject *parent) :mName(name),
-    mAlbum(a),mSongUrl(url),AbstractCollectionItem(id,collectionID,parent)
+Song::Song(int id, QString collectionID, QString name, int Duration, Album * a, QUrl url, QObject *parent) :mName(name),
+    mAlbum(a),mDuration(Duration),mSongUrl(url),AbstractCollectionItem(id,collectionID,parent)
 {
     mNote = qrand() % 5 + 1;
 }
@@ -10,7 +10,7 @@ Song::Song(int id, QString collectionID, QString name, Album * a, QUrl url, QObj
 Song::Song(QObject *parent)
 {}
 
-const QTime Song::getDuration()
+const int Song::getDuration()
 {
     return mDuration;
 

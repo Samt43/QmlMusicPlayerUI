@@ -15,13 +15,16 @@ public:
     virtual bool play(Song * s) = 0;
     virtual void pause() =0;
     virtual void stop() = 0;
+    virtual int getCurrentTime() = 0;
 
 
 
 public slots:
 
 
-
+signals:
+    void CurrentTimeHasChanged(int);
+    void SongHasFinished();
 };
 
 

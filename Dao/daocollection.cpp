@@ -63,7 +63,7 @@ bool DAOCollection::openCollection(QString path)
                     qDebug()<<songs.tagName();
                     if (songs.tagName() == "song")
                     {
-                    Song * s = new Song(child.attribute("id").toInt(),mCollectionId,songs.attribute("title"),ab,QUrl());
+                    Song * s = new Song(child.attribute("id").toInt(),mCollectionId,songs.attribute("title"),1000,ab,QUrl());
                     ab->addSong(s);
                     }
                     songs = songs.nextSiblingElement();

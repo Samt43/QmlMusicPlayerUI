@@ -4,6 +4,9 @@ import QtQuick.Window 2.1
 ListView {
     model: contextModel
     id: listContext
+    property int currentSelectedView: currentIndex
+
+
 
     delegate:         Item {
         width: listContext.width; height: Screen.height/25

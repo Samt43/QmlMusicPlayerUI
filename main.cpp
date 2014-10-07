@@ -8,6 +8,8 @@
 #include "Model/artist.h"
 #include "Model/collection.h"
 #include "Player/audiostreammediaplayer.h"
+#include "Player/DeezerPlayer/deezermediaplayer.h"
+#include "Service/collectionmanager.h"
 
 #include <QtQml>
 
@@ -25,9 +27,22 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+    QQmlApplicationEngine engineDeezer;
+  engineDeezer.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
+  QObject *rootObject = engineDeezer.rootObjects().first();
+  qDebug()<<QQmlProperty::read(rootObject, "objectName").toString();
+
+
+    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::LocalCollection), new AudioStreamMediaPlayer);
+    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::DeezerCollection), new DeezerMediaPlayer(rootObject));
+
+
     Player p;
     engine.rootContext()->setContextProperty("player",&p);
+
+
     engine.addImageProvider("jacket", new JacketProvider);
+
 
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 

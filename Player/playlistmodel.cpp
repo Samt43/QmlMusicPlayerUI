@@ -6,6 +6,7 @@
 PlaylistModel::PlaylistModel(QObject *parent) :
     QAbstractListModel(parent)
 {
+    mNowPlayingSongIndex = 0;
 
 
 
@@ -36,4 +37,30 @@ QHash<int, QByteArray> PlaylistModel::roleNames() const
     roles[Qt::UserRole] = "obj";
 
     return roles;
+}
+
+Song * PlaylistModel::getNowPlayingSong()
+{
+    if (mNowPlayingSongIndex<mPlaylistSongs.size())
+        return mPlaylistSongs[mNowPlayingSongIndex];
+    else
+        return NULL;
+}
+
+int PlaylistModel::getNowPlayingSongIndex()
+{
+    return mNowPlayingSongIndex;
+}
+
+void PlaylistModel::setNowPlayingSong(int index)
+{
+
+    mNowPlayingSongIndex = index;
+}
+
+bool PlaylistModel::goToNextTrack()
+{
+    mNowPlayingSongIndex ++;
+    if (mNowPlayingSongIndex == mPlaylistSongs.size())
+        mNowPlayingSongIndex = 0;
 }

@@ -10,6 +10,7 @@ public:
     bool play(Song * s);
     void pause();
     void stop();
+        int getCurrentTime();
 
 protected:
     QMediaPlayer mPlayer;

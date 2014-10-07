@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/deezer">
+        <file>deezer.html</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>DeezerQMLWebkitPlayer.qml</file>
+    </qresource>
+</RCC>

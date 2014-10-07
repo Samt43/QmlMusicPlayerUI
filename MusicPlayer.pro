@@ -1,9 +1,8 @@
 TEMPLATE = app
 
-QT += qml quick widgets xml svg multimedia
+QT += qml quick widgets xml svg multimedia webkitwidgets
 
 QTPLUGIN += qsvg
-
 SOURCES += main.cpp \
     Model/album.cpp \
     Model/artist.cpp \
@@ -17,11 +16,14 @@ SOURCES += main.cpp \
     Service/collectionmanager.cpp \
     Dao/daodeezercollection.cpp \
     Player/abstractmediaplayer.cpp \
-    Player/audiostreammediaplayer.cpp
+    Player/audiostreammediaplayer.cpp \
+    Player/DeezerPlayer/deezermediaplayer.cpp \
+    Player/DeezerPlayer/networkcookiejar.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
-    FakeMusicCollection/FakeMusicCollection.qrc
+    FakeMusicCollection/FakeMusicCollection.qrc \
+    Player/DeezerPlayer/DeezerRessources.qrc
 
 CONFIG+=qml_debug
 
@@ -46,4 +48,8 @@ HEADERS += \
     Service/collectionmanager.h \
     Dao/daodeezercollection.h \
     Player/abstractmediaplayer.h \
-    Player/audiostreammediaplayer.h
+    Player/audiostreammediaplayer.h \
+    Player/DeezerPlayer/deezermediaplayer.h \
+    Player/DeezerPlayer/networkcookiejar.h
+
+OTHER_FILES +=

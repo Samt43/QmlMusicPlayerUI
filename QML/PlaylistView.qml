@@ -29,7 +29,7 @@ ScrollView{
                 onClicked: {
                     parent.ListView.view.currentIndex = index
                     parent.forceActiveFocus()
-                    player.play(song)
+                    player.play(index)
                 }
 
 
@@ -69,7 +69,13 @@ ScrollView{
 
                         }
 
-                        Text { text: 'Duration'
+                        Text { text:  {
+                                var d2 = new Date(song.duration * 1000);
+                                var H = "";
+                                if(d2.getUTCHours()!=0)
+                                { H = d2.getUTCHours() +":" }
+
+                                return  H + d2.getMinutes() + ":" + d2.getSeconds()}
                             color: (listContext.currentIndex === index ? 'white':'grey' )
                             horizontalAlignment: Text.AlignRight
                             Layout.fillWidth: true

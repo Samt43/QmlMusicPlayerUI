@@ -4,20 +4,22 @@
 #include "Service/servicecollection.h"
 #include "Service/collectionmanager.h"
 #include "Player/audiostreammediaplayer.h"
+#include "Player/DeezerPlayer/deezermediaplayer.h"
 #include "Model/song.h"
+#include <QApplication>
+#include <QQmlApplicationEngine>
 
 Player::Player(QObject *parent) :
     QObject(parent)
 {
 
-    mPlaylistModel = new PlaylistModel;
-    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::LocalCollection), new AudioStreamMediaPlayer);
-    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::DeezerCollection), new AudioStreamMediaPlayer);
 
+    mPlaylistModel = new PlaylistModel;
     mPlaylistModel->addSongs(CollectionManager::getInstance()->getServiceCollection("DeezerDatabase")->getAllSongs());
     mPlaylistModel->addSongs(CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getAllSongs());
-    mNowPlayingSong = NULL;
     mAbstractMediaPlayer = NULL;
+
+
 
 }
 
@@ -29,22 +31,54 @@ PlaylistModel * Player::getPlaylistModel()
 
 Song * Player::getNowPlayingSong()
 {
-    return mNowPlayingSong;
+    return mPlaylistModel->getNowPlayingSong();
 }
 
-bool Player::play(Song *s)
+bool Player::play(int index)
 {
-    if (mAbstractMediaPlayer)
+    mPlaylistModel->setNowPlayingSong(index);
+    Song *s  = mPlaylistModel->getNowPlayingSong();
+
+    if (mAbstractMediaPlayer != CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId()))
     {
-        mAbstractMediaPlayer->stop();
+        if (mAbstractMediaPlayer)
+        {
+            mAbstractMediaPlayer->stop();
+            disconnect(mAbstractMediaPlayer);
+        }
+        mAbstractMediaPlayer = CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId());
+        connect(mAbstractMediaPlayer,SIGNAL(SongHasFinished()),this,SLOT(playNextSong()));
+            connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged(int)),this,SLOT(setCurrentTime(int)));
     }
-    mAbstractMediaPlayer = CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId());
+
+
+    setCurrentTime(0);
+
     mAbstractMediaPlayer->play(s);
-    mNowPlayingSong = s;
     emit nowPlayingSongHasChanged();
 }
 
 void Player::pause()
 {
     mAbstractMediaPlayer->pause();
+}
+
+int Player::getCurrentTime()
+{
+    int retour = 0;
+    if (mAbstractMediaPlayer)
+        retour = mAbstractMediaPlayer->getCurrentTime();
+    return retour;
+}
+
+void Player::setCurrentTime(int seconds)
+{
+    emit CurrentTimeHasChanged();
+}
+
+bool Player::playNextSong()
+{
+    qDebug()<<"next song !";
+    mPlaylistModel->goToNextTrack();
+    play(mPlaylistModel->getNowPlayingSongIndex());
 }
