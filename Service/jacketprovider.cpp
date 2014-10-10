@@ -25,12 +25,12 @@ while ((pos = rx.indexIn(id, pos)) != -1 && rx.cap(0) != "") {
 
 if (list.at(0) == "album")
 {
-   const Album *ab = CollectionManager::getInstance()->getServiceCollection(list.at(2))->getAlbumFromId(list.at(1).toInt());
+   AlbumView *ab = CollectionManager::getInstance()->getServiceCollection(list.at(2))->getAlbumFromId(list.at(1).toInt());
    retour =  CollectionManager::getInstance()->getServiceCollection(list.at(2))->getJacketFromAlbum(ab);
 }
 else if (list.at(0) == "artist")
 {
-   const Artist *a = CollectionManager::getInstance()->getServiceCollection(list.at(2))->getArtistFromId(list.at(1).toInt());
+   ArtistView *a = CollectionManager::getInstance()->getServiceCollection(list.at(2))->getArtistFromId(list.at(1).toInt());
    retour = CollectionManager::getInstance()->getServiceCollection(list.at(2))->getJacketFromArtist(a);
 }
 

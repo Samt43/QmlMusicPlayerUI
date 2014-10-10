@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
-import Song 1.0
+import SongView 1.0
 
 Rectangle
 {
@@ -25,7 +25,7 @@ Rectangle
     Image {
         id : immmm
         //source: "image://jacket/album/"+player.nowPlayingSong.album.itemID+"/"+player.nowPlayingSong.collectionID
-        source: player.nowPlayingSong.album.jacket
+        source: player.nowPlayingSong.albumCover
         fillMode: Image.PreserveAspectCrop
         anchors.fill: parent
         visible: false
@@ -67,7 +67,7 @@ Rectangle
                                    anchors.fill: parent
                                    anchors.margins: 2
                                    //source: "image://jacket/album/"+player.nowPlayingSong.album.itemID+"/"+player.nowPlayingSong.collectionID
-                                   source:player.nowPlayingSong.album.jacket
+                                   source:player.nowPlayingSong.albumCover
                                    smooth: true
                                    asynchronous: true
                                }
@@ -97,7 +97,7 @@ Rectangle
                                }
 
 
-                               Text { text: player.nowPlayingSong.album.name + '-'+ player.nowPlayingSong.album.artist.name
+                               Text { text: player.nowPlayingSong.albumName + '-'+ player.nowPlayingSong.artistName
                                    color: "white"
                                    Layout.fillWidth: true
                                    Layout.fillHeight: true

@@ -4,9 +4,9 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 
 
-import Song 1.0
-import Album 1.0
-import Artist 1.0
+import SongView 1.0
+import AlbumView 1.0
+import ArtistView 1.0
 
 ApplicationWindow {
 

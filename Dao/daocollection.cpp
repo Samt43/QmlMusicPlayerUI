@@ -1,4 +1,4 @@
-#include "daocollection.h"
+
 #include <QDebug>
 #include <QtXml/qdom.h>
 #include <QFile>
@@ -6,6 +6,10 @@
 #include "Model/album.h"
 #include "Model/artist.h"
 #include "Model/song.h"
+#include "View/artistview.h"
+#include "View/songview.h"
+#include "View/albumview.h"
+#include "daocollection.h"
 
 
 DAOCollection::DAOCollection(QString path,QString sCollectionID,QObject *parent) :
@@ -85,22 +89,29 @@ bool DAOCollection::openCollection(QString path)
         return true;
 }
 
-const QList<const Artist *> DAOCollection::getAllArtists()
+QList<ArtistView *> DAOCollection::getAllArtists()
 {
-    return mCollection.getArtists();
+    QList< Artist *> l= mCollection.getArtists();
+    QList< ArtistView *> m;
 
+    foreach ( Artist *a, l) {
+        m.append(new ArtistView(a->getItemId(),a->getCollectionId(),a->getName(),a->getInfos(),a->getJacket()));
 
-
+    }
+    return m;
 }
-const QList<Song *> DAOCollection::getAllSongs()
-{
-    QList<Song *> songs;
-    QList<const Artist *> artists = getAllArtists();
-    foreach (const Artist * a, artists) {
-        const QList<Album * >& abs = a->getAlbums();
-        foreach (const Album * a, abs) {
-            songs.append(a->getSongs());
 
+ QList<SongView *> DAOCollection::getAllSongs()
+{
+    QList<SongView *> songs;
+    QList< Artist *> artists = mCollection.getArtists();
+    foreach ( Artist * a, artists) {
+         QList<Album * > abs = a->getAlbums();
+        foreach ( Album * a, abs) {
+             QList<Song *> songsAlbum = a->getSongs();
+            foreach (Song *s, songsAlbum) {
+                songs.append(createSongView(s));
+            }
         }
     }
 
@@ -108,15 +119,23 @@ const QList<Song *> DAOCollection::getAllSongs()
     return songs;
 }
 
-
-const Album * DAOCollection::getAlbumFromId(int id)
+SongView * DAOCollection::createSongView(Song *s)
 {
-    QList<const Artist *> artists = getAllArtists();
-    foreach (const Artist * a, artists) {
-        const QList<Album * >& abs = a->getAlbums();
-        foreach (const Album * a, abs) {
+    Album * a = s->getAlbum();
+    Artist * at = s->getAlbum()->getArtist();
+
+    return new SongView(s->getItemId(),s->getCollectionId(),s->getName(),a->getItemId(),a->getName(),a->getJacket(),at->getItemId(),at->getName(),s->getDuration(),s->getSongUrl());
+}
+
+
+AlbumView *DAOCollection::getAlbumFromId(int id)
+{
+    QList< Artist *> artists = mCollection.getArtists();
+    foreach ( Artist * a, artists) {
+         QList<Album * > abs = a->getAlbums();
+        foreach ( Album * a, abs) {
             if (a->getItemId() ==id)
-                return a;
+                return new AlbumView(a->getItemId(),a->getCollectionId(),a->getName(),a->getJacket());
 
         }
     }
@@ -124,45 +143,45 @@ const Album * DAOCollection::getAlbumFromId(int id)
     return NULL;
 }
 
-const Artist * DAOCollection::getArtistFromId(int id)
+ArtistView * DAOCollection::getArtistFromId(int id)
 {
-    QList<const Artist *> artists = getAllArtists();
-    foreach (const Artist * a, artists) {
+    QList< Artist *> artists = mCollection.getArtists();
+    foreach ( Artist * a, artists) {
         if (a->getItemId() == id)
-            return a;
+            return new ArtistView(a->getItemId(),a->getCollectionId(),a->getName(),a->getInfos(),a->getJacket());
     }
     return NULL;
 
 }
 
 
-const QList<const Artist *> DAOCollection::searchArtists(QString s)
+QList< ArtistView *> DAOCollection::searchArtists(QString s)
 {
 
-    return QList<const Artist *>();
+    return QList< ArtistView *>();
 }
 
 
-const QList<const Song *> DAOCollection::searchSongs(QString s) {
-    return QList<const Song *>();
+QList< SongView *> DAOCollection::searchSongs(QString s) {
+    return QList< SongView *>();
 }
-const QList<const Song *> DAOCollection::searchSongsByArtist(QString s)
+QList< SongView *> DAOCollection::searchSongsByArtist(QString s)
 {
-    QList<const Song *>();
+    QList< SongView *>();
 }
-const QList<const Song *> DAOCollection::searchSongsByAlbum(QString s)
+QList< SongView *> DAOCollection::searchSongsByAlbum(QString s)
 {
-    QList<const Song *>();
+    QList< SongView *>();
 }
 
-const QImage DAOCollection::getJacketFromAlbum(const Album *a)
+const QImage DAOCollection::getJacketFromAlbum(AlbumView *a)
 {
     qDebug()<<a->getJacket().toString();
     QImage i(":/"+a->getJacket().toString());
     return i;
 }
 
-const QImage DAOCollection::getJacketFromArtist(const Artist *a)
+const QImage DAOCollection::getJacketFromArtist(ArtistView *a)
 {
     QImage i(":/"+a->getJacket().toString());
     return i;

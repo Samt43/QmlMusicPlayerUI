@@ -23,7 +23,7 @@ ServiceCollection::ServiceCollection(CollectionType type)
 }
 
 
-const QList<const Artist *> ServiceCollection::getAllArtists()
+QList<ArtistView *> ServiceCollection::getAllArtists()
 {
     return mAbstractCollection->getAllArtists();
 
@@ -38,29 +38,29 @@ const QString ServiceCollection::getCollectionID()
     return mCollectionId;
 }
 
-const QList<Song *> ServiceCollection::getAllSongs()
+QList<SongView *> ServiceCollection::getAllSongs()
 {
     return mAbstractCollection->getAllSongs();
 }
 
-const Album *ServiceCollection::getAlbumFromId(int id)
+AlbumView *ServiceCollection::getAlbumFromId(int id)
 {
     return mAbstractCollection->getAlbumFromId(id);
 
 }
 
-const Artist *ServiceCollection::getArtistFromId(int id)
+ArtistView *ServiceCollection::getArtistFromId(int id)
 {
     return mAbstractCollection->getArtistFromId(id);
 
 }
- const QImage ServiceCollection::getJacketFromAlbum(const Album *a)
+ const QImage ServiceCollection::getJacketFromAlbum(AlbumView *a)
  {
 
     return mAbstractCollection->getJacketFromAlbum(a);
  }
 
-  const QImage ServiceCollection::getJacketFromArtist(const Artist *a)
+  const QImage ServiceCollection::getJacketFromArtist(ArtistView *a)
   {
       return mAbstractCollection->getJacketFromArtist(a);
   }

@@ -6,8 +6,6 @@
 class AbstractCollectionItem : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString collectionID READ getCollectionId CONSTANT)
-    Q_PROPERTY(int itemID READ getItemId CONSTANT)
 
 public:
     explicit AbstractCollectionItem(int itemId,QString CollectionId,QObject *parent = 0):mItemID(itemId),mCollectionID(CollectionId)
@@ -16,7 +14,7 @@ public:
     explicit AbstractCollectionItem(QObject *parent = 0)
     {}
 
-    QString getCollectionId()
+    QString getCollectionId() const
     {
         return mCollectionID;
     }
@@ -25,6 +23,8 @@ public:
     {
         return mItemID;
     }
+    
+    
 
 signals:
 

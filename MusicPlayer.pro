@@ -18,7 +18,11 @@ SOURCES += main.cpp \
     Player/abstractmediaplayer.cpp \
     Player/audiostreammediaplayer.cpp \
     Player/DeezerPlayer/deezermediaplayer.cpp \
-    Player/DeezerPlayer/networkcookiejar.cpp
+    Player/DeezerPlayer/networkcookiejar.cpp \
+    View/albumview.cpp \
+    View/artistview.cpp \
+    View/collectionview.cpp \
+    View/songview.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -50,6 +54,11 @@ HEADERS += \
     Player/abstractmediaplayer.h \
     Player/audiostreammediaplayer.h \
     Player/DeezerPlayer/deezermediaplayer.h \
-    Player/DeezerPlayer/networkcookiejar.h
+    Player/DeezerPlayer/networkcookiejar.h \
+    View/abstractcollectionitemview.h \
+    View/albumview.h \
+    View/artistview.h \
+    View/collectionview.h \
+    View/songview.h
 
 OTHER_FILES +=

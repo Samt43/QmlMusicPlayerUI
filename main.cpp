@@ -4,9 +4,11 @@
 #include "Dao/daocollection.h"
 #include "Player/player.h"
 #include "Service/jacketprovider.h"
-#include "Model/song.h"
-#include "Model/artist.h"
-#include "Model/collection.h"
+
+#include "View/songview.h"
+#include "View/artistview.h"
+#include "View/albumview.h"
+
 #include "Player/audiostreammediaplayer.h"
 #include "Player/DeezerPlayer/deezermediaplayer.h"
 #include "Service/collectionmanager.h"
@@ -20,9 +22,9 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<Player>("Player", 1, 0, "Player");
     qmlRegisterType<PlaylistModel>("PlaylistModel", 1, 0, "PlaylistModel");
-    qmlRegisterType<Album>("Album", 1, 0, "Album");
-    qmlRegisterType<Song>("Song", 1, 0, "Song");
-    qmlRegisterType<Artist>("Artist", 1, 0, "Artist");
+    qmlRegisterType<AlbumView>("AlbumView", 1, 0, "AlbumView");
+    qmlRegisterType<SongView>("SongView", 1, 0, "SongView");
+    qmlRegisterType<ArtistView>("ArtistView", 1, 0, "ArtistView");
     qmlRegisterType<AudioStreamMediaPlayer>("AudioStreamMediaPlayer", 1, 0, "AudioStreamMediaPlayer");
 
     QQmlApplicationEngine engine;
@@ -41,12 +43,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("player",&p);
 
 
-    engine.addImageProvider("jacket", new JacketProvider);
-
-
+    //engine.addImageProvider("jacket", new JacketProvider);
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
-
-
     return app.exec();
-
 }

@@ -11,29 +11,29 @@ class DAODeezerCollection : public AbstractCollection
 {
 public:
     DAODeezerCollection(QString idCollection,QObject *parent=0);
-    const QList<const Artist *> getAllArtists();
-    const QList<Song *> getAllSongs();
-    const QList<const Artist *> searchArtists(QString s);
-    const QList<const Song *> searchSongs(QString s);
-    const QList<const Song *> searchSongsByArtist(QString s);
-    const QList<const Song *> searchSongsByAlbum(QString s);
-    const Album * getAlbumFromId(int id);
-    const Artist * getArtistFromId(int id);
-    const QImage getJacketFromAlbum(const Album *a);
-    const QImage getJacketFromArtist(const Artist *a);
+    QList<ArtistView *> getAllArtists();
+    QList<SongView *> getAllSongs();
+    QList<ArtistView *> searchArtists(QString s);
+    QList<SongView *> searchSongs(QString s);
+    QList<SongView *> searchSongsByArtist(QString s);
+    QList<SongView *> searchSongsByAlbum(QString s);
+    AlbumView * getAlbumFromId(int id);
+    ArtistView *getArtistFromId(int id);
+    const QImage getJacketFromAlbum(AlbumView *a);
+    const QImage getJacketFromArtist(ArtistView *a);
 
 protected:
     QJsonObject getJsonObject(QUrl url);
-    QImage getImageFromUrl(QUrl url);
-    Song * getSongFromJson(QJsonObject songObject);
-    Album * getAlbumFromJson(QJsonObject albumObject,Artist *a);
-    Artist * getArtistFromJson(QJsonObject artistObject);
+    const QImage getImageFromUrl(QUrl url);
+    SongView * getSongFromJson(QJsonObject songObject);
+    AlbumView * getAlbumFromJson(QJsonObject albumObject);
+    ArtistView * getArtistFromJson(QJsonObject artistObject);
     QNetworkAccessManager mNetworkManager;
 
-    QMap<int,Song *> mapSong;
-    QMap<int,Artist *> mapArtist;
-    QMap<int, Album *> mapAlbum;
-    QMutex mut;
+    QMap<int,SongView *> mapSong;
+    QMap<int,ArtistView *> mapArtist;
+    QMap<int, AlbumView *> mapAlbum;
+
 
 };
 

@@ -3,9 +3,9 @@
 
 #include <QObject>
 
-class Artist;
-class Song;
-class Album;
+class ArtistView;
+class SongView;
+class AlbumView;
 class ServiceCollection;
 
 class AbstractCollection : public QObject
@@ -17,17 +17,16 @@ public:
     {
     }
 
-    virtual const QList<const Artist *> getAllArtists() = 0;
-    virtual const QList<Song *> getAllSongs() = 0;
-    virtual const QList<const Artist *> searchArtists(QString s) = 0;
-    virtual const QList<const Song *> searchSongs(QString s) = 0;
-    virtual const QList<const Song *> searchSongsByArtist(QString s) = 0;
-    virtual const QList<const Song *> searchSongsByAlbum(QString s) = 0;
-    virtual const Album * getAlbumFromId(int id) = 0;
-    virtual const Artist * getArtistFromId(int id) = 0;
-    virtual const QImage getJacketFromAlbum(const Album *a) = 0;
-    virtual const QImage getJacketFromArtist(const Artist *a) = 0;
-
+    virtual QList<ArtistView *> getAllArtists() = 0;
+    virtual QList<SongView *> getAllSongs() = 0;
+    virtual QList<ArtistView *> searchArtists(QString s) = 0;
+    virtual QList<SongView *> searchSongs(QString s) = 0;
+    virtual QList<SongView *> searchSongsByArtist(QString s) = 0;
+    virtual QList<SongView *> searchSongsByAlbum(QString s) = 0;
+    virtual AlbumView * getAlbumFromId(int id) = 0;
+    virtual ArtistView * getArtistFromId(int id) = 0;
+    virtual const QImage getJacketFromAlbum(AlbumView *a) = 0;
+    virtual const QImage getJacketFromArtist(ArtistView *a) = 0;
 
 signals:
 

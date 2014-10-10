@@ -16,16 +16,17 @@ class DAOCollection :  public AbstractCollection
 public:
     explicit DAOCollection(QString path, QString sCollectionID, QObject *parent = 0);
 
-    const QList<const Artist *> getAllArtists();
-    const QList<Song *> getAllSongs();
-    const QList<const Artist *> searchArtists(QString s);
-    const QList<const Song *> searchSongs(QString s);
-    const QList<const Song *> searchSongsByArtist(QString s);
-    const QList<const Song *> searchSongsByAlbum(QString s);
-    const Album * getAlbumFromId(int id);
-    const Artist * getArtistFromId(int id);
-    const QImage getJacketFromAlbum(const Album *a);
-    const QImage getJacketFromArtist(const Artist *a);
+    QList<ArtistView *> getAllArtists();
+    QList<SongView *> getAllSongs();
+    QList<ArtistView *> searchArtists(QString s);
+    QList<SongView *> searchSongs(QString s);
+    QList<SongView *> searchSongsByArtist(QString s);
+    QList<SongView *> searchSongsByAlbum(QString s);
+    AlbumView * getAlbumFromId(int id);
+    ArtistView * getArtistFromId(int id);
+    const QImage getJacketFromAlbum(AlbumView *a);
+    const QImage getJacketFromArtist(ArtistView *a);
+
 
 
 signals:
@@ -36,6 +37,7 @@ private:
     // It's a proof of concept, should be an sql collection !
     Collection mCollection;
     bool openCollection(QString path);
+    SongView * createSongView(Song * s);
 
 };
 

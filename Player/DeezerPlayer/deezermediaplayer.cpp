@@ -1,5 +1,5 @@
 #include "deezermediaplayer.h"
-#include "Model/song.h"
+#include "View/songview.h"
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include<QDebug>
@@ -20,6 +20,7 @@ DeezerMediaPlayer::DeezerMediaPlayer(QObject *qmlItemPlayer):mQmlItemPlayer(qmlI
     mCurrentTime.setSingleShot(true);
     connect(&mRefreshTime,SIGNAL(timeout()),this,SLOT(updatePlayingTime()));
     connect(&mCurrentTime,SIGNAL(timeout()),this,SLOT(songIsFinished()));
+    mRefreshTime.setInterval(1000);
     mRefreshTime.start();
 }
 
@@ -30,7 +31,7 @@ void DeezerMediaPlayer::loadNewSong(QUrl s)
 //   mView->load(s);
 }
 
-bool DeezerMediaPlayer::play(Song *s)
+bool DeezerMediaPlayer::play(SongView *s)
 {
     qDebug()<<"Now Playing !! : "+ s->getName();
     qDebug()<<"mp3 url : "+ s->getSongUrl().toString();

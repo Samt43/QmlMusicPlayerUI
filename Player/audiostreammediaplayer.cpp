@@ -1,12 +1,12 @@
 #include "audiostreammediaplayer.h"
 #include<QDebug>
-#include "Model/song.h"
+#include "View/songview.h"
 
 AudioStreamMediaPlayer::AudioStreamMediaPlayer()
 {
 }
 
-bool AudioStreamMediaPlayer::play(Song *s)
+bool AudioStreamMediaPlayer::play(SongView *s)
 {
     qDebug()<<"Now Playing !! : "+ s->getName();
     qDebug()<<"mp3 url : "+ s->getSongUrl().toString();

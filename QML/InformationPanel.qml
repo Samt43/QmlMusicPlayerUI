@@ -12,7 +12,7 @@ Item {
             height: width * 9/16
             width: parent.width
             //source: "image://jacket/artist/"+player.nowPlayingSong.album.artist.itemID+"/"+player.nowPlayingSong.collectionID
-            source: player.nowPlayingSong.album.artist.jacket
+            source: player.nowPlayingArtist.jacket
             smooth: true
             asynchronous: true
 

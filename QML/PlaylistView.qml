@@ -2,9 +2,9 @@ import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 import QtQuick.Window 2.1
-import Song 1.0
-import Album 1.0
-import Artist 1.0
+import SongView 1.0
+import AlbumView 1.0
+import ArtistView 1.0
 
 ScrollView{
     anchors.fill: parent
@@ -20,7 +20,7 @@ ScrollView{
             id : songItem
 
 
-            property Song song: obj
+            property SongView song: obj
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
@@ -49,7 +49,7 @@ ScrollView{
                         Image {
                             anchors.fill: parent
                             anchors.margins: 2
-                            source: obj.album.jacket
+                            source: obj.albumCover
                             smooth: true
                             asynchronous: true
                         }
@@ -84,7 +84,7 @@ ScrollView{
                         }
 
 
-                        Text { text: song.album.name + '-'+ song.album.artist.name
+                        Text { text: song.albumName + '-'+ song.artistName
                             color: (listContext.currentIndex === index ? 'white':'grey' )
                             Layout.fillWidth: true
                             Layout.fillHeight: true

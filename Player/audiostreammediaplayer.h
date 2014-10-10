@@ -7,7 +7,7 @@ class AudioStreamMediaPlayer : public AbstractMediaPlayer
 {
 public:
     AudioStreamMediaPlayer();
-    bool play(Song * s);
+    bool play(SongView * s);
     void pause();
     void stop();
         int getCurrentTime();

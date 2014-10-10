@@ -5,7 +5,7 @@
 #include "Service/collectionmanager.h"
 #include "Player/audiostreammediaplayer.h"
 #include "Player/DeezerPlayer/deezermediaplayer.h"
-#include "Model/song.h"
+#include "View/songview.h"
 #include <QApplication>
 #include <QQmlApplicationEngine>
 
@@ -29,15 +29,25 @@ PlaylistModel * Player::getPlaylistModel()
 }
 
 
-Song * Player::getNowPlayingSong()
+SongView * Player::getNowPlayingSong()
 {
     return mPlaylistModel->getNowPlayingSong();
+}
+
+ArtistView *Player::getNowPlayingArtist()
+{
+    return mNowPlayingArtist;
+}
+
+AlbumView *Player::getNowPlayingAlbum()
+{
+    return mNowPlayingAlbum;
 }
 
 bool Player::play(int index)
 {
     mPlaylistModel->setNowPlayingSong(index);
-    Song *s  = mPlaylistModel->getNowPlayingSong();
+    SongView *s  = mPlaylistModel->getNowPlayingSong();
 
     if (mAbstractMediaPlayer != CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId()))
     {
@@ -48,14 +58,20 @@ bool Player::play(int index)
         }
         mAbstractMediaPlayer = CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId());
         connect(mAbstractMediaPlayer,SIGNAL(SongHasFinished()),this,SLOT(playNextSong()));
-            connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged(int)),this,SLOT(setCurrentTime(int)));
+        connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged(int)),this,SLOT(setCurrentTime(int)));
     }
 
 
     setCurrentTime(0);
 
     mAbstractMediaPlayer->play(s);
+    mNowPlayingAlbum = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getAlbumFromId(s->getAlbumId());
+    mNowPlayingArtist = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getArtistFromId(s->getArtistId());
+
+
     emit nowPlayingSongHasChanged();
+    emit nowPlayingArtistHasChanged();
+    emit nowPlayingAlbumHasChanged();
 }
 
 void Player::pause()

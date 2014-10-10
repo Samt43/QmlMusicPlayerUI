@@ -12,7 +12,7 @@ Album::Album(QObject *parent)
 
 }
 
-const QList<Song*>& Album::getSongs() const
+QList<Song *> Album::getSongs() const
 {
     return mSongs;
 }
@@ -24,7 +24,7 @@ void Album::addSong(Song *s)
     mSongs.append(s);
 }
 
-const QString & Album::getName() const
+QString Album::getName() const
 {
     return mName;
 }

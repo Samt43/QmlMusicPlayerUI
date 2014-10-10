@@ -6,10 +6,11 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include "Model/album.h"
-#include "Model/song.h"
-#include "Model/artist.h"
+#include "View/songview.h"
+#include "View/albumview.h"
+#include "View/artistview.h"
 #include <QTimer>
+#include <QImage>
 
 DAODeezerCollection::DAODeezerCollection(QString idCollection, QObject *parent): AbstractCollection(idCollection,parent)
 {
@@ -18,69 +19,79 @@ DAODeezerCollection::DAODeezerCollection(QString idCollection, QObject *parent):
 }
 
 
-const QList<const Artist *> DAODeezerCollection::getAllArtists()
+ QList< ArtistView *> DAODeezerCollection::getAllArtists()
 {
-    return QList<const Artist *>();
+    return QList< ArtistView *>();
 
 
 
 }
-const QList<Song *> DAODeezerCollection::getAllSongs()
+ QList<SongView *> DAODeezerCollection::getAllSongs()
 {
-    QList<Song *> songs;
-    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=200"));
-    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/playlist/216322211"));
+    QList<SongView *> songs;
+    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=5000"));
+    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/playlist/216322211"));
     qDebug()<<j.keys();
 
     QJsonArray a = j["tracks"].toObject()["data"].toArray();
-    QJsonArray::const_iterator  it;
+    QJsonArray::iterator  it;
 
     for (it=a.begin();it!=a.end();it++)
     {
     songs.append(getSongFromJson((*it).toObject()));
     }
-
-
-
     return songs;
 }
 
 
-const Album * DAODeezerCollection::getAlbumFromId(int id)
+AlbumView *DAODeezerCollection::getAlbumFromId(int id)
 {
+    if (!mapAlbum.contains(id))
+    {
+        QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/album/"+QString::number(id)));
+        mapAlbum[id] = getAlbumFromJson(j);
+    }
 
     return mapAlbum[id];
+
 }
 
-const Artist * DAODeezerCollection::getArtistFromId(int id)
+ArtistView *DAODeezerCollection::getArtistFromId(int id)
 {
+
+    if (!mapArtist.contains(id))
+    {
+        QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/artist/"+QString::number(id)));
+        qDebug()<<QString("http://api.deezer.com/artist/")+QString::number(id);
+        mapArtist[id] = getArtistFromJson(j);
+    }
 
     return mapArtist[id];
 
 }
 
 
-const QList<const Artist *> DAODeezerCollection::searchArtists(QString s)
+ QList< ArtistView *> DAODeezerCollection::searchArtists(QString s)
 {
 
-    return QList<const Artist *>();
+    return QList< ArtistView *>();
 }
 
 
-const QList<const Song *> DAODeezerCollection::searchSongs(QString s) {
-    return QList<const Song *>();
+ QList< SongView *> DAODeezerCollection::searchSongs(QString s) {
+    return QList< SongView *>();
 }
-const QList<const Song *> DAODeezerCollection::searchSongsByArtist(QString s)
+ QList< SongView *> DAODeezerCollection::searchSongsByArtist(QString s)
 {
-    QList<const Song *>();
+    QList< SongView *>();
 }
-const QList<const Song *> DAODeezerCollection::searchSongsByAlbum(QString s)
+ QList< SongView *> DAODeezerCollection::searchSongsByAlbum(QString s)
 {
-    QList<const Song *>();
+    QList< SongView *>();
 }
 
 
-Song * DAODeezerCollection::getSongFromJson(QJsonObject songObject)
+SongView *DAODeezerCollection::getSongFromJson(QJsonObject songObject)
 {
 
            qDebug()<< songObject.keys();
@@ -88,31 +99,38 @@ Song * DAODeezerCollection::getSongFromJson(QJsonObject songObject)
            QString url = songObject.value("preview").toString();
            int id = songObject.value("id").toInt();
            int duration = songObject.value("duration").toInt();
-           QJsonObject artistJs = songObject.value("artist").toObject();
-           Artist * a = getArtistFromJson(artistJs);
+
            QJsonObject albumJs = songObject.value("album").toObject();
-           Album * ab = getAlbumFromJson(albumJs,a);
-           Song * s = new Song(id,mCollectionId,title,duration,ab,QUrl(url));
+           QString abName = albumJs.value("title").toString();
+           QString abCover = albumJs.value("cover").toString();
+           int abID = albumJs.value("id").toInt();
+
+           QJsonObject artistJs = songObject.value("artist").toObject();
+           QString atName = artistJs.value("name").toString();
+           int atID = artistJs.value("id").toInt();
+
+           SongView * s = new SongView(id,mCollectionId,title,abID,abName,QUrl(abCover),atID,atName,duration,QUrl(url));
+
 
            mapSong[id] = s;
     return s;
 
 }
 
-Album * DAODeezerCollection::getAlbumFromJson(QJsonObject albumObject, Artist *a)
+AlbumView *DAODeezerCollection::getAlbumFromJson(QJsonObject albumObject)
 {
                qDebug()<< albumObject.keys();
                int id = albumObject.value("id").toInt();
-               Album * ab = new Album(id,mCollectionId,albumObject["title"].toString(),a,albumObject["cover"].toString());
+               AlbumView * ab = new AlbumView(id,mCollectionId,albumObject["title"].toString(),albumObject["cover"].toString());
                mapAlbum[id] = ab;
                return ab;
 }
 
-Artist * DAODeezerCollection::getArtistFromJson(QJsonObject artistObject)
+ArtistView *DAODeezerCollection::getArtistFromJson(QJsonObject artistObject)
 {
     qDebug()<< artistObject.keys();
     int id = artistObject.value("id").toInt();
-    Artist * a = new Artist(id,mCollectionId,artistObject["name"].toString(),"",artistObject["picture"].toString());
+    ArtistView * a = new ArtistView(id,mCollectionId,artistObject["name"].toString(),"",artistObject["picture"].toString());
     mapArtist[id] = a;
     return a;
 
@@ -159,18 +177,18 @@ QJsonObject DAODeezerCollection::getJsonObject(QUrl url)
 
 }
 
-const QImage DAODeezerCollection::getJacketFromAlbum(const Album *a)
+const QImage DAODeezerCollection::getJacketFromAlbum( AlbumView *a)
 {
     return getImageFromUrl(a->getJacket());
 }
 
-const QImage DAODeezerCollection::getJacketFromArtist(const Artist *a)
+const QImage DAODeezerCollection::getJacketFromArtist( ArtistView *a)
 {
     return getImageFromUrl(a->getJacket());
 }
 
 
-QImage DAODeezerCollection::getImageFromUrl(QUrl url)
+const QImage DAODeezerCollection::getImageFromUrl(QUrl url)
 {
     QEventLoop eventLoop;
 

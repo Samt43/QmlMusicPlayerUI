@@ -1,7 +1,7 @@
 #include "playlistmodel.h"
 #include "Service/servicecollection.h"
 #include <QVariant>
-#include "Model/song.h"
+#include "View/songview.h"
 
 PlaylistModel::PlaylistModel(QObject *parent) :
     QAbstractListModel(parent)
@@ -14,7 +14,7 @@ PlaylistModel::PlaylistModel(QObject *parent) :
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    Song * s = mPlaylistSongs.at(index.row());
+    SongView * s = mPlaylistSongs.at(index.row());
     return QVariant::fromValue(s);
 
 }
@@ -24,7 +24,7 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
     return mPlaylistSongs.count();
 }
 
-void PlaylistModel::addSongs(QList<Song *> s)
+void PlaylistModel::addSongs(QList<SongView *> s)
 {
 
     mPlaylistSongs.append(s);
@@ -39,7 +39,7 @@ QHash<int, QByteArray> PlaylistModel::roleNames() const
     return roles;
 }
 
-Song * PlaylistModel::getNowPlayingSong()
+SongView *PlaylistModel::getNowPlayingSong()
 {
     if (mNowPlayingSongIndex<mPlaylistSongs.size())
         return mPlaylistSongs[mNowPlayingSongIndex];

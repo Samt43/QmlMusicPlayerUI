@@ -5,7 +5,7 @@ Collection::Collection(QString sCollectionID, QObject *parent) : mCollectionId(s
 {
 }
 
-QList<const Artist*> Collection::getArtists()
+QList<Artist *> Collection::getArtists()
 {
     return mArtists;
 

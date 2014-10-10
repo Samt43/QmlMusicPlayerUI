@@ -15,22 +15,22 @@ void Artist::addAlbum(Album *a)
     mAlbums.append(a);
 }
 
-const QString & Artist::getInfos() const
+QString Artist::getInfos() const
 {
     return mInfos;
 }
 
-const QString & Artist::getName() const
+QString Artist::getName() const
 {
     return mName;
 }
 
-const QList<Album *> &Artist::getAlbums() const
+QList<Album *> Artist::getAlbums() const
 {
     return mAlbums;
 }
 
-const QUrl &Artist::getJacket() const
+QUrl Artist::getJacket() const
 {
     return mJacket;
 }

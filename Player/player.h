@@ -11,7 +11,9 @@ class Player : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(PlaylistModel * playlistModel READ getPlaylistModel CONSTANT)
-    Q_PROPERTY(Song * nowPlayingSong READ getNowPlayingSong NOTIFY nowPlayingSongHasChanged)
+    Q_PROPERTY(SongView * nowPlayingSong READ getNowPlayingSong NOTIFY nowPlayingSongHasChanged)
+    Q_PROPERTY(AlbumView * nowPlayingAlbum READ getNowPlayingAlbum NOTIFY nowPlayingAlbumHasChanged)
+    Q_PROPERTY(ArtistView * nowPlayingArtist READ getNowPlayingArtist NOTIFY nowPlayingArtistHasChanged)
     Q_PROPERTY(PlayerState state READ getState NOTIFY stateChanged)
     Q_PROPERTY(int currentTime READ getCurrentTime NOTIFY CurrentTimeHasChanged)
 
@@ -29,7 +31,9 @@ public:
 
     explicit Player(QObject *parent = 0);
     PlaylistModel * getPlaylistModel();
-    Song * getNowPlayingSong();
+    SongView *getNowPlayingSong();
+    ArtistView *getNowPlayingArtist();
+    AlbumView *getNowPlayingAlbum();
     int getCurrentTime();
 
 public slots:
@@ -39,6 +43,8 @@ public slots:
 
 signals:
     void nowPlayingSongHasChanged();
+    void nowPlayingArtistHasChanged();
+    void nowPlayingAlbumHasChanged();
     void stateChanged();
     void CurrentTimeHasChanged();
 
@@ -52,6 +58,8 @@ protected:
     PlaylistModel * mPlaylistModel;
     AbstractMediaPlayer * mAbstractMediaPlayer;
     PlayerState mState;
+    ArtistView * mNowPlayingArtist;
+    AlbumView * mNowPlayingAlbum;
     int mCurrentTime;
 
 };
