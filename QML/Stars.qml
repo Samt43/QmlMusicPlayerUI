@@ -16,7 +16,7 @@ Item {
 
     onScoreChanged:
     {
-      setScore(score)
+        setScore(score)
         console.debug(score)
     }
 
@@ -65,24 +65,24 @@ Item {
         if (score<scoreMax)
         {
 
-        clearScore()
+            clearScore()
 
-        var ratio = score / scoreMax
-        var etoiles = ratio * nbStars
+            var ratio = score / scoreMax
+            var etoiles = ratio * nbStars
 
 
-        for (var i = 0 ; i < Math.floor(etoiles);i++)
-        {
+            for (var i = 0 ; i < Math.floor(etoiles);i++)
+            {
 
-            rep.itemAt(i).pourcentage = 100
+                rep.itemAt(i).pourcentage = 100
+
+            }
+
+
+            if (score%1 != 0 && score<scoreMax)
+                rep.itemAt(Math.floor(etoiles)).pourcentage = score%1*100
 
         }
-
-
-        if (score%1 != 0 && score<scoreMax)
-        rep.itemAt(Math.floor(etoiles)).pourcentage = score%1*100
-
-    }
     }
 
 

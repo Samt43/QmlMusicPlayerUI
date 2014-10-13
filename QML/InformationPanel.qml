@@ -22,17 +22,17 @@ Item {
             height: titlealbum.contentHeight
             width: parent.width
             color: "black"
-        Text {
-            id : titlealbum
-            text: player.nowPlayingSong.album.artist.name
-            wrapMode: Text.Wrap
-            anchors.fill: parent
-            color: "grey"
-            horizontalAlignment : Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.bold: true
+            Text {
+                id : titlealbum
+                text: player.nowPlayingSong.album.artist.name
+                wrapMode: Text.Wrap
+                anchors.fill: parent
+                color: "grey"
+                horizontalAlignment : Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.bold: true
 
-        }
+            }
         }
 
         Text {

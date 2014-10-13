@@ -7,7 +7,7 @@ class Collection;
 class AbstractCollection;
 class ArtistView;
 class AlbumView;
-class SongView;
+#include "View/songview.h"
 
 class ServiceCollection : public QObject
 {
@@ -17,10 +17,11 @@ public:
 
     ServiceCollection(CollectionType type);
     QList<ArtistView *> getAllArtists();
-    QList<SongView *> getAllSongs();
-    QList<SongView *> searchSongs(QString s);
+    QList<QSharedPointer<SongView> > getAllSongs();
+    QList<QSharedPointer<SongView> > searchSongs(QString s);
     AlbumView *getAlbumFromId(int id);
     ArtistView * getArtistFromId(int id);
+    QSharedPointer<SongView> getSongFromId(int id);
     const QString getCollectionID();
     const QImage getJacketFromAlbum(AlbumView *a);
     const QImage getJacketFromArtist(ArtistView *a);

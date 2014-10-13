@@ -16,9 +16,9 @@ Rectangle
     }
 
     Rectangle {
-     color: "black"
-     anchors.fill: trackHeader
-     opacity: 0.5
+        color: "black"
+        anchors.fill: trackHeader
+        opacity: 0.5
     }
 
 
@@ -37,95 +37,101 @@ Rectangle
         anchors.fill: parent
 
         Item{
-         Layout.preferredHeight: parent.height*70/100
-         Layout.fillWidth: true
+            Layout.preferredHeight: parent.height*70/100
+            Layout.fillWidth: true
 
-         Item {
-          anchors.horizontalCenter: parent.horizontalCenter
-          anchors.verticalCenter: parent.verticalCenter
-          width: parent.width * 60/100
-          height: parent.height * 80/100
-
-
-          Item {
-              anchors.fill: parent
-                   id : songItem
+            Item {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width * 60/100
+                height: parent.height * 80/100
 
 
-                       RowLayout {
-                           anchors.fill: parent
-                           spacing: 20
-                           Rectangle {
-
-                               Layout.fillHeight: true
-                               Layout.preferredWidth: height
-                               color: "white"
-                               border.color: "black"
-                               border.width: 1
-                               radius: 2
-                               Image {
-                                   anchors.fill: parent
-                                   anchors.margins: 2
-                                   //source: "image://jacket/album/"+player.nowPlayingSong.album.itemID+"/"+player.nowPlayingSong.collectionID
-                                   source:player.nowPlayingSong.albumCover
-                                   smooth: true
-                                   asynchronous: true
-                               }
-                           }
-
-                           GridLayout {
-                               columns: 2
-                               rows: 2
-                               Layout.fillWidth: true
-                               Layout.fillHeight: true
-
-                               Text { text: '<b>'+player.nowPlayingSong.name+'</b> '
-                                   color: "white"
-                                   Layout.fillWidth: true
-                                   Layout.fillHeight: true
-                                   font.pixelSize: songItem.height/3.5
+                Item {
+                    anchors.fill: parent
+                    id : songItem
 
 
-                               }
+                    RowLayout {
+                        anchors.fill: parent
+                        spacing: 20
+                        Rectangle {
 
-                               Text { text: 'Duration'
-                                   color: "white"
-                                   horizontalAlignment: Text.AlignRight
-                                   Layout.fillWidth: true
-                                   Layout.fillHeight: true
-                                   font.pixelSize: songItem.height/5
-                               }
+                            Layout.fillHeight: true
+                            Layout.preferredWidth: height
+                            color: "white"
+                            border.color: "black"
+                            border.width: 1
+                            radius: 2
+                            Image {
+                                anchors.fill: parent
+                                anchors.margins: 2
+                                //source: "image://jacket/album/"+player.nowPlayingSong.album.itemID+"/"+player.nowPlayingSong.collectionID
+                                source:player.nowPlayingSong.albumCover
+                                smooth: true
+                                asynchronous: true
+                            }
+                        }
 
+                        GridLayout {
+                            columns: 2
+                            rows: 2
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
 
-                               Text { text: player.nowPlayingSong.albumName + '-'+ player.nowPlayingSong.artistName
-                                   color: "white"
-                                   Layout.fillWidth: true
-                                   Layout.fillHeight: true
-                                   verticalAlignment: Text.AlignVCenter
-                                   font.pixelSize: songItem.height/5
-                               }
-
-                               Stars {
-
-                                   Layout.fillWidth: true
-                                   Layout.fillHeight: true
-                                   Layout.minimumWidth: 100
-                                   Layout.maximumWidth: 150
-                                   Layout.alignment: Qt.AlignRight
-                                   score: player.nowPlayingSong.note
-
-
-                               }
-
-                           }
-                       }
-
-
-               }
+                            Text { text: '<b>'+player.nowPlayingSong.name+'</b> '
+                                color: "white"
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                font.pixelSize: songItem.height/3.5
 
 
+                            }
 
-         }
+                            Text { text: {
+                                    var d2 = new Date(player.nowPlayingSong.duration * 1000);
+                                    var H = "";
+                                    if(d2.getUTCHours()!=0)
+                                    { H = d2.getUTCHours() +":" }
+
+                                    return  H + d2.getMinutes() + ":" + d2.getSeconds()}
+                                color: "white"
+                                horizontalAlignment: Text.AlignRight
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                font.pixelSize: songItem.height/5
+                            }
+
+
+                            Text { text: player.nowPlayingSong.albumName + '-'+ player.nowPlayingSong.artistName
+                                color: "white"
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                verticalAlignment: Text.AlignVCenter
+                                font.pixelSize: songItem.height/5
+                            }
+
+                            Stars {
+
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                Layout.minimumWidth: 100
+                                Layout.maximumWidth: 150
+                                Layout.alignment: Qt.AlignRight
+                                score: player.nowPlayingSong.note
+
+
+                            }
+
+                        }
+                    }
+
+
+                }
+
+
+
+            }
 
         }
 
@@ -178,13 +184,13 @@ Rectangle
                     Layout.fillHeight: true
                     Layout.preferredWidth: height
                     onClicked: player.playNextSong()
-                Image {
-                    anchors.fill: parent
-                    source: "media-skip-forward.svgz"
-                    sourceSize.width:  width
-                    sourceSize.height:  height
+                    Image {
+                        anchors.fill: parent
+                        source: "media-skip-forward.svgz"
+                        sourceSize.width:  width
+                        sourceSize.height:  height
 
-                }}
+                    }}
                 Slider {
                     Layout.fillWidth: true
                     Layout.fillHeight: true

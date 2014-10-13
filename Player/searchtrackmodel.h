@@ -2,7 +2,7 @@
 #define SEARCHTRACKMODEL_H
 #include <QAbstractListModel>
 
-class SongView;
+#include "View/songview.h"
 
 class SearchTrackModel: public QAbstractListModel
 {
@@ -16,7 +16,7 @@ public:
     void SearchSongs(QString s);
 
 protected:
-    QList<SongView *> mMatchingSongs;
+    QList<QSharedPointer<SongView> > mMatchingSongs;
 };
 
 #endif // SEARCHTRACKMODEL_H

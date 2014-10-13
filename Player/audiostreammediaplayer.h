@@ -7,7 +7,7 @@ class AudioStreamMediaPlayer : public AbstractMediaPlayer
 {
 public:
     AudioStreamMediaPlayer();
-    bool play(SongView * s);
+    bool play(QSharedPointer<SongView> s);
     void pause();
     void stop();
         int getCurrentTime();

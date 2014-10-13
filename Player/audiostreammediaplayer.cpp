@@ -6,7 +6,7 @@ AudioStreamMediaPlayer::AudioStreamMediaPlayer()
 {
 }
 
-bool AudioStreamMediaPlayer::play(SongView *s)
+bool AudioStreamMediaPlayer::play(QSharedPointer<SongView>s)
 {
     qDebug()<<"Now Playing !! : "+ s->getName();
     qDebug()<<"mp3 url : "+ s->getSongUrl().toString();

@@ -27,11 +27,11 @@ ApplicationWindow {
         spacing: 0
 
 
-     TrackHeader {
-         Layout.preferredHeight: win.height*30/100
-         Layout.fillWidth:true
+        TrackHeader {
+            Layout.preferredHeight: win.height*30/100
+            Layout.fillWidth:true
 
-     }
+        }
 
         SplitView {
             Layout.fillWidth:true
@@ -88,24 +88,24 @@ ApplicationWindow {
 
     Component {
         id:trackView
-     PlaylistView{
+        PlaylistView{
 
-     }
+        }
 
     }
     Component {
         id:searchView
-     SearchView{
+        SearchView{
 
-     }
+        }
 
     }
 
     Component {
         id:artistView
-     ArtistView{
+        ArtistView{
 
-     }
+        }
 
     }
 

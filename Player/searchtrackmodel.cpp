@@ -8,8 +8,8 @@ SearchTrackModel::SearchTrackModel(QObject *parent):QAbstractListModel(parent)
 
 QVariant SearchTrackModel::data(const QModelIndex &index, int role) const
 {
-    SongView * s = mMatchingSongs.at(index.row());
-    return QVariant::fromValue(s);
+    QSharedPointer<SongView> s = mMatchingSongs.at(index.row());
+    return QVariant::fromValue(s.data());
 
 }
 

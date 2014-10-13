@@ -24,7 +24,6 @@ public:
         return mItemID;
     }
     
-    
 
 signals:
 

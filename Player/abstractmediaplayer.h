@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class SongView;
+#include "View/songview.h"
 
 class AbstractMediaPlayer : public QObject
 {
@@ -12,7 +12,7 @@ class AbstractMediaPlayer : public QObject
 public:
 
     explicit AbstractMediaPlayer(QObject *parent = 0);
-    virtual bool play(SongView * s) = 0;
+    virtual bool play(QSharedPointer<SongView> s) = 0;
     virtual void pause() =0;
     virtual void stop() = 0;
     virtual int getCurrentTime() = 0;

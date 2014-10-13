@@ -1,5 +1,6 @@
 #include "song.h"
 #include<qalgorithms.h>
+#include <QDebug>
 
 Song::Song(int id, QString collectionID, QString name, int Duration, Album * a, QUrl url, QObject *parent) :mName(name),
     mAlbum(a),mDuration(Duration),mSongUrl(url),AbstractCollectionItem(id,collectionID,parent)
@@ -37,5 +38,6 @@ QUrl Song::getSongUrl()
 {
     return mSongUrl;
 }
+
 
 

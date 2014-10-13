@@ -9,14 +9,16 @@ import ArtistView 1.0
 ScrollView{
 
     property variant mod
-    signal trackClicked(SongView track,int index)
+    property int modelcurrentIndex: 0
+    signal trackClicked(SongView track,int indexTrack)
 
     ListView {
         model: mod
         id: listContext
         spacing : 2
-
-
+        highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+        currentIndex: modelcurrentIndex
+        highlightMoveDuration : 1000
 
         delegate:         Item {
             width: listContext.width; height: Screen.height/20
@@ -30,14 +32,8 @@ ScrollView{
                 z:0
 
                 onClicked: {
-                    parent.ListView.view.currentIndex = index
-                    parent.forceActiveFocus()
                     trackClicked(song,index)
                 }
-
-
-
-
 
                 RowLayout {
                     anchors.fill: parent
@@ -54,7 +50,7 @@ ScrollView{
                             anchors.margins: 2
                             source: obj.albumCover
                             smooth: true
-                            asynchronous: true
+                            asynchronous: false
                         }
                     }
 
@@ -113,8 +109,6 @@ ScrollView{
             }
         }
 
-        highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-        focus: true
 
     }
 }

@@ -11,7 +11,7 @@ class DeezerMediaPlayer : public AbstractMediaPlayer
     Q_OBJECT
 public:
     DeezerMediaPlayer(QObject * qmlItemPlayer);
-    bool play(SongView * s);
+    bool play(QSharedPointer<SongView> s);
     void pause();
     void stop();
     int getCurrentTime();

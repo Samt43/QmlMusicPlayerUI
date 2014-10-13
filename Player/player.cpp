@@ -21,7 +21,7 @@ Player::Player(QObject *parent) :
     mAbstractMediaPlayer = NULL;
     mNowPlayingAlbum = NULL;
     mNowPlayingArtist = NULL;
-    mNowPlayingSong = NULL;
+
 
 
 
@@ -33,9 +33,9 @@ PlaylistModel * Player::getPlaylistModel()
 }
 
 
-SongView * Player::getNowPlayingSong()
+SongView *Player::getNowPlayingSong()
 {
-    return mNowPlayingSong;
+    return mNowPlayingSong.data();
 }
 
 ArtistView *Player::getNowPlayingArtist()
@@ -48,26 +48,21 @@ AlbumView *Player::getNowPlayingAlbum()
     return mNowPlayingAlbum;
 }
 
-bool Player::play(SongView *s)
+bool Player::playImmediatly(SongView * s)
 {
-    mAbstractMediaPlayer = CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId());
-    mAbstractMediaPlayer->play(s);
-    mNowPlayingAlbum = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getAlbumFromId(s->getAlbumId());
-    mNowPlayingArtist = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getArtistFromId(s->getArtistId());
 
-
-    mNowPlayingSong = s;
-    connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged(int)),this,SLOT(setCurrentTime(int)));
-    emit nowPlayingSongHasChanged();
-    emit nowPlayingArtistHasChanged();
-    emit nowPlayingAlbumHasChanged();
+    QSharedPointer<SongView> ptr = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getSongFromId(s->getItemId());
+    QList<QSharedPointer<SongView> > l;
+    l.append(ptr);
+    mPlaylistModel->addSongs(l);
+    play(mPlaylistModel->rowCount(QModelIndex())-1);
 
 }
 
 bool Player::play(int index)
 {
     mPlaylistModel->setNowPlayingSong(index);
-    SongView *s  = mPlaylistModel->getNowPlayingSong();
+    QSharedPointer<SongView>s  = mPlaylistModel->getNowPlayingSong();
 
     if (mAbstractMediaPlayer != CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId()))
     {

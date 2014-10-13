@@ -14,9 +14,8 @@ PlaylistModel::PlaylistModel(QObject *parent) :
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 {
-    SongView * s = mPlaylistSongs.at(index.row());
-    return QVariant::fromValue(s);
-
+    QSharedPointer<SongView> s = mPlaylistSongs.at(index.row());
+    return QVariant::fromValue(s.data());
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const
@@ -24,10 +23,11 @@ int PlaylistModel::rowCount(const QModelIndex &parent) const
     return mPlaylistSongs.count();
 }
 
-void PlaylistModel::addSongs(QList<SongView *> s)
+void PlaylistModel::addSongs(QList<QSharedPointer<SongView> > s)
 {
-
+    beginResetModel();
     mPlaylistSongs.append(s);
+    endResetModel();
 }
 
 
@@ -39,12 +39,12 @@ QHash<int, QByteArray> PlaylistModel::roleNames() const
     return roles;
 }
 
-SongView *PlaylistModel::getNowPlayingSong()
+QSharedPointer<SongView>PlaylistModel::getNowPlayingSong()
 {
     if (mNowPlayingSongIndex<mPlaylistSongs.size())
         return mPlaylistSongs[mNowPlayingSongIndex];
     else
-        return NULL;
+        return QSharedPointer<SongView>();
 }
 
 int PlaylistModel::getNowPlayingSongIndex()
@@ -56,6 +56,7 @@ void PlaylistModel::setNowPlayingSong(int index)
 {
 
     mNowPlayingSongIndex = index;
+    emit nowPlayingSongIndexChanged();
 }
 
 bool PlaylistModel::goToNextTrack()

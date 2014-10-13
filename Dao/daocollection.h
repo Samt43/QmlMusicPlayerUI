@@ -17,11 +17,12 @@ public:
     explicit DAOCollection(QString path, QString sCollectionID, QObject *parent = 0);
 
     QList<ArtistView *> getAllArtists();
-    QList<SongView *> getAllSongs();
+    QList<QSharedPointer<SongView> > getAllSongs();
     QList<ArtistView *> searchArtists(QString s);
-    QList<SongView *> searchSongs(QString s);
-    QList<SongView *> searchSongsByArtist(QString s);
-    QList<SongView *> searchSongsByAlbum(QString s);
+    QList<QSharedPointer<SongView> > searchSongs(QString s);
+    QList<QSharedPointer<SongView> > searchSongsByArtist(QString s);
+    QList<QSharedPointer<SongView> > searchSongsByAlbum(QString s);
+    virtual QSharedPointer<SongView> getSongFromId(int id);
     AlbumView * getAlbumFromId(int id);
     ArtistView * getArtistFromId(int id);
     const QImage getJacketFromAlbum(AlbumView *a);
@@ -37,7 +38,7 @@ private:
     // It's a proof of concept, should be an sql collection !
     Collection mCollection;
     bool openCollection(QString path);
-    SongView * createSongView(Song * s);
+    QSharedPointer<SongView> createSongView(Song * s);
 
 };
 

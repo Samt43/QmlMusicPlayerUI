@@ -38,12 +38,12 @@ const QString ServiceCollection::getCollectionID()
     return mCollectionId;
 }
 
-QList<SongView *> ServiceCollection::getAllSongs()
+QList<QSharedPointer<SongView> > ServiceCollection::getAllSongs()
 {
     return mAbstractCollection->getAllSongs();
 }
 
-QList<SongView *> ServiceCollection::searchSongs(QString s)
+QList<QSharedPointer<SongView> > ServiceCollection::searchSongs(QString s)
 {
     return mAbstractCollection->searchSongs(s);
 }
@@ -69,5 +69,10 @@ ArtistView *ServiceCollection::getArtistFromId(int id)
   const QImage ServiceCollection::getJacketFromArtist(ArtistView *a)
   {
       return mAbstractCollection->getJacketFromArtist(a);
+  }
+
+  QSharedPointer<SongView> ServiceCollection::getSongFromId(int id)
+  {
+      return mAbstractCollection->getSongFromId(id);
   }
 

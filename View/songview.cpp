@@ -1,5 +1,6 @@
 #include "songview.h"
 #include<qalgorithms.h>
+#include <QDebug>
 
 SongView::SongView(int id, QString collectionID, QString name,int albumID,QString albumName,QUrl albumCover,int artistID,QString artistName, int Duration, QUrl url, QObject *parent) :mName(name),
     mDuration(Duration),mSongUrl(url),mAlbumId(albumID),mAlbumName(albumName),mArtistId(artistID),mArtistName(artistName),mAlbumCover(albumCover),AbstractCollectionItemView(id,collectionID,parent)
@@ -59,3 +60,7 @@ int SongView::getArtistId()
     return mArtistId;
 }
 
+SongView::~SongView()
+{
+    qDebug()<<"Song destructed";
+}

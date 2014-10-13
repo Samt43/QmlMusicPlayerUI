@@ -12,11 +12,12 @@ class DAODeezerCollection : public AbstractCollection
 public:
     DAODeezerCollection(QString idCollection,QObject *parent=0);
     QList<ArtistView *> getAllArtists();
-    QList<SongView *> getAllSongs();
+    QList<QSharedPointer<SongView> > getAllSongs();
     QList<ArtistView *> searchArtists(QString s);
-    QList<SongView *> searchSongs(QString s);
-    QList<SongView *> searchSongsByArtist(QString s);
-    QList<SongView *> searchSongsByAlbum(QString s);
+    QList<QSharedPointer<SongView> > searchSongs(QString s);
+    QList<QSharedPointer<SongView> > searchSongsByArtist(QString s);
+    QList<QSharedPointer<SongView> > searchSongsByAlbum(QString s);
+    QSharedPointer<SongView> getSongFromId(int id);
     AlbumView * getAlbumFromId(int id);
     ArtistView *getArtistFromId(int id);
     const QImage getJacketFromAlbum(AlbumView *a);
@@ -25,12 +26,11 @@ public:
 protected:
     QJsonObject getJsonObject(QUrl url);
     const QImage getImageFromUrl(QUrl url);
-    SongView * getSongFromJson(QJsonObject songObject);
+    QSharedPointer<SongView> getSongFromJson(QJsonObject songObject);
     AlbumView * getAlbumFromJson(QJsonObject albumObject);
     ArtistView * getArtistFromJson(QJsonObject artistObject);
     QNetworkAccessManager mNetworkManager;
 
-    QMap<int,SongView *> mapSong;
     QMap<int,ArtistView *> mapArtist;
     QMap<int, AlbumView *> mapAlbum;
 

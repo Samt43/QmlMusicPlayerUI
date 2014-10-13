@@ -4,7 +4,7 @@
 #include <QObject>
 
 class ArtistView;
-class SongView;
+#include "View/songview.h"
 class AlbumView;
 class ServiceCollection;
 
@@ -18,13 +18,15 @@ public:
     }
 
     virtual QList<ArtistView *> getAllArtists() = 0;
-    virtual QList<SongView *> getAllSongs() = 0;
+    virtual QList<QSharedPointer<SongView> > getAllSongs() = 0;
     virtual QList<ArtistView *> searchArtists(QString s) = 0;
-    virtual QList<SongView *> searchSongs(QString s) = 0;
-    virtual QList<SongView *> searchSongsByArtist(QString s) = 0;
-    virtual QList<SongView *> searchSongsByAlbum(QString s) = 0;
+    virtual QList<QSharedPointer<SongView> > searchSongs(QString s) = 0;
+    virtual QList<QSharedPointer<SongView> > searchSongsByArtist(QString s) = 0;
+    virtual QList<QSharedPointer<SongView> > searchSongsByAlbum(QString s) = 0;
+    virtual QSharedPointer<SongView> getSongFromId(int id) = 0;
     virtual AlbumView * getAlbumFromId(int id) = 0;
     virtual ArtistView * getArtistFromId(int id) = 0;
+
     virtual const QImage getJacketFromAlbum(AlbumView *a) = 0;
     virtual const QImage getJacketFromArtist(ArtistView *a) = 0;
 

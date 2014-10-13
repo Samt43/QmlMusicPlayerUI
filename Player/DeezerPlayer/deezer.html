@@ -3,9 +3,7 @@
 <head>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-
-                <script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>
-
+        <script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>
 
         <style type="text/css">
                 .progressbarplay {
@@ -19,15 +17,11 @@
 <body>
 <div id="dz-root"></div>
 <div id="controlers">
-        <input type="button" onclick="DZ.player.playAlbum(302127); return false;" value="Play Daft Punk - Discovery"/>
-        <input type="button" onclick="login()" return false;" value="Play Daft Punk - Homework"/>
-        <br/>
         <input type="button" onclick="DZ.player.play(); return false;" value="play"/>
         <input type="button" onclick="DZ.player.pause(); return false;" value="pause"/>
         <input type="button" onclick="DZ.player.prev(); return false;" value="prev"/>
         <input type="button" onclick="DZ.player.next(); return false;" value="next"/>
         <br/>
-        <input type="button" onclick="DZ.player.setVolume(20); return false;" value="set Volume 20"/>
         <input type="button" onclick="DZ.player.setVolume(80); return false;" value="set Volume 80"/>
         <br/><br/><br/>
 </div>
@@ -63,8 +57,7 @@
                 });
 
 
-var id = getUrlVars()["SongID"];
-
+                var id = getUrlVars()["SongID"];
                 DZ.player.playTracks([id]);
         }
         DZ.init({
@@ -75,15 +68,6 @@ var id = getUrlVars()["SongID"];
                 }
         });
         
-        function login(){
-DZ.login(function(response) {
-if (response.authResponse) {
-DZ.api('/user/me', function(user) {
-console.log('Successful Login!');
-$('#name').html(user.name); });
-}}, {perms: 'email'})
-
-}
 
 function getUrlVars() {
     var vars = {};

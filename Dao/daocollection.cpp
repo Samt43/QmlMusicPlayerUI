@@ -101,9 +101,9 @@ QList<ArtistView *> DAOCollection::getAllArtists()
     return m;
 }
 
- QList<SongView *> DAOCollection::getAllSongs()
+ QList<QSharedPointer<SongView> > DAOCollection::getAllSongs()
 {
-    QList<SongView *> songs;
+    QList<QSharedPointer<SongView> > songs;
     QList< Artist *> artists = mCollection.getArtists();
     foreach ( Artist * a, artists) {
          QList<Album * > abs = a->getAlbums();
@@ -119,14 +119,19 @@ QList<ArtistView *> DAOCollection::getAllArtists()
     return songs;
 }
 
-SongView * DAOCollection::createSongView(Song *s)
+QSharedPointer<SongView> DAOCollection::createSongView(Song *s)
 {
     Album * a = s->getAlbum();
     Artist * at = s->getAlbum()->getArtist();
 
-    return new SongView(s->getItemId(),s->getCollectionId(),s->getName(),a->getItemId(),a->getName(),a->getJacket(),at->getItemId(),at->getName(),s->getDuration(),s->getSongUrl());
+    QSharedPointer<SongView> ptr(new SongView(s->getItemId(),s->getCollectionId(),s->getName(),a->getItemId(),a->getName(),a->getJacket(),at->getItemId(),at->getName(),s->getDuration(),s->getSongUrl()));
+    return ptr;
 }
 
+QSharedPointer<SongView> DAOCollection::getSongFromId(int id)
+{
+    return QSharedPointer<SongView>();
+}
 
 AlbumView *DAOCollection::getAlbumFromId(int id)
 {
@@ -162,16 +167,16 @@ QList< ArtistView *> DAOCollection::searchArtists(QString s)
 }
 
 
-QList< SongView *> DAOCollection::searchSongs(QString s) {
-    return QList< SongView *>();
+QList<QSharedPointer<SongView> > DAOCollection::searchSongs(QString s) {
+    return QList<QSharedPointer<SongView> >();
 }
-QList< SongView *> DAOCollection::searchSongsByArtist(QString s)
+QList<QSharedPointer<SongView> > DAOCollection::searchSongsByArtist(QString s)
 {
-    QList< SongView *>();
+    QList<QSharedPointer<SongView> >();
 }
-QList< SongView *> DAOCollection::searchSongsByAlbum(QString s)
+QList<QSharedPointer<SongView> > DAOCollection::searchSongsByAlbum(QString s)
 {
-    QList< SongView *>();
+    QList<QSharedPointer<SongView> >();
 }
 
 const QImage DAOCollection::getJacketFromAlbum(AlbumView *a)

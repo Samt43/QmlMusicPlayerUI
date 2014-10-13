@@ -7,6 +7,7 @@
 #include "Dao/abstractcollection.h"
 #include "abstractmediaplayer.h"
 #include "searchtrackmodel.h"
+#include "View/songview.h"
 
 
 class Player : public QObject
@@ -25,7 +26,7 @@ public:
     enum PlayerState {playState,pauseState};
 
     Q_INVOKABLE virtual bool play(int index);
-    Q_INVOKABLE virtual bool play(SongView * s);
+    Q_INVOKABLE virtual bool playImmediatly(SongView* s);
     Q_INVOKABLE virtual void pause();
 
 
@@ -36,7 +37,7 @@ public:
     explicit Player(QObject *parent = 0);
     PlaylistModel * getPlaylistModel();
     SearchTrackModel * getSearchTrackModel();
-    SongView *getNowPlayingSong();
+    SongView * getNowPlayingSong();
     ArtistView *getNowPlayingArtist();
     AlbumView *getNowPlayingAlbum();
     int getCurrentTime();
@@ -66,7 +67,7 @@ protected:
     PlayerState mState;
     ArtistView * mNowPlayingArtist;
     AlbumView * mNowPlayingAlbum;
-    SongView * mNowPlayingSong;
+    QSharedPointer<SongView> mNowPlayingSong;
     int mCurrentTime;
 
 };
