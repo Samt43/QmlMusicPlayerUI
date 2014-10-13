@@ -18,6 +18,7 @@ public:
     ServiceCollection(CollectionType type);
     QList<ArtistView *> getAllArtists();
     QList<SongView *> getAllSongs();
+    QList<SongView *> searchSongs(QString s);
     AlbumView *getAlbumFromId(int id);
     ArtistView * getArtistFromId(int id);
     const QString getCollectionID();

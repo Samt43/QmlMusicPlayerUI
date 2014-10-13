@@ -43,6 +43,12 @@ QList<SongView *> ServiceCollection::getAllSongs()
     return mAbstractCollection->getAllSongs();
 }
 
+QList<SongView *> ServiceCollection::searchSongs(QString s)
+{
+    return mAbstractCollection->searchSongs(s);
+}
+
+
 AlbumView *ServiceCollection::getAlbumFromId(int id)
 {
     return mAbstractCollection->getAlbumFromId(id);
@@ -64,3 +70,4 @@ ArtistView *ServiceCollection::getArtistFromId(int id)
   {
       return mAbstractCollection->getJacketFromArtist(a);
   }
+

@@ -39,6 +39,9 @@ ListView {
             name: "Now Playing"
         }
         ListElement {
+            name: "Search"
+        }
+        ListElement {
             name: "Recently played"
         }
         ListElement {

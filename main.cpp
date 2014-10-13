@@ -11,6 +11,7 @@
 
 #include "Player/audiostreammediaplayer.h"
 #include "Player/DeezerPlayer/deezermediaplayer.h"
+#include "Player/searchtrackmodel.h"
 #include "Service/collectionmanager.h"
 
 #include <QtQml>
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<SongView>("SongView", 1, 0, "SongView");
     qmlRegisterType<ArtistView>("ArtistView", 1, 0, "ArtistView");
     qmlRegisterType<AudioStreamMediaPlayer>("AudioStreamMediaPlayer", 1, 0, "AudioStreamMediaPlayer");
+    qmlRegisterType<SearchTrackModel>("SearchTrackModel", 1, 0, "SearchTrackModel");
 
     QQmlApplicationEngine engine;
 

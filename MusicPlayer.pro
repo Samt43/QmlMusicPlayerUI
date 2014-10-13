@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets xml svg multimedia webkitwidgets
+QT += qml quick widgets xml svg multimedia
 
 QTPLUGIN += qsvg
 SOURCES += main.cpp \
@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     View/albumview.cpp \
     View/artistview.cpp \
     View/collectionview.cpp \
-    View/songview.cpp
+    View/songview.cpp \
+    Player/searchtrackmodel.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -59,6 +60,7 @@ HEADERS += \
     View/albumview.h \
     View/artistview.h \
     View/collectionview.h \
-    View/songview.h
+    View/songview.h \
+    Player/searchtrackmodel.h
 
 OTHER_FILES +=

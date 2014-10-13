@@ -14,10 +14,14 @@ Player::Player(QObject *parent) :
 {
 
 
+    mSearchTrackModel = new SearchTrackModel;
     mPlaylistModel = new PlaylistModel;
     mPlaylistModel->addSongs(CollectionManager::getInstance()->getServiceCollection("DeezerDatabase")->getAllSongs());
     mPlaylistModel->addSongs(CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getAllSongs());
     mAbstractMediaPlayer = NULL;
+    mNowPlayingAlbum = NULL;
+    mNowPlayingArtist = NULL;
+    mNowPlayingSong = NULL;
 
 
 
@@ -31,7 +35,7 @@ PlaylistModel * Player::getPlaylistModel()
 
 SongView * Player::getNowPlayingSong()
 {
-    return mPlaylistModel->getNowPlayingSong();
+    return mNowPlayingSong;
 }
 
 ArtistView *Player::getNowPlayingArtist()
@@ -42,6 +46,22 @@ ArtistView *Player::getNowPlayingArtist()
 AlbumView *Player::getNowPlayingAlbum()
 {
     return mNowPlayingAlbum;
+}
+
+bool Player::play(SongView *s)
+{
+    mAbstractMediaPlayer = CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId());
+    mAbstractMediaPlayer->play(s);
+    mNowPlayingAlbum = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getAlbumFromId(s->getAlbumId());
+    mNowPlayingArtist = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getArtistFromId(s->getArtistId());
+
+
+    mNowPlayingSong = s;
+    connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged(int)),this,SLOT(setCurrentTime(int)));
+    emit nowPlayingSongHasChanged();
+    emit nowPlayingArtistHasChanged();
+    emit nowPlayingAlbumHasChanged();
+
 }
 
 bool Player::play(int index)
@@ -69,6 +89,7 @@ bool Player::play(int index)
     mNowPlayingArtist = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getArtistFromId(s->getArtistId());
 
 
+    mNowPlayingSong = s;
     emit nowPlayingSongHasChanged();
     emit nowPlayingArtistHasChanged();
     emit nowPlayingAlbumHasChanged();
@@ -97,4 +118,9 @@ bool Player::playNextSong()
     qDebug()<<"next song !";
     mPlaylistModel->goToNextTrack();
     play(mPlaylistModel->getNowPlayingSongIndex());
+}
+
+SearchTrackModel * Player::getSearchTrackModel()
+{
+    return mSearchTrackModel;
 }

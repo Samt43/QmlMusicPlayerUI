@@ -54,7 +54,7 @@ ApplicationWindow {
                 Component.onCompleted:
                 {
                     centralView.insertTab(0,"TrackView",trackView)
-                    centralView.insertTab(1,"TrackView",trackView)
+                    centralView.insertTab(1,"SearchView",searchView)
                     centralView.insertTab(2,"ArtistsView",artistView)
 
 
@@ -93,6 +93,14 @@ ApplicationWindow {
      }
 
     }
+    Component {
+        id:searchView
+     SearchView{
+
+     }
+
+    }
+
     Component {
         id:artistView
      ArtistView{

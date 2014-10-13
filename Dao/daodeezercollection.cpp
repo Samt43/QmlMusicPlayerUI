@@ -29,8 +29,8 @@ DAODeezerCollection::DAODeezerCollection(QString idCollection, QObject *parent):
  QList<SongView *> DAODeezerCollection::getAllSongs()
 {
     QList<SongView *> songs;
-    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=5000"));
-    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/playlist/216322211"));
+    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=5000"));
+    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/playlist/216322211"));
     qDebug()<<j.keys();
 
     QJsonArray a = j["tracks"].toObject()["data"].toArray();
@@ -79,7 +79,19 @@ ArtistView *DAODeezerCollection::getArtistFromId(int id)
 
 
  QList< SongView *> DAODeezerCollection::searchSongs(QString s) {
-    return QList< SongView *>();
+     QList<SongView *> songs;
+     //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=5000"));
+     QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/search/track?q="+s));
+     qDebug()<<j.keys();
+
+     QJsonArray a = j["data"].toArray();
+     QJsonArray::iterator  it;
+
+     for (it=a.begin();it!=a.end();it++)
+     {
+     songs.append(getSongFromJson((*it).toObject()));
+     }
+     return songs;
 }
  QList< SongView *> DAODeezerCollection::searchSongsByArtist(QString s)
 {
