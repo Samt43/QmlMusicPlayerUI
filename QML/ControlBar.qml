@@ -5,6 +5,7 @@ ListView {
     model: contextModel
     id: listContext
     property int currentSelectedView: currentIndex
+    clip: true
 
 
 

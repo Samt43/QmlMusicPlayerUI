@@ -10,5 +10,7 @@
         <file>media-skip-forward.svgz</file>
         <file>go-up.svgz</file>
         <file>go-down.svgz</file>
+        <file>edit-clear.svgz</file>
+        <file>document-save.svgz</file>
     </qresource>
 </RCC>

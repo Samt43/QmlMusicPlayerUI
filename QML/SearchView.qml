@@ -1,35 +1,27 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
+import QtQuick.Controls 1.2
 
 ColumnLayout
 {
     anchors.fill: parent
+    spacing: 0
 
     Item
     {
-        height: parent.height /13
+        height: parent.height /9.5
         Layout.fillWidth: true
-
-        TextInput {
-            id : inputText
-            height: contentHeight
-            width: parent.width - parent.width /10
+        Rectangle {
+         anchors.fill: parent
+         color: "white"
+         opacity: 0.3
+        }
+        TextField {
+            height: parent.height - parent.height /7
+            width: parent.width - parent.width / 5
             anchors.centerIn: parent
             onTextChanged: player.searchTrackModel.SearchSongs(text)
-
         }
-
-        Rectangle {
-            id : cadreRect
-            height: inputText.height + inputText.height/3
-            width: parent.width
-            anchors.centerIn: inputText
-            border.color: "black"
-            border.width: 2
-            radius: 10
-            opacity: 0.5
-        }
-
 
     }
 
@@ -39,6 +31,12 @@ ColumnLayout
         Layout.fillHeight: true
         mod : player.searchTrackModel
         onTrackClicked:
+        {
+            player.addSongToPlaylist(track)
+            modelcurrentIndex = indexTrack
+
+        }
+        onTrackDoubleClicked:
         {
             player.playImmediatly(track)
             modelcurrentIndex = indexTrack

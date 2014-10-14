@@ -11,6 +11,7 @@ ScrollView{
     property variant mod
     property int modelcurrentIndex: 0
     signal trackClicked(SongView track,int indexTrack)
+    signal trackDoubleClicked(SongView track,int indexTrack)
 
     ListView {
         model: mod
@@ -31,8 +32,22 @@ ScrollView{
                 hoverEnabled: true
                 z:0
 
-                onClicked: {
+                Timer {
+                    id : doubleClickedDelay
+                    interval: 80
+                    onTriggered: {
                     trackClicked(song,index)
+                    }
+
+
+                }
+
+                onClicked: {
+                    doubleClickedDelay.restart()
+                }
+                onDoubleClicked: {
+                    doubleClickedDelay.stop()
+                    trackDoubleClicked(song,index)
                 }
 
                 RowLayout {

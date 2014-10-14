@@ -50,12 +50,18 @@ AlbumView *Player::getNowPlayingAlbum()
 
 bool Player::playImmediatly(SongView * s)
 {
+    addSongToPlaylist(s);
+    play(mPlaylistModel->rowCount(QModelIndex())-1);
+
+}
+
+bool Player::addSongToPlaylist(SongView * s)
+{
 
     QSharedPointer<SongView> ptr = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getSongFromId(s->getItemId());
     QList<QSharedPointer<SongView> > l;
     l.append(ptr);
     mPlaylistModel->addSongs(l);
-    play(mPlaylistModel->rowCount(QModelIndex())-1);
 
 }
 
@@ -113,6 +119,11 @@ bool Player::playNextSong()
     qDebug()<<"next song !";
     mPlaylistModel->goToNextTrack();
     play(mPlaylistModel->getNowPlayingSongIndex());
+}
+
+void Player::clearPlaylist()
+{
+    mPlaylistModel->clearPlaylist();
 }
 
 SearchTrackModel * Player::getSearchTrackModel()

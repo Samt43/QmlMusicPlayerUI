@@ -20,6 +20,7 @@ public:
     int getNowPlayingSongIndex();
     void setNowPlayingSong(int index);
     bool goToNextTrack();
+    void clearPlaylist();
 
 
 signals:

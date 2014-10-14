@@ -26,9 +26,10 @@ public:
     enum PlayerState {playState,pauseState};
 
     Q_INVOKABLE virtual bool play(int index);
+    Q_INVOKABLE virtual bool addSongToPlaylist(SongView* s);
     Q_INVOKABLE virtual bool playImmediatly(SongView* s);
     Q_INVOKABLE virtual void pause();
-
+    Q_INVOKABLE virtual void clearPlaylist();
 
     PlayerState getState() {
         return mState;
