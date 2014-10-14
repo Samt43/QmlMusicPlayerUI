@@ -67,33 +67,36 @@ bool Player::addSongToPlaylist(SongView * s)
 
 bool Player::play(int index)
 {
-    mPlaylistModel->setNowPlayingSong(index);
-    QSharedPointer<SongView>s  = mPlaylistModel->getNowPlayingSong();
 
-    if (mAbstractMediaPlayer != CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId()))
+    if (mPlaylistModel->setNowPlayingSong(index))
     {
-        if (mAbstractMediaPlayer)
+        QSharedPointer<SongView>s  = mPlaylistModel->getNowPlayingSong();
+
+        if (mAbstractMediaPlayer != CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId()))
         {
-            mAbstractMediaPlayer->stop();
-            disconnect(mAbstractMediaPlayer);
+            if (mAbstractMediaPlayer)
+            {
+                mAbstractMediaPlayer->stop();
+                disconnect(mAbstractMediaPlayer);
+            }
+            mAbstractMediaPlayer = CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId());
+            connect(mAbstractMediaPlayer,SIGNAL(SongHasFinished()),this,SLOT(playNextSong()));
+            connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged(int)),this,SLOT(setCurrentTime(int)));
         }
-        mAbstractMediaPlayer = CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId());
-        connect(mAbstractMediaPlayer,SIGNAL(SongHasFinished()),this,SLOT(playNextSong()));
-        connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged(int)),this,SLOT(setCurrentTime(int)));
+
+
+        setCurrentTime(0);
+
+        mAbstractMediaPlayer->play(s);
+        mNowPlayingAlbum = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getAlbumFromId(s->getAlbumId());
+        mNowPlayingArtist = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getArtistFromId(s->getArtistId());
+
+
+        mNowPlayingSong = s;
+        emit nowPlayingSongHasChanged();
+        emit nowPlayingArtistHasChanged();
+        emit nowPlayingAlbumHasChanged();
     }
-
-
-    setCurrentTime(0);
-
-    mAbstractMediaPlayer->play(s);
-    mNowPlayingAlbum = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getAlbumFromId(s->getAlbumId());
-    mNowPlayingArtist = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getArtistFromId(s->getArtistId());
-
-
-    mNowPlayingSong = s;
-    emit nowPlayingSongHasChanged();
-    emit nowPlayingArtistHasChanged();
-    emit nowPlayingAlbumHasChanged();
 }
 
 void Player::pause()

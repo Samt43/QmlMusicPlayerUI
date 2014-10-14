@@ -52,17 +52,25 @@ int PlaylistModel::getNowPlayingSongIndex()
     return mNowPlayingSongIndex;
 }
 
-void PlaylistModel::setNowPlayingSong(int index)
+bool PlaylistModel::setNowPlayingSong(int index)
 {
 
-    mNowPlayingSongIndex = index;
-    emit nowPlayingSongIndexChanged();
+    if (index >= 0 && mPlaylistSongs.count()>index)
+    {
+        mNowPlayingSongIndex = index;
+        emit nowPlayingSongIndexChanged();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool PlaylistModel::goToNextTrack()
 {
     mNowPlayingSongIndex ++;
-    if (mNowPlayingSongIndex == mPlaylistSongs.size())
+    if (mNowPlayingSongIndex >= mPlaylistSongs.size())
         mNowPlayingSongIndex = 0;
 }
 

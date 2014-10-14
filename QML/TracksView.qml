@@ -30,6 +30,7 @@ ScrollView{
             MouseArea {
                 anchors.fill: parent
                 hoverEnabled: true
+                property bool doubleClickedbool : false
                 z:0
 
                 Timer {
@@ -39,14 +40,17 @@ ScrollView{
                     trackClicked(song,index)
                     }
 
-
                 }
 
                 onClicked: {
+                    if (!doubleClickedbool)
                     doubleClickedDelay.restart()
+                    else
+                        doubleClickedbool =false
                 }
                 onDoubleClicked: {
                     doubleClickedDelay.stop()
+                    doubleClickedbool = true
                     trackDoubleClicked(song,index)
                 }
 

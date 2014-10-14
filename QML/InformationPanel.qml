@@ -24,7 +24,7 @@ Item {
             color: "black"
             Text {
                 id : titlealbum
-                text: player.nowPlayingSong.album.artist.name
+                text: player.nowPlayingSong.artistName
                 wrapMode: Text.Wrap
                 anchors.fill: parent
                 color: "grey"
@@ -36,7 +36,7 @@ Item {
         }
 
         Text {
-            text: player.nowPlayingSong.album.name
+            text: player.nowPlayingSong.albumName
             wrapMode: Text.Wrap
             width: parent.width
             height: contentHeight

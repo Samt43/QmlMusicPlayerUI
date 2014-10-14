@@ -18,7 +18,7 @@ public:
     void addSongs(QList<QSharedPointer<SongView> >);
     QSharedPointer<SongView> getNowPlayingSong();
     int getNowPlayingSongIndex();
-    void setNowPlayingSong(int index);
+    bool setNowPlayingSong(int index);
     bool goToNextTrack();
     void clearPlaylist();
 

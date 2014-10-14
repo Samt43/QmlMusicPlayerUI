@@ -12,9 +12,9 @@ ColumnLayout
         height: parent.height /9.5
         Layout.fillWidth: true
         Rectangle {
-         anchors.fill: parent
-         color: "white"
-         opacity: 0.3
+            anchors.fill: parent
+            color: "white"
+            opacity: 0.3
         }
         TextField {
             height: parent.height - parent.height /7
