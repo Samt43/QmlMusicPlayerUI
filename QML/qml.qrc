@@ -10,5 +10,7 @@
         <file>ArtistView.qml</file>
         <file>SearchView.qml</file>
         <file>PlaylistView.qml</file>
+        <file>AlbumView.qml</file>
+        <file>BodyView.qml</file>
     </qresource>
 </RCC>

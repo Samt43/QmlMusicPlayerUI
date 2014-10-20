@@ -31,7 +31,7 @@ DAODeezerCollection::DAODeezerCollection(QString idCollection, QObject *parent):
     QList<QSharedPointer<SongView> > songs;
     //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=5000"));
     QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/playlist/216322211"));
-    qDebug()<<j.keys();
+
 
     QJsonArray a = j["tracks"].toObject()["data"].toArray();
     QJsonArray::iterator  it;
@@ -62,7 +62,6 @@ ArtistView *DAODeezerCollection::getArtistFromId(int id)
     if (!mapArtist.contains(id))
     {
         QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/artist/"+QString::number(id)));
-        qDebug()<<QString("http://api.deezer.com/artist/")+QString::number(id);
         mapArtist[id] = getArtistFromJson(j);
     }
 
@@ -89,7 +88,6 @@ QSharedPointer<SongView> DAODeezerCollection::getSongFromId(int id)
      QList<QSharedPointer<SongView> > songs;
      //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=5000"));
      QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/search/track?q="+s));
-     qDebug()<<j.keys();
 
      QJsonArray a = j["data"].toArray();
      QJsonArray::iterator  it;
@@ -113,7 +111,6 @@ QSharedPointer<SongView> DAODeezerCollection::getSongFromId(int id)
 QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObject)
 {
 
-           qDebug()<< songObject.keys();
            QString title = songObject.value("title").toString();
            QString url = songObject.value("preview").toString();
            int id = songObject.value("id").toInt();
@@ -139,7 +136,6 @@ QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObj
 
 AlbumView *DAODeezerCollection::getAlbumFromJson(QJsonObject albumObject)
 {
-               qDebug()<< albumObject.keys();
                int id = albumObject.value("id").toInt();
                AlbumView * ab = new AlbumView(id,mCollectionId,albumObject["title"].toString(),albumObject["cover"].toString());
                mapAlbum[id] = ab;
@@ -148,7 +144,6 @@ AlbumView *DAODeezerCollection::getAlbumFromJson(QJsonObject albumObject)
 
 ArtistView *DAODeezerCollection::getArtistFromJson(QJsonObject artistObject)
 {
-    qDebug()<< artistObject.keys();
     int id = artistObject.value("id").toInt();
     ArtistView * a = new ArtistView(id,mCollectionId,artistObject["name"].toString(),"",artistObject["picture"].toString());
     mapArtist[id] = a;
@@ -178,7 +173,6 @@ QJsonObject DAODeezerCollection::getJsonObject(QUrl url)
             QString strReply = (QString)currentReply->readAll();
 
             //parse json
-            //qDebug() << "Response:" << strReply;
             QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
 
             jsonObjRetour = jsonResponse.object();
@@ -188,8 +182,7 @@ QJsonObject DAODeezerCollection::getJsonObject(QUrl url)
             delete currentReply;
         }
         else {
-            //failure
-            qDebug() << "Failure" <<currentReply->errorString();
+
             delete currentReply;
         }
 

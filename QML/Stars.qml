@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 
 
 Item {
-    property double score : 0
+    property variant score : 0
     property int nbStars : 5
     property int scoreMax : 5
     height: 20
@@ -17,7 +17,6 @@ Item {
     onScoreChanged:
     {
         setScore(score)
-        console.debug(score)
     }
 
     RowLayout {
@@ -77,7 +76,6 @@ Item {
                 rep.itemAt(i).pourcentage = 100
 
             }
-
 
             if (score%1 != 0 && score<scoreMax)
                 rep.itemAt(Math.floor(etoiles)).pourcentage = score%1*100

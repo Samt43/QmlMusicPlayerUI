@@ -21,6 +21,18 @@ ColumnLayout
             width: parent.width - parent.width / 5
             anchors.centerIn: parent
             onTextChanged: player.searchTrackModel.SearchSongs(text)
+
+            Image {
+                Layout.alignment: Qt.AlignLeft
+                height: parent.height
+                width: parent.height
+                anchors.right: parent.right
+
+                source: "edit-find.svgz"
+                sourceSize.width:  width
+                sourceSize.height:  height
+
+            }
         }
 
     }

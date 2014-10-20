@@ -21,93 +21,59 @@ ApplicationWindow {
     //visibility: "FullScreen"
 
 
-    ColumnLayout
+    Column
     {
+
+        id : winColumn
+
+        state:  "maximized"
+        states: [
+            State {
+                name: "minimized"
+                PropertyChanges {
+                    target: winColumn
+                    layoutDisposition: 0
+                }
+            },
+            State {
+                name: "maximized"
+                PropertyChanges {
+                    target: winColumn
+                    layoutDisposition: 1
+                }
+            }
+        ]
+
+        transitions: Transition {
+        NumberAnimation {
+            properties: "layoutDisposition"
+            duration: 200
+            easing: Easing.OutExpo
+        }
+        }
+
         anchors.fill: parent
         spacing: 0
 
+        property double layoutDisposition : 0
+        property double headerProportionSize : 30/100
 
         TrackHeader {
-            Layout.preferredHeight: win.height*30/100
-            Layout.fillWidth:true
+            width: parent.width
+            height: parent.height * ((parent.headerProportionSize) + (1-parent.headerProportionSize) * (1-parent.layoutDisposition))
 
         }
 
-        SplitView {
-            Layout.fillWidth:true
-            Layout.fillHeight:true
-            orientation: Qt.Horizontal
-
-            ControlBar {
-                id : controlBar
-                Layout.preferredWidth: win.width*20/100
-                Layout.minimumWidth: win.width*20/100
-            }
-
-            TabView {
-                Layout.fillWidth: true
-                Layout.minimumWidth: win.width * 20 /100
-                frameVisible: false
-                tabsVisible: false
-
-                id:centralView
-                Component.onCompleted:
-                {
-                    centralView.insertTab(0,"TrackView",trackView)
-                    centralView.insertTab(1,"SearchView",searchView)
-                    centralView.insertTab(2,"ArtistsView",artistView)
-
-
-                }
-
-
-            }
-
-
-            Rectangle {
-                id:trackInformation
-                Layout.preferredWidth: win.width*20/100
-                Layout.minimumWidth: win.width*20/100
-                color: syspal.window
-                InformationPanel
-                {}
-
-            }
+        BodyView {
+            id:bodyView
+            width: parent.width
+            height: parent.height *(1-parent.headerProportionSize) * parent.layoutDisposition
         }
-    }
-
-
-    Connections {
-        target: controlBar
-        onCurrentIndexChanged :
-            centralView.currentIndex = controlBar.currentIndex
 
 
     }
 
 
-    Component {
-        id:trackView
-        PlaylistView{
-
-        }
-
-    }
-    Component {
-        id:searchView
-        SearchView{
-
-        }
-
-    }
-
-    Component {
-        id:artistView
-        ArtistView{
-
-        }
-
-    }
 
 }
 

@@ -47,7 +47,6 @@ bool DAOCollection::openCollection(QString path)
     QDomElement child=root.firstChild().toElement();
     while(!child.isNull())
     {
-        qDebug()<<child.tagName();
       // We know how to treat appearance and geometry
       if (child.tagName() == "artist")
       {
@@ -64,7 +63,6 @@ bool DAOCollection::openCollection(QString path)
                 QDomElement songs=albums.firstChild().toElement();
                 while(!songs.isNull())
                 {
-                    qDebug()<<songs.tagName();
                     if (songs.tagName() == "song")
                     {
                     Song * s = new Song(child.attribute("id").toInt(),mCollectionId,songs.attribute("title"),1000,ab,QUrl());
@@ -181,7 +179,6 @@ QList<QSharedPointer<SongView> > DAOCollection::searchSongsByAlbum(QString s)
 
 const QImage DAOCollection::getJacketFromAlbum(AlbumView *a)
 {
-    qDebug()<<a->getJacket().toString();
     QImage i(":/"+a->getJacket().toString());
     return i;
 }

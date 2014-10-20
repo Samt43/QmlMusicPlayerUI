@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engineDeezer;
   engineDeezer.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
   QObject *rootObject = engineDeezer.rootObjects().first();
-  qDebug()<<QQmlProperty::read(rootObject, "objectName").toString();
 
 
     CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::LocalCollection), new AudioStreamMediaPlayer);

@@ -34,8 +34,6 @@ void DeezerMediaPlayer::loadNewSong(QUrl s)
 bool DeezerMediaPlayer::play(QSharedPointer<SongView>s)
 {
     qDebug()<<"Now Playing !! : "+ s->getName();
-    qDebug()<<"mp3 url : "+ s->getSongUrl().toString();
-    qDebug()<< s->getItemId();
 
     QVariant returnedValue;
     QMetaObject::invokeMethod(mQmlItemPlayer, "play",

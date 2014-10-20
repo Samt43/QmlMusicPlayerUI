@@ -162,6 +162,40 @@ Rectangle
                     sourceSize.width:  width
                     sourceSize.height:  height
 
+                    MouseArea {
+
+                        function toggle() {
+                            if(state == "maximized") { state = "minimized" } else { state = "maximized" }
+                        }
+
+                     anchors.fill: parent
+
+                     state: winColumn.state
+                     states: [
+                         State {
+                             name: "maximized"
+                             PropertyChanges {
+                                 target: winColumn
+                                 state: "maximized"
+
+                             }
+
+                         },
+                         State {
+                             name: "minimized"
+                             PropertyChanges {
+                                 target: winColumn
+                                 state: "minimized"
+
+                             }
+
+                         }
+                     ]
+
+                     onClicked: toggle()
+
+                    }
+
                 }
 
                 Image {
