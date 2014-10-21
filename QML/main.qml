@@ -21,10 +21,19 @@ ApplicationWindow {
     //visibility: "FullScreen"
 
 
+
     Column
     {
 
         id : winColumn
+
+        anchors.fill: parent
+        spacing: 0
+
+        property double layoutDisposition : 0
+        property double headerProportionSize : 30/100
+
+
 
         state:  "maximized"
         states: [
@@ -34,12 +43,20 @@ ApplicationWindow {
                     target: winColumn
                     layoutDisposition: 0
                 }
+                PropertyChanges {
+                    target: trackHeader
+                    state : "minimized"
+                }
             },
             State {
                 name: "maximized"
                 PropertyChanges {
                     target: winColumn
                     layoutDisposition: 1
+                }
+                PropertyChanges {
+                    target: trackHeader
+                    state : "maximized"
                 }
             }
         ]
@@ -48,23 +65,22 @@ ApplicationWindow {
         NumberAnimation {
             properties: "layoutDisposition"
             duration: 200
-            easing: Easing.OutExpo
         }
         }
 
-        anchors.fill: parent
-        spacing: 0
-
-        property double layoutDisposition : 0
-        property double headerProportionSize : 30/100
 
         TrackHeader {
             width: parent.width
             height: parent.height * ((parent.headerProportionSize) + (1-parent.headerProportionSize) * (1-parent.layoutDisposition))
+            id : trackHeader
+            onToogleView: {
+                    if(winColumn.state == "maximized") { winColumn.state = "minimized" } else { winColumn.state = "maximized" }
 
+            }
         }
 
         BodyView {
+
             id:bodyView
             width: parent.width
             height: parent.height *(1-parent.headerProportionSize) * parent.layoutDisposition

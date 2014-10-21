@@ -5,6 +5,7 @@ import QtQuick.Window 2.1
 import SongView 1.0
 import AlbumView 1.0
 import ArtistView 1.0
+import "FomatTools.js" as Formater
 
 ScrollView{
 
@@ -87,13 +88,7 @@ ScrollView{
 
                         }
 
-                        Text { text:  {
-                                var d2 = new Date(song.duration * 1000);
-                                var H = "";
-                                if(d2.getUTCHours()!=0)
-                                { H = d2.getUTCHours() +":" }
-
-                                return  H + d2.getMinutes() + ":" + d2.getSeconds()}
+                        Text { text: Formater.formatDurationToString(song.duration)
                             color: (listContext.currentIndex === index ? 'white':'grey' )
                             horizontalAlignment: Text.AlignRight
                             Layout.fillWidth: true

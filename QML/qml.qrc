@@ -12,5 +12,7 @@
         <file>PlaylistView.qml</file>
         <file>AlbumView.qml</file>
         <file>BodyView.qml</file>
+        <file>FomatTools.js</file>
+        <file>ArtistImage.qml</file>
     </qresource>
 </RCC>

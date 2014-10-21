@@ -118,7 +118,7 @@ QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObj
 
            QJsonObject albumJs = songObject.value("album").toObject();
            QString abName = albumJs.value("title").toString();
-           QString abCover = albumJs.value("cover").toString();
+           QString abCover = albumJs.value("cover").toString()+"?size=big";
            int abID = albumJs.value("id").toInt();
 
            QJsonObject artistJs = songObject.value("artist").toObject();
@@ -137,7 +137,7 @@ QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObj
 AlbumView *DAODeezerCollection::getAlbumFromJson(QJsonObject albumObject)
 {
                int id = albumObject.value("id").toInt();
-               AlbumView * ab = new AlbumView(id,mCollectionId,albumObject["title"].toString(),albumObject["cover"].toString());
+               AlbumView * ab = new AlbumView(id,mCollectionId,albumObject["title"].toString(),albumObject["cover"].toString()+"?size=big");
                mapAlbum[id] = ab;
                return ab;
 }
@@ -145,7 +145,7 @@ AlbumView *DAODeezerCollection::getAlbumFromJson(QJsonObject albumObject)
 ArtistView *DAODeezerCollection::getArtistFromJson(QJsonObject artistObject)
 {
     int id = artistObject.value("id").toInt();
-    ArtistView * a = new ArtistView(id,mCollectionId,artistObject["name"].toString(),"",artistObject["picture"].toString());
+    ArtistView * a = new ArtistView(id,mCollectionId,artistObject["name"].toString(),"",artistObject["picture"].toString()+"?size=big");
     mapArtist[id] = a;
     return a;
 

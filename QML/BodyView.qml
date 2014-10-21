@@ -37,11 +37,11 @@ SplitView {
     }
 
 
-    Rectangle {
+    Item {
         id:trackInformation
         Layout.preferredWidth: win.width*20/100
         Layout.minimumWidth: win.width*20/100
-        color: syspal.window
+
         InformationPanel
         {}
 

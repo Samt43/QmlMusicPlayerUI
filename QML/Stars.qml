@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 
 
 Item {
-    property variant score : 0
+    property double score : 0
     property int nbStars : 5
     property int scoreMax : 5
     height: 20
@@ -14,10 +14,7 @@ Item {
 
     }
 
-    onScoreChanged:
-    {
-        setScore(score)
-    }
+
 
     RowLayout {
         anchors.fill: parent
@@ -41,7 +38,7 @@ Item {
         anchors.fill: parent
         onMouseXChanged: {
 
-            score = mouseX/width * scoreMax
+            setScore(mouseX/width * scoreMax)
         }
 
     }
@@ -50,9 +47,9 @@ Item {
     {
 
 
-        for (var i = 0 ; i < nbStars ;i++)
+        for (var i = 1 ; i < nbStars  ;i++)
         {
-            rep.itemAt(i).pourcentage = 0
+            rep.itemAt(i).setValue(0)
 
         }
 
@@ -73,7 +70,7 @@ Item {
             for (var i = 0 ; i < Math.floor(etoiles);i++)
             {
 
-                rep.itemAt(i).pourcentage = 100
+                rep.itemAt(i).setValue(100)
 
             }
 

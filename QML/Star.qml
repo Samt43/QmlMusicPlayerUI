@@ -2,10 +2,16 @@ import QtQuick 2.2
 import QtGraphicalEffects 1.0
 
 Item {
-    property real pourcentage : 50
+    property double pourcentage : 50
     height: 300
     width: 300
     id : cadre
+
+    function setValue(val)
+    {
+        pourcentage = val
+
+    }
 
 
     Item {
