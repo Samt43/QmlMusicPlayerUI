@@ -1,8 +1,8 @@
 #include "jacketprovider.h"
 #include "servicecollection.h"
-#include "Model/song.h"
-#include"Model/album.h"
-#include"Model/artist.h"
+#include "FakeMusicCollection/Model/song.h"
+#include"FakeMusicCollection/Model/album.h"
+#include"FakeMusicCollection/Model/artist.h"
 #include "collectionmanager.h"
 
 JacketProvider::JacketProvider():QQuickImageProvider(QQuickImageProvider::Image)

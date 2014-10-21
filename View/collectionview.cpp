@@ -1,7 +1,6 @@
 #include "collectionview.h"
 
-CollectionView::CollectionView(QString sCollectionID, QObject *parent) : mCollectionId(sCollectionID),
-    QObject(parent)
+CollectionView::CollectionView(QString sCollectionID, QObject *parent) : QObject(parent),mCollectionId(sCollectionID)
 {
 }
 

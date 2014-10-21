@@ -17,7 +17,6 @@ public:
     int getCurrentTime();
 
 public slots:
-    void loadNewSong(QUrl s);
     void updatePlayingTime();
 
 

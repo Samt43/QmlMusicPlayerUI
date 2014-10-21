@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "abstractcollection.h"
-#include "Model/collection.h"
+#include "FakeMusicCollection/Model/collection.h"
 
 class Artist;
 class Song;

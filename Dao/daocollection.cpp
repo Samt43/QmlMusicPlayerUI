@@ -2,10 +2,10 @@
 #include <QDebug>
 #include <QtXml/qdom.h>
 #include <QFile>
-#include "Model/collection.h"
-#include "Model/album.h"
-#include "Model/artist.h"
-#include "Model/song.h"
+#include "FakeMusicCollection/Model/collection.h"
+#include "FakeMusicCollection/Model/album.h"
+#include "FakeMusicCollection/Model/artist.h"
+#include "FakeMusicCollection/Model/song.h"
 #include "View/artistview.h"
 #include "View/songview.h"
 #include "View/albumview.h"
@@ -170,11 +170,11 @@ QList<QSharedPointer<SongView> > DAOCollection::searchSongs(QString s) {
 }
 QList<QSharedPointer<SongView> > DAOCollection::searchSongsByArtist(QString s)
 {
-    QList<QSharedPointer<SongView> >();
+    return QList<QSharedPointer<SongView> >();
 }
 QList<QSharedPointer<SongView> > DAOCollection::searchSongsByAlbum(QString s)
 {
-    QList<QSharedPointer<SongView> >();
+    return QList<QSharedPointer<SongView> >();
 }
 
 const QImage DAOCollection::getJacketFromAlbum(AlbumView *a)

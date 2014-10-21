@@ -10,10 +10,10 @@ class AbstractCollectionItemView : public QObject
     Q_PROPERTY(int itemID READ getItemId CONSTANT)
 
 public:
-    explicit AbstractCollectionItemView(int itemId,QString CollectionId,QObject *parent = 0):mItemID(itemId),mCollectionID(CollectionId)
+    explicit AbstractCollectionItemView(int itemId,QString CollectionId,QObject *parent = 0):QObject(parent),mItemID(itemId),mCollectionID(CollectionId)
     {}
 
-    explicit AbstractCollectionItemView(QObject *parent = 0)
+    explicit AbstractCollectionItemView(QObject *parent = 0):QObject(parent)
     {}
 
     QString getCollectionId() const
@@ -31,8 +31,9 @@ signals:
 public slots:
 
 protected :
-    QString mCollectionID;
     long mItemID;
+    QString mCollectionID;
+
 };
 
 #endif // ABSTRACTCOLLECTIONITEMVIEW_H

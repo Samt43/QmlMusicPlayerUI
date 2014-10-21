@@ -23,11 +23,11 @@ public:
     explicit SongView(int id, QString collectionID, QString name, int albumId, QString albumName, QUrl albumCover, int artistID, QString artistName, int Duration, QUrl url, QObject *parent=0);
     SongView(QObject *parent = 0);
     virtual ~SongView();
-    const int getDuration();
+    int getDuration();
     const QString getName();
     const QString getAlbumName();
     const QString getArtistName();
-    const double getNote();
+    double getNote();
     QUrl getSongUrl();
     QUrl getAlbumCover();
     int getAlbumId();
@@ -39,15 +39,17 @@ public slots:
 
 
 protected :
-    QString mAlbumName;
     QString mName;
-    QString mArtistName;
     int mDuration;
-    int mAlbumId;
-    int mArtistId;
-    double mNote;
     QUrl mSongUrl;
+    int mAlbumId;
+    QString mAlbumName;
+    int mArtistId;
+    QString mArtistName;
     QUrl mAlbumCover;
+    double mNote;
+
+
 
 };
 

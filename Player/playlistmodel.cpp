@@ -72,6 +72,7 @@ bool PlaylistModel::goToNextTrack()
     mNowPlayingSongIndex ++;
     if (mNowPlayingSongIndex >= mPlaylistSongs.size())
         mNowPlayingSongIndex = 0;
+    return true;
 }
 
 void PlaylistModel::clearPlaylist()

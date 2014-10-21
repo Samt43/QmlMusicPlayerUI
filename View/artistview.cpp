@@ -1,6 +1,6 @@
 #include "artistview.h"
 
-ArtistView::ArtistView(int id,QString collectionID,QString Name, QString Infos, QUrl img,QObject *parent) : mName(Name),mInfos(Infos),mJacket(img),AbstractCollectionItemView(id,collectionID,parent)
+ArtistView::ArtistView(int id,QString collectionID,QString Name, QString Infos, QUrl img,QObject *parent) :AbstractCollectionItemView(id,collectionID,parent), mName(Name),mInfos(Infos),mJacket(img)
 {
 
 }

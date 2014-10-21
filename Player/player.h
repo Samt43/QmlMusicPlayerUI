@@ -59,7 +59,7 @@ public slots:
 
 
 private slots:
-void setCurrentTime(int seconds);
+void updateCurrentTime();
 
 protected:
     PlaylistModel * mPlaylistModel;

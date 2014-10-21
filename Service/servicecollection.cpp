@@ -1,8 +1,8 @@
 #include "servicecollection.h"
 #include "Dao/daocollection.h"
 #include "Dao/daodeezercollection.h"
-#include "Model/album.h"
-#include "Model/artist.h"
+#include "FakeMusicCollection/Model/album.h"
+#include "FakeMusicCollection/Model/artist.h"
 
 
 ServiceCollection::ServiceCollection(CollectionType type)

@@ -2,8 +2,8 @@
 #include<qalgorithms.h>
 #include <QDebug>
 
-SongView::SongView(int id, QString collectionID, QString name,int albumID,QString albumName,QUrl albumCover,int artistID,QString artistName, int Duration, QUrl url, QObject *parent) :mName(name),
-    mDuration(Duration),mSongUrl(url),mAlbumId(albumID),mAlbumName(albumName),mArtistId(artistID),mArtistName(artistName),mAlbumCover(albumCover),AbstractCollectionItemView(id,collectionID,parent)
+SongView::SongView(int id, QString collectionID, QString name,int albumID,QString albumName,QUrl albumCover,int artistID,QString artistName, int Duration, QUrl url, QObject *parent) :AbstractCollectionItemView(id,collectionID,parent),mName(name),
+    mDuration(Duration),mSongUrl(url),mAlbumId(albumID),mAlbumName(albumName),mArtistId(artistID),mArtistName(artistName),mAlbumCover(albumCover)
 {
     mNote = qrand() % 5 + 1;
 }
@@ -11,7 +11,7 @@ SongView::SongView(int id, QString collectionID, QString name,int albumID,QStrin
 SongView::SongView(QObject *parent)
 {}
 
-const int SongView::getDuration()
+int SongView::getDuration()
 {
     return mDuration;
 
@@ -23,7 +23,7 @@ const QString SongView::getName()
 
 }
 
-const double SongView::getNote()
+double SongView::getNote()
 {
     return mNote;
 

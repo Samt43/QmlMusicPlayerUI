@@ -1,6 +1,6 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
-#include "Model/album.h"
+#include "FakeMusicCollection/Model/album.h"
 #include "Dao/daocollection.h"
 #include "Player/player.h"
 #include "Service/jacketprovider.h"

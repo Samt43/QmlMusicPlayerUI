@@ -4,6 +4,11 @@
 
 AudioStreamMediaPlayer::AudioStreamMediaPlayer()
 {
+
+    connect(&mRefreshTime,SIGNAL(timeout()),this,SLOT(updatePlayingTime()));
+    connect(&mPlayer,SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),this,SLOT(mediaPlayerMediaStatusSlot(QMediaPlayer::MediaStatus)));
+    mRefreshTime.setInterval(1000);
+    mRefreshTime.start();
 }
 
 bool AudioStreamMediaPlayer::play(QSharedPointer<SongView>s)
@@ -14,6 +19,8 @@ bool AudioStreamMediaPlayer::play(QSharedPointer<SongView>s)
     mPlayer.setMedia(s->getSongUrl());
     mPlayer.setVolume(90);
     mPlayer.play();
+
+    return true;
 }
 
 void AudioStreamMediaPlayer::pause()
@@ -24,10 +31,24 @@ void AudioStreamMediaPlayer::pause()
 void AudioStreamMediaPlayer::stop()
 {
     mPlayer.stop();
-
 }
 
 int AudioStreamMediaPlayer::getCurrentTime()
 {
     return mPlayer.position()/1000;
+}
+
+void AudioStreamMediaPlayer::updatePlayingTime()
+{
+    emit CurrentTimeHasChanged();
+
+}
+
+void AudioStreamMediaPlayer::mediaPlayerMediaStatusSlot(QMediaPlayer::MediaStatus s)
+{
+    if (s == QMediaPlayer::EndOfMedia)
+    {
+        emit SongHasFinished();
+    }
+
 }

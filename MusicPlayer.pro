@@ -4,10 +4,10 @@ QT += qml quick widgets xml svg multimedia
 
 QTPLUGIN += qsvg
 SOURCES += main.cpp \
-    Model/album.cpp \
-    Model/artist.cpp \
-    Model/collection.cpp \
-    Model/song.cpp \
+    FakeMusicCollection/Model/album.cpp \
+    FakeMusicCollection/Model/artist.cpp \
+    FakeMusicCollection/Model/collection.cpp \
+    FakeMusicCollection/Model/song.cpp \
     Dao/daocollection.cpp \
     Player/player.cpp \
     Player/playlistmodel.cpp \
@@ -39,19 +39,19 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    Model/album.h \
-    Model/artist.h \
-    Model/collection.h \
-    Model/song.h \
-    Dao/daocollection.h \
+    FakeMusicCollection/Model/album.h \
+    FakeMusicCollection/Model/artist.h \
+    FakeMusicCollection/Model/collection.h \
+    FakeMusicCollection/Model/song.h \
+    FakeMusicCollection/Model/abstractcollectionitem.h \
     Player/player.h \
     Player/playlistmodel.h \
     Service/servicecollection.h \
     Service/jacketprovider.h \
-    Dao/abstractcollection.h \
-    Model/abstractcollectionitem.h \
     Service/collectionmanager.h \
     Dao/daodeezercollection.h \
+    Dao/abstractcollection.h \
+    Dao/daocollection.h \
     Player/abstractmediaplayer.h \
     Player/audiostreammediaplayer.h \
     Player/DeezerPlayer/deezermediaplayer.h \

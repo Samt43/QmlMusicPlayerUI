@@ -24,12 +24,7 @@ DeezerMediaPlayer::DeezerMediaPlayer(QObject *qmlItemPlayer):mQmlItemPlayer(qmlI
     mRefreshTime.start();
 }
 
-void DeezerMediaPlayer::loadNewSong(QUrl s)
-{
 
-
-//   mView->load(s);
-}
 
 bool DeezerMediaPlayer::play(QSharedPointer<SongView>s)
 {
@@ -43,6 +38,8 @@ bool DeezerMediaPlayer::play(QSharedPointer<SongView>s)
     mCurrentTime.setInterval(1500 + s->getDuration()*1000);
     mCurrentTime.start();
     mRefreshTime.start();
+
+    return true;
 
 
 //    emit playNewSong(QUrl("qrc:/deezer/deezer.html?SongID=" + QString::number(s->getItemId())));
@@ -62,7 +59,7 @@ void DeezerMediaPlayer::stop()
 
 void DeezerMediaPlayer::updatePlayingTime()
 {
-    emit CurrentTimeHasChanged(getCurrentTime());
+    emit CurrentTimeHasChanged();
 
 }
 

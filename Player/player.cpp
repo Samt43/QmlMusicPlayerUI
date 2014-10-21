@@ -50,8 +50,10 @@ AlbumView *Player::getNowPlayingAlbum()
 
 bool Player::playImmediatly(SongView * s)
 {
-    addSongToPlaylist(s);
+    bool ret = addSongToPlaylist(s);
     play(mPlaylistModel->rowCount(QModelIndex())-1);
+
+    return ret;
 
 }
 
@@ -62,6 +64,8 @@ bool Player::addSongToPlaylist(SongView * s)
     QList<QSharedPointer<SongView> > l;
     l.append(ptr);
     mPlaylistModel->addSongs(l);
+
+    return true;
 
 }
 
@@ -81,11 +85,8 @@ bool Player::play(int index)
             }
             mAbstractMediaPlayer = CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId());
             connect(mAbstractMediaPlayer,SIGNAL(SongHasFinished()),this,SLOT(playNextSong()));
-            connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged(int)),this,SLOT(setCurrentTime(int)));
+            connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged()),this,SLOT(updateCurrentTime()));
         }
-
-
-        setCurrentTime(0);
 
         mAbstractMediaPlayer->play(s);
         mNowPlayingAlbum = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getAlbumFromId(s->getAlbumId());
@@ -97,6 +98,8 @@ bool Player::play(int index)
         emit nowPlayingArtistHasChanged();
         emit nowPlayingAlbumHasChanged();
     }
+
+    return true;
 }
 
 void Player::pause()
@@ -112,7 +115,7 @@ int Player::getCurrentTime()
     return retour;
 }
 
-void Player::setCurrentTime(int seconds)
+void Player::updateCurrentTime()
 {
     emit CurrentTimeHasChanged();
 }
@@ -122,6 +125,7 @@ bool Player::playNextSong()
     qDebug()<<"next song !";
     mPlaylistModel->goToNextTrack();
     play(mPlaylistModel->getNowPlayingSongIndex());
+    return true;
 }
 
 void Player::clearPlaylist()

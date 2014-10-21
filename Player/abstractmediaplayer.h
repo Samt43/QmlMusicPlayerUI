@@ -23,7 +23,7 @@ public slots:
 
 
 signals:
-    void CurrentTimeHasChanged(int);
+    void CurrentTimeHasChanged();
     void SongHasFinished();
 };
 

@@ -13,7 +13,7 @@ class AbstractCollection : public QObject
     Q_OBJECT
 public:
     explicit AbstractCollection(QString s,QObject *parent = 0):
-        mCollectionId(s),QObject(parent)
+        QObject(parent),mCollectionId(s)
     {
     }
 
