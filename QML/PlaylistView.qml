@@ -1,13 +1,16 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import QtGraphicalEffects 1.0
-
-Item
+import QtQuick.Controls 1.2
+SplitView
 {
     anchors.fill: parent
 
 
 
+Item{
+    Layout.fillWidth: true
+    Layout.fillHeight: true
     TracksView {
         anchors.fill: parent
         mod : player.playlistModel
@@ -69,4 +72,17 @@ Item
 
 
 }
+
+}
+Item {
+    id:trackInformation
+    Layout.preferredWidth: parent.width*20/100
+    Layout.minimumWidth: parent.width*20/100
+    Layout.maximumWidth:  parent.width*40/100
+
+    InformationPanel
+    {}
+
+}
+
 }

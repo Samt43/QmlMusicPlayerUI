@@ -167,45 +167,45 @@ Rectangle
 
                         Rectangle
                         {
-                        color: "black"
-                        opacity: 0.3
-                        anchors.fill: parent
+                            color: "black"
+                            opacity: 0.3
+                            anchors.fill: parent
                         }
 
                         ColumnLayout
                         {
-                        anchors.fill: parent
+                            anchors.fill: parent
 
-                        Rectangle {
-                            id: imageArtist
-                            Layout.preferredHeight: width * 9/16
-                            Layout.preferredWidth: infosArtist.width
-                            ArtistImage {}
-
-                        }
-
-
-                        Item {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                            TextArea {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                anchors.top: parent.top
-                                anchors.topMargin: 10
-                                anchors.bottom: parent.bottom
-                                anchors.bottomMargin: 10
-                                backgroundVisible: false
-                                frameVisible: false
-
-
-                                width: parent.width * 90 / 100
-                                horizontalAlignment: Text.AlignJustify
-                                readOnly: true
-                                textColor : "white"
-                                text : "Daft Punk est un groupe français de musique électronique, originaire de Versailles. Actifs depuis 1993, Thomas Bangalter et Guy-Manuel de Homem-Christo, les deux membres, ont allié à leurs sons electro, house et techno des tonalités rock, groove et disco. Le groupe participa à la création et à la démocratisation du mouvement de musique électronique baptisé French Touch. Ils font partie des artistes français s'exportant le mieux à l'étranger, et ce depuis la sortie de leur premier véritable succès, Da Funk en 1996. "
+                            Rectangle {
+                                id: imageArtist
+                                Layout.preferredHeight: width * 9/16
+                                Layout.preferredWidth: infosArtist.width
+                                ArtistImage {}
 
                             }
-                        }
+
+
+                            Item {
+                                Layout.fillHeight: true
+                                Layout.fillWidth: true
+                                TextArea {
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    anchors.top: parent.top
+                                    anchors.topMargin: 10
+                                    anchors.bottom: parent.bottom
+                                    anchors.bottomMargin: 10
+                                    backgroundVisible: false
+                                    frameVisible: false
+
+
+                                    width: parent.width * 90 / 100
+                                    horizontalAlignment: Text.AlignJustify
+                                    readOnly: true
+                                    textColor : "white"
+                                    text : "Daft Punk est un groupe français de musique électronique, originaire de Versailles. Actifs depuis 1993, Thomas Bangalter et Guy-Manuel de Homem-Christo, les deux membres, ont allié à leurs sons electro, house et techno des tonalités rock, groove et disco. Le groupe participa à la création et à la démocratisation du mouvement de musique électronique baptisé French Touch. Ils font partie des artistes français s'exportant le mieux à l'étranger, et ce depuis la sortie de leur premier véritable succès, Da Funk en 1996. "
+                                    font.pixelSize: win.width/110
+                                }
+                            }
 
 
                         }

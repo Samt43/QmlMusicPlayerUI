@@ -11,6 +11,7 @@ SplitView {
         id : controlBar
         Layout.preferredWidth: win.width*20/100
         Layout.minimumWidth: win.width*20/100
+        Layout.maximumWidth:  parent.width*40/100
     }
 
     TabView {
@@ -33,17 +34,6 @@ SplitView {
 
         }
 
-
-    }
-
-
-    Item {
-        id:trackInformation
-        Layout.preferredWidth: win.width*20/100
-        Layout.minimumWidth: win.width*20/100
-
-        InformationPanel
-        {}
 
     }
 

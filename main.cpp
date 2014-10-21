@@ -29,15 +29,22 @@ int main(int argc, char *argv[])
     qmlRegisterType<AudioStreamMediaPlayer>("AudioStreamMediaPlayer", 1, 0, "AudioStreamMediaPlayer");
     qmlRegisterType<SearchTrackModel>("SearchTrackModel", 1, 0, "SearchTrackModel");
 
+
     QQmlApplicationEngine engine;
 
+    // Load Deezer collection
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     QQmlApplicationEngine engineDeezer;
-  engineDeezer.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
-  QObject *rootObject = engineDeezer.rootObjects().first();
-
-
-    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::LocalCollection), new AudioStreamMediaPlayer);
+    engineDeezer.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
+    QObject *rootObject = engineDeezer.rootObjects().first();
     CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::DeezerCollection), new DeezerMediaPlayer(rootObject));
+#else
+    // Only 30s for windows and android
+    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::DeezerCollection), new AudioStreamMediaPlayer);
+#endif
+
+    // load xml fake collection
+    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::LocalCollection), new AudioStreamMediaPlayer);
 
 
     Player p;
