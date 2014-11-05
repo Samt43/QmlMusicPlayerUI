@@ -2,7 +2,7 @@
 #define DAOCOLLECTION_H
 
 #include <QObject>
-#include "abstractcollection.h"
+#include "abstractcollectiondao.h"
 #include "FakeMusicCollection/Model/collection.h"
 
 class Artist;
@@ -10,14 +10,15 @@ class Song;
 class Album;
 
 
-class DAOCollection :  public AbstractCollection
+class DAOCollection :  public AbstractCollectionDao
 {
     Q_OBJECT
 public:
-    explicit DAOCollection(QString path, QString sCollectionID, QObject *parent = 0);
+    explicit DAOCollection(QString path,QString sCollectionID,QObject *parent=0);
 
     QList<ArtistView *> getAllArtists();
     QList<QSharedPointer<SongView> > getAllSongs();
+    QList<AlbumView *> getAllAlbums();
     QList<ArtistView *> searchArtists(QString s);
     QList<QSharedPointer<SongView> > searchSongs(QString s);
     QList<QSharedPointer<SongView> > searchSongsByArtist(QString s);

@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     View/artistview.cpp \
     View/collectionview.cpp \
     View/songview.cpp \
-    Player/searchtrackmodel.cpp
+    Player/searchtrackmodel.cpp \
+    Player/albumlistmodel.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -50,7 +51,6 @@ HEADERS += \
     Service/jacketprovider.h \
     Service/collectionmanager.h \
     Dao/daodeezercollection.h \
-    Dao/abstractcollection.h \
     Dao/daocollection.h \
     Player/abstractmediaplayer.h \
     Player/audiostreammediaplayer.h \
@@ -61,6 +61,8 @@ HEADERS += \
     View/artistview.h \
     View/collectionview.h \
     View/songview.h \
-    Player/searchtrackmodel.h
+    Player/searchtrackmodel.h \
+    Player/albumlistmodel.h \
+    Dao/abstractcollectiondao.h
 
 OTHER_FILES +=

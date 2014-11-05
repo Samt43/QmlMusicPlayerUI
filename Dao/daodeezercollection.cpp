@@ -12,7 +12,7 @@
 #include <QTimer>
 #include <QImage>
 
-DAODeezerCollection::DAODeezerCollection(QString idCollection, QObject *parent): AbstractCollection(idCollection,parent)
+DAODeezerCollection::DAODeezerCollection(QString idCollection, QObject *parent): AbstractCollectionDao(idCollection,parent)
 {
 
 
@@ -23,13 +23,32 @@ QList< ArtistView *> DAODeezerCollection::getAllArtists()
 {
     return QList< ArtistView *>();
 
+}
 
+
+QList<AlbumView *> DAODeezerCollection::getAllAlbums()
+{
+    QList<AlbumView *> albums;
+    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=100"));
+    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/user/me/albums?access_token="));
+
+    QJsonArray a = j["albums"].toObject()["data"].toArray();
+    QJsonArray::iterator  it;
+
+    for (it=a.begin();it!=a.end();it++)
+    {
+        albums.append(getAlbumFromJson((*it).toObject()));
+    }
+
+    return albums;
 
 }
+
+
 QList<QSharedPointer<SongView> > DAODeezerCollection::getAllSongs()
 {
     QList<QSharedPointer<SongView> > songs;
-    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=5000"));
+    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=500"));
     QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/playlist/216322211"));
 
 

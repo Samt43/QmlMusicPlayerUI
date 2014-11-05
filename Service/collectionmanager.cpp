@@ -50,3 +50,8 @@ AbstractMediaPlayer * CollectionManager::getMediaPlayerCollection(QString IDColl
     return retour;
 
 }
+
+QMap<QString,ServiceCollection *> CollectionManager::getAllAvailableServiceCollection()
+{
+    return mAvailableServices;
+}

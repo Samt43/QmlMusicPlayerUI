@@ -14,10 +14,16 @@ Player::Player(QObject *parent) :
 {
 
 
+    mAlbumListModel = new AlbumListModel;
     mSearchTrackModel = new SearchTrackModel;
     mPlaylistModel = new PlaylistModel;
-    mPlaylistModel->addSongs(CollectionManager::getInstance()->getServiceCollection("DeezerDatabase")->getAllSongs());
-    mPlaylistModel->addSongs(CollectionManager::getInstance()->getServiceCollection("FakeDatabase")->getAllSongs());
+
+    QMap<QString,ServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
+
+    foreach (ServiceCollection *s, all) {
+        mPlaylistModel->addSongs(s->getAllSongs());
+    }
+
     mAbstractMediaPlayer = NULL;
     mNowPlayingAlbum = NULL;
     mNowPlayingArtist = NULL;
@@ -136,4 +142,9 @@ void Player::clearPlaylist()
 SearchTrackModel * Player::getSearchTrackModel()
 {
     return mSearchTrackModel;
+}
+
+AlbumListModel * Player::getAlbumListModel()
+{
+    return mAlbumListModel;
 }

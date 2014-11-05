@@ -1,7 +1,6 @@
 #include "collection.h"
 
 Collection::Collection(QString sCollectionID, QObject *parent) : QObject(parent), mCollectionId(sCollectionID)
-
 {
 }
 

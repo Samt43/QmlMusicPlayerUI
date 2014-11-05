@@ -5,20 +5,9 @@
 #include "FakeMusicCollection/Model/artist.h"
 
 
-ServiceCollection::ServiceCollection(CollectionType type)
+ServiceCollection::ServiceCollection(AbstractCollectionDao *collectionDAO)
 {
-    switch (type) {
-    case LocalCollection:
-        mCollectionId = "FakeDatabase";
-        mAbstractCollection = new DAOCollection(":/music.xml",mCollectionId);
-        break;
-    case DeezerCollection:
-        mCollectionId = "DeezerDatabase";
-        mAbstractCollection = new DAODeezerCollection(mCollectionId);
-        break;
-    default:
-        break;
-    }
+        mAbstractCollection = collectionDAO;
 
 }
 
@@ -35,12 +24,17 @@ QList<ArtistView *> ServiceCollection::getAllArtists()
 const QString ServiceCollection::getCollectionID()
 {
 
-    return mCollectionId;
+    return mAbstractCollection->getCollectionName();
 }
 
 QList<QSharedPointer<SongView> > ServiceCollection::getAllSongs()
 {
     return mAbstractCollection->getAllSongs();
+}
+
+QList<AlbumView *> ServiceCollection::getAllAlbums()
+{
+    return mAbstractCollection->getAllAlbums();
 }
 
 QList<QSharedPointer<SongView> > ServiceCollection::searchSongs(QString s)

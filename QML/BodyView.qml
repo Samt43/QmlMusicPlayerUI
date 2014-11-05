@@ -26,10 +26,10 @@ SplitView {
         {
             centralView.insertTab(0,"TrackView",trackView)
             centralView.insertTab(1,"SearchView",searchView)
-            centralView.insertTab(2,"ArtistsView",artistView)
-            centralView.insertTab(3,"ToImplement",Rectangle)
-            centralView.insertTab(4,"ToImplement",Rectangle)
-            centralView.insertTab(5,"ToImplement",Rectangle)
+            centralView.insertTab(2,"ToImplement",searchView)
+            centralView.insertTab(3,"ToImplement",searchView)
+            centralView.insertTab(4,"ToImplement",searchView)
+            centralView.insertTab(5,"ArtistsView",artistView)
             centralView.insertTab(6,"AlbumView",albumView)
 
         }

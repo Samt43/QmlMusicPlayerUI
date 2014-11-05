@@ -4,7 +4,7 @@
 #include <QObject>
 
 class Collection;
-class AbstractCollection;
+class AbstractCollectionDao;
 class ArtistView;
 class AlbumView;
 #include "View/songview.h"
@@ -13,11 +13,11 @@ class ServiceCollection : public QObject
 {
 
 public:
-    enum CollectionType {LocalCollection,DeezerCollection};
 
-    ServiceCollection(CollectionType type);
+    ServiceCollection(AbstractCollectionDao* collectionDAO);
     QList<ArtistView *> getAllArtists();
     QList<QSharedPointer<SongView> > getAllSongs();
+    QList<AlbumView *> getAllAlbums();
     QList<QSharedPointer<SongView> > searchSongs(QString s);
     AlbumView *getAlbumFromId(int id);
     ArtistView * getArtistFromId(int id);
@@ -29,7 +29,7 @@ public:
 
 
 protected :
-    AbstractCollection * mAbstractCollection;
+    AbstractCollectionDao * mAbstractCollection;
     QString mCollectionId;
 
 };

@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 #include "FakeMusicCollection/Model/album.h"
 #include "Dao/daocollection.h"
+#include "Dao/daodeezercollection.h"
+#include "Dao/daocollection.h"
 #include "Player/player.h"
 #include "Service/jacketprovider.h"
 
@@ -12,6 +14,7 @@
 #include "Player/audiostreammediaplayer.h"
 #include "Player/DeezerPlayer/deezermediaplayer.h"
 #include "Player/searchtrackmodel.h"
+#include "Player/albumlistmodel.h"
 #include "Service/collectionmanager.h"
 
 #include <QtQml>
@@ -28,7 +31,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ArtistView>("ArtistView", 1, 0, "ArtistView");
     qmlRegisterType<AudioStreamMediaPlayer>("AudioStreamMediaPlayer", 1, 0, "AudioStreamMediaPlayer");
     qmlRegisterType<SearchTrackModel>("SearchTrackModel", 1, 0, "SearchTrackModel");
-
+    qmlRegisterType<AlbumListModel>("AlbumListModel", 1, 0, "AlbumListModel");
 
     QQmlApplicationEngine engine;
 
@@ -37,14 +40,14 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engineDeezer;
     engineDeezer.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
     QObject *rootObject = engineDeezer.rootObjects().first();
-    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::DeezerCollection), new DeezerMediaPlayer(rootObject));
+    CollectionManager::getInstance()->addCollection(new ServiceCollection(new DAODeezerCollection("Deezer")), new DeezerMediaPlayer(rootObject));
 #else
     // Only 30s for windows and android
-    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::DeezerCollection), new AudioStreamMediaPlayer);
+    CollectionManager::getInstance()->addCollection(new ServiceCollection(new DAODeezerCollection("Deezer")), new AudioStreamMediaPlayer);
 #endif
 
     // load xml fake collection
-    CollectionManager::getInstance()->addCollection(new ServiceCollection(ServiceCollection::LocalCollection), new AudioStreamMediaPlayer);
+    CollectionManager::getInstance()->addCollection(new ServiceCollection(new DAOCollection(":/music.xml","Local")), new AudioStreamMediaPlayer);
 
 
     Player p;

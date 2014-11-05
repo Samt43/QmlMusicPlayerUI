@@ -13,7 +13,7 @@
 
 
 DAOCollection::DAOCollection(QString path,QString sCollectionID,QObject *parent) :
-    AbstractCollection(sCollectionID,parent),mCollection(sCollectionID)
+    AbstractCollectionDao(sCollectionID,parent),mCollection(sCollectionID)
 {
     if (openCollection(path))
         qDebug()<< "Collection is opened !!";
@@ -125,6 +125,28 @@ QSharedPointer<SongView> DAOCollection::createSongView(Song *s)
     QSharedPointer<SongView> ptr(new SongView(s->getItemId(),s->getCollectionId(),s->getName(),a->getItemId(),a->getName(),a->getJacket(),at->getItemId(),at->getName(),s->getDuration(),s->getSongUrl()));
     return ptr;
 }
+
+
+
+
+QList<AlbumView *> DAOCollection::getAllAlbums()
+{
+    QList<AlbumView *> albums;
+
+    QList< Artist *> artists = mCollection.getArtists();
+    foreach ( Artist * a, artists) {
+    QList< Album *>abs = a->getAlbums();
+
+          foreach ( Album * a, abs) {
+                 albums.append(new AlbumView(a->getItemId(),a->getCollectionId(),a->getName(),a->getJacket()));
+
+          }
+    }
+    return albums;
+
+}
+
+
 
 QSharedPointer<SongView> DAOCollection::getSongFromId(int id)
 {

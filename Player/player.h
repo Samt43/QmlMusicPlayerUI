@@ -4,7 +4,9 @@
 #include <QObject>
 #include "playlistmodel.h"
 #include "searchtrackmodel.h"
-#include "Dao/abstractcollection.h"
+#include "Player/albumlistmodel.h"
+
+#include "Dao/abstractcollectiondao.h"
 #include "abstractmediaplayer.h"
 #include "searchtrackmodel.h"
 #include "View/songview.h"
@@ -15,6 +17,7 @@ class Player : public QObject
     Q_OBJECT
     Q_PROPERTY(PlaylistModel * playlistModel READ getPlaylistModel CONSTANT)
     Q_PROPERTY(SearchTrackModel * searchTrackModel READ getSearchTrackModel CONSTANT)
+    Q_PROPERTY(AlbumListModel * albumListModel READ getAlbumListModel CONSTANT)
     Q_PROPERTY(SongView * nowPlayingSong READ getNowPlayingSong NOTIFY nowPlayingSongHasChanged)
     Q_PROPERTY(AlbumView * nowPlayingAlbum READ getNowPlayingAlbum NOTIFY nowPlayingAlbumHasChanged)
     Q_PROPERTY(ArtistView * nowPlayingArtist READ getNowPlayingArtist NOTIFY nowPlayingArtistHasChanged)
@@ -38,6 +41,7 @@ public:
     explicit Player(QObject *parent = 0);
     PlaylistModel * getPlaylistModel();
     SearchTrackModel * getSearchTrackModel();
+    AlbumListModel * getAlbumListModel();
     SongView * getNowPlayingSong();
     ArtistView *getNowPlayingArtist();
     AlbumView *getNowPlayingAlbum();
@@ -64,6 +68,7 @@ void updateCurrentTime();
 protected:
     PlaylistModel * mPlaylistModel;
     SearchTrackModel * mSearchTrackModel;
+    AlbumListModel * mAlbumListModel;
     AbstractMediaPlayer * mAbstractMediaPlayer;
     PlayerState mState;
     ArtistView * mNowPlayingArtist;

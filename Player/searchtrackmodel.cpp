@@ -10,7 +10,6 @@ QVariant SearchTrackModel::data(const QModelIndex &index, int role) const
 {
     QSharedPointer<SongView> s = mMatchingSongs.at(index.row());
     return QVariant::fromValue(s.data());
-
 }
 
 int SearchTrackModel::rowCount(const QModelIndex &parent) const
@@ -23,7 +22,11 @@ void SearchTrackModel::SearchSongs(QString s)
     beginResetModel();
 
     mMatchingSongs.clear();
-    mMatchingSongs.append(CollectionManager::getInstance()->getServiceCollection("DeezerDatabase")->searchSongs(s));
+    QMap<QString,ServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
+
+    foreach (ServiceCollection *ser, all) {
+        mMatchingSongs.append(ser->searchSongs(s));
+    }
     endResetModel();
 }
 

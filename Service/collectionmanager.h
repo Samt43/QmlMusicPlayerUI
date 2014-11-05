@@ -15,6 +15,7 @@ public:
     bool addCollection(ServiceCollection * s, AbstractMediaPlayer * player);
     ServiceCollection * getServiceCollection(QString IDCollection);
     AbstractMediaPlayer * getMediaPlayerCollection(QString IDCollection);
+    QMap<QString,ServiceCollection *> getAllAvailableServiceCollection();
 
 signals:
 
