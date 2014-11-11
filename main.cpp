@@ -6,6 +6,7 @@
 #include "Dao/daocollection.h"
 #include "Player/player.h"
 #include "Service/jacketprovider.h"
+#include "Service/servicecollectiondeezer.h"
 
 #include "View/songview.h"
 #include "View/artistview.h"
@@ -40,14 +41,14 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engineDeezer;
     engineDeezer.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
     QObject *rootObject = engineDeezer.rootObjects().first();
-    CollectionManager::getInstance()->addCollection(new ServiceCollection(new DAODeezerCollection("Deezer")), new DeezerMediaPlayer(rootObject));
+    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",rootObject));
 #else
     // Only 30s for windows and android
-    CollectionManager::getInstance()->addCollection(new ServiceCollection(new DAODeezerCollection("Deezer")), new AudioStreamMediaPlayer);
+    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",rootObject));
 #endif
 
     // load xml fake collection
-    CollectionManager::getInstance()->addCollection(new ServiceCollection(new DAOCollection(":/music.xml","Local")), new AudioStreamMediaPlayer);
+    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",rootObject));
 
 
     Player p;

@@ -1,5 +1,5 @@
 #include "playlistmodel.h"
-#include "Service/servicecollection.h"
+#include "Service/abstractservicecollection.h"
 #include <QVariant>
 #include "View/songview.h"
 

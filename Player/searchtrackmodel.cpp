@@ -22,9 +22,9 @@ void SearchTrackModel::SearchSongs(QString s)
     beginResetModel();
 
     mMatchingSongs.clear();
-    QMap<QString,ServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
+    QMap<QString,AbstractServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
 
-    foreach (ServiceCollection *ser, all) {
+    foreach (AbstractServiceCollection *ser, all) {
         mMatchingSongs.append(ser->searchSongs(s));
     }
     endResetModel();

@@ -1,5 +1,5 @@
 #include "jacketprovider.h"
-#include "servicecollection.h"
+#include "abstractservicecollection.h"
 #include "FakeMusicCollection/Model/song.h"
 #include"FakeMusicCollection/Model/album.h"
 #include"FakeMusicCollection/Model/artist.h"

@@ -13,12 +13,23 @@ GridView {
     anchors.fill: parent
     model: player.albumListModel
 
+    onVisibleChanged:
+    {
+        player.albumListModel.updateList();
+    }
+
 
             delegate:
+    Item {
+    width: cellWidth
+    height: cellHeight
     Image {
-    width: 100
-    height: 62
+    anchors.fill: parent
+    anchors.margins: 5
+    anchors.centerIn: parent
     source: obj.jacket
+    }
+
     }
 
 }

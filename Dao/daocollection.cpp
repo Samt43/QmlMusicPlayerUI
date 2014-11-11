@@ -12,8 +12,7 @@
 #include "daocollection.h"
 
 
-DAOCollection::DAOCollection(QString path,QString sCollectionID,QObject *parent) :
-    AbstractCollectionDao(sCollectionID,parent),mCollection(sCollectionID)
+DAOCollection::DAOCollection(QString path, QString sCollectionID) : mCollection(sCollectionID)
 {
     if (openCollection(path))
         qDebug()<< "Collection is opened !!";
@@ -50,7 +49,7 @@ bool DAOCollection::openCollection(QString path)
       // We know how to treat appearance and geometry
       if (child.tagName() == "artist")
       {
-        Artist * a = new Artist(child.attribute("id").toInt(),mCollectionId,child.attribute("name"),child.attribute("infos"),QUrl(child.attribute("image")));
+        Artist * a = new Artist(child.attribute("id").toInt(),mCollection.getCollectionId(),child.attribute("name"),child.attribute("infos"),QUrl(child.attribute("image")));
         // We traverse children
         QDomElement albums=child.firstChild().toElement();
         while(!albums.isNull())
@@ -58,14 +57,14 @@ bool DAOCollection::openCollection(QString path)
 
             if (albums.tagName() == "album")
             {
-                Album * ab = new Album(child.attribute("id").toInt(),mCollectionId,albums.attribute("title"),a,QUrl(albums.attribute("image")));
+                Album * ab = new Album(child.attribute("id").toInt(),mCollection.getCollectionId(),albums.attribute("title"),a,QUrl(albums.attribute("image")));
 
                 QDomElement songs=albums.firstChild().toElement();
                 while(!songs.isNull())
                 {
                     if (songs.tagName() == "song")
                     {
-                    Song * s = new Song(child.attribute("id").toInt(),mCollectionId,songs.attribute("title"),1000,ab,QUrl());
+                    Song * s = new Song(child.attribute("id").toInt(),mCollection.getCollectionId(),songs.attribute("title"),1000,ab,QUrl());
                     ab->addSong(s);
                     }
                     songs = songs.nextSiblingElement();

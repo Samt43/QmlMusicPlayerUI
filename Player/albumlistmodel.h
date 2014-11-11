@@ -13,6 +13,9 @@ public:
     int rowCount(const QModelIndex &parent) const;
     QHash<int, QByteArray> roleNames() const;
 
+    Q_INVOKABLE
+    void updateList();
+
 protected:
     QList<AlbumView *> mAlbums;
 

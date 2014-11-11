@@ -1,20 +1,21 @@
 #ifndef DAOCOLLECTION_H
 #define DAOCOLLECTION_H
 
-#include <QObject>
-#include "abstractcollectiondao.h"
 #include "FakeMusicCollection/Model/collection.h"
 
 class Artist;
 class Song;
 class Album;
 
+class ArtistView;
+class SongView;
+class AlbumView;
 
-class DAOCollection :  public AbstractCollectionDao
+
+class DAOCollection
 {
-    Q_OBJECT
 public:
-    explicit DAOCollection(QString path,QString sCollectionID,QObject *parent=0);
+    explicit DAOCollection(QString path,QString sCollectionID);
 
     QList<ArtistView *> getAllArtists();
     QList<QSharedPointer<SongView> > getAllSongs();

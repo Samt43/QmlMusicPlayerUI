@@ -1,18 +1,22 @@
 #ifndef DAODEEZERCOLLECTION_H
 #define DAODEEZERCOLLECTION_H
 
-#include "abstractcollectiondao.h"
 #include <QJsonDocument>
 #include <QMap>
 #include <QNetworkAccessManager>
 #include <QMutex>
 
-class DAODeezerCollection : public AbstractCollectionDao
+
+class ArtistView;
+class SongView;
+class AlbumView;
+
+class DAODeezerCollection
 {
 public:
-    DAODeezerCollection(QString idCollection, QObject *parent=0);
+    DAODeezerCollection(QString idCollection);
     QList<ArtistView *> getAllArtists();
-    QList<AlbumView *> getAllAlbums();
+    QList<AlbumView *> getAllAlbums(QString token);
     QList<QSharedPointer<SongView> > getAllSongs();
     QList<ArtistView *> searchArtists(QString s);
     QList<QSharedPointer<SongView> > searchSongs(QString s);
@@ -34,6 +38,7 @@ protected:
 
     QMap<int,ArtistView *> mapArtist;
     QMap<int, AlbumView *> mapAlbum;
+    QString mCollectionId;
 
 
 };

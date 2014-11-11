@@ -4,6 +4,7 @@ import QtWebKit 3.0
 
 Item {
 
+    signal accessTokenAvailable(string token)
     function play(url)
     {
         webview.url = "deezer/deezer.html?SongID="+url
@@ -35,7 +36,18 @@ Item {
             url: "https://connect.deezer.com/oauth/auth.php?app_id=144391&format=popup&redirect_uri=http://localhost:3000&response_type=token"
             anchors.fill: parent
             onUrlChanged:
-                console.debug(url)
+            {
+                var patt = /access_token=(.*?)&/;
+                if(patt.test(url))
+                {
+                    var myArray = patt.exec(url)
+                    console.debug(myArray[1])
+                    essai.visible = false
+                    accessTokenAvailable(myArray[1])
+                }
+                else
+                    console.debug("waiting for login...")
+            }
 
         }
 

@@ -1,21 +1,17 @@
 #include "albumlistmodel.h"
-#include "Service/servicecollection.h"
+#include "Service/abstractservicecollection.h"
 #include "Service/collectionmanager.h"
 
 AlbumListModel::AlbumListModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-
-    QMap<QString,ServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
-
-    foreach (ServiceCollection *s, all) {
-        mAlbums.append(s->getAllAlbums());
-    }
-
+    updateList();
 }
 
 QVariant AlbumListModel::data(const QModelIndex &index, int role) const
 {
+
+
     AlbumView *a = mAlbums.at(index.row());
     return QVariant::fromValue(a);
 }
@@ -33,4 +29,16 @@ QHash<int, QByteArray> AlbumListModel::roleNames() const
     roles[Qt::UserRole] = "obj";
 
     return roles;
+}
+
+void AlbumListModel::updateList()
+{
+    beginResetModel();
+    mAlbums.clear();
+    QMap<QString,AbstractServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
+    foreach (AbstractServiceCollection *s, all) {
+        mAlbums.append(s->getAllAlbums());
+    }
+    endResetModel();
+
 }

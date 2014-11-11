@@ -11,7 +11,6 @@ SOURCES += main.cpp \
     Dao/daocollection.cpp \
     Player/player.cpp \
     Player/playlistmodel.cpp \
-    Service/servicecollection.cpp \
     Service/jacketprovider.cpp \
     Service/collectionmanager.cpp \
     Dao/daodeezercollection.cpp \
@@ -24,7 +23,8 @@ SOURCES += main.cpp \
     View/collectionview.cpp \
     View/songview.cpp \
     Player/searchtrackmodel.cpp \
-    Player/albumlistmodel.cpp
+    Player/albumlistmodel.cpp \
+    Service/servicecollectiondeezer.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -47,7 +47,6 @@ HEADERS += \
     FakeMusicCollection/Model/abstractcollectionitem.h \
     Player/player.h \
     Player/playlistmodel.h \
-    Service/servicecollection.h \
     Service/jacketprovider.h \
     Service/collectionmanager.h \
     Dao/daodeezercollection.h \
@@ -63,6 +62,7 @@ HEADERS += \
     View/songview.h \
     Player/searchtrackmodel.h \
     Player/albumlistmodel.h \
-    Dao/abstractcollectiondao.h
+    Service/abstractservicecollection.h \
+    Service/servicecollectiondeezer.h
 
 OTHER_FILES +=

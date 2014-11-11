@@ -6,11 +6,10 @@
 #include "searchtrackmodel.h"
 #include "Player/albumlistmodel.h"
 
-#include "Dao/abstractcollectiondao.h"
 #include "abstractmediaplayer.h"
 #include "searchtrackmodel.h"
 #include "View/songview.h"
-
+#include "View/artistview.h"
 
 class Player : public QObject
 {

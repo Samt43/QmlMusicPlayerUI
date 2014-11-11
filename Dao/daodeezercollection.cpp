@@ -12,7 +12,7 @@
 #include <QTimer>
 #include <QImage>
 
-DAODeezerCollection::DAODeezerCollection(QString idCollection, QObject *parent): AbstractCollectionDao(idCollection,parent)
+DAODeezerCollection::DAODeezerCollection(QString idCollection):mCollectionId(idCollection)
 {
 
 
@@ -26,13 +26,21 @@ QList< ArtistView *> DAODeezerCollection::getAllArtists()
 }
 
 
-QList<AlbumView *> DAODeezerCollection::getAllAlbums()
+QList<AlbumView *> DAODeezerCollection::getAllAlbums(QString token)
 {
     QList<AlbumView *> albums;
-    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=100"));
-    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/user/me/albums?access_token="));
+    QJsonObject j;
+    QJsonArray a;
+    if (token =="")
+    {    j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=100"));
+        a = j["albums"].toObject()["data"].toArray();
+    }
+    else
+    {
+        j = getJsonObject(QUrl("http://api.deezer.com/user/me/albums?access_token="+token));
+        a = j["data"].toArray();
+    }
 
-    QJsonArray a = j["albums"].toObject()["data"].toArray();
     QJsonArray::iterator  it;
 
     for (it=a.begin();it!=a.end();it++)

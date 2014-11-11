@@ -1,7 +1,7 @@
 #include "player.h"
 #include <QDebug>
 #include "Dao/daocollection.h"
-#include "Service/servicecollection.h"
+#include "Service/abstractservicecollection.h"
 #include "Service/collectionmanager.h"
 #include "Player/audiostreammediaplayer.h"
 #include "Player/DeezerPlayer/deezermediaplayer.h"
@@ -18,9 +18,9 @@ Player::Player(QObject *parent) :
     mSearchTrackModel = new SearchTrackModel;
     mPlaylistModel = new PlaylistModel;
 
-    QMap<QString,ServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
+    QMap<QString,AbstractServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
 
-    foreach (ServiceCollection *s, all) {
+    foreach (AbstractServiceCollection *s, all) {
         mPlaylistModel->addSongs(s->getAllSongs());
     }
 
@@ -82,14 +82,14 @@ bool Player::play(int index)
     {
         QSharedPointer<SongView>s  = mPlaylistModel->getNowPlayingSong();
 
-        if (mAbstractMediaPlayer != CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId()))
+        if (mAbstractMediaPlayer != CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getMediaPlayer())
         {
             if (mAbstractMediaPlayer)
             {
                 mAbstractMediaPlayer->stop();
                 disconnect(mAbstractMediaPlayer);
             }
-            mAbstractMediaPlayer = CollectionManager::getInstance()->getMediaPlayerCollection(s->getCollectionId());
+            mAbstractMediaPlayer = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getMediaPlayer();
             connect(mAbstractMediaPlayer,SIGNAL(SongHasFinished()),this,SLOT(playNextSong()));
             connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged()),this,SLOT(updateCurrentTime()));
         }
