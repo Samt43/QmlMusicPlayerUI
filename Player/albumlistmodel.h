@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include "View/albumview.h"
+#include <qmutex.h>
 
 class AlbumListModel : public QAbstractListModel
 {
@@ -13,11 +14,12 @@ public:
     int rowCount(const QModelIndex &parent) const;
     QHash<int, QByteArray> roleNames() const;
 
-    Q_INVOKABLE
+    public slots:
     void updateList();
 
 protected:
     QList<AlbumView *> mAlbums;
+    QMutex mUpdateListMutex;
 
 signals:
 

@@ -11,12 +11,12 @@ class AlbumView;
 
 class AbstractServiceCollection : public QObject
 {
-
+Q_OBJECT
 public:
 
-    AbstractServiceCollection(QString id)
+    AbstractServiceCollection(QString id, QObject * parent=0):QObject(parent),mCollectionId(id)
     {
-            mCollectionId = id;
+
 
     }
 
@@ -28,6 +28,7 @@ public:
 
     virtual QList<ArtistView *> getAllArtists() = 0;
     virtual QList<QSharedPointer<SongView> > getAllSongs() = 0;
+    virtual QList<QSharedPointer<SongView> > searchSongsByAlbum(int albumId) = 0;
     virtual QList<AlbumView *> getAllAlbums() = 0;
     virtual QList<QSharedPointer<SongView> > searchSongs(QString s) = 0;
     virtual AlbumView *getAlbumFromId(int id) = 0;
@@ -37,7 +38,8 @@ public:
     virtual const QImage getJacketFromAlbum(AlbumView *a) = 0;
     virtual const QImage getJacketFromArtist(ArtistView *a) = 0;
 
-
+signals:
+    void AllCollectionHasChanged(AbstractServiceCollection *);
 
 protected :
     QString mCollectionId;

@@ -7,6 +7,7 @@
 #include "Player/player.h"
 #include "Service/jacketprovider.h"
 #include "Service/servicecollectiondeezer.h"
+#include "Service/servicecollectionxml.h"
 
 #include "View/songview.h"
 #include "View/artistview.h"
@@ -44,11 +45,11 @@ int main(int argc, char *argv[])
     CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",rootObject));
 #else
     // Only 30s for windows and android
-    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",rootObject));
+    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",NULL));
 #endif
 
     // load xml fake collection
-    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",rootObject));
+    CollectionManager::getInstance()->addCollection(new ServiceCollectionXML("Local XML"));
 
 
     Player p;

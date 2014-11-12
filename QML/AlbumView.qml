@@ -13,21 +13,22 @@ GridView {
     anchors.fill: parent
     model: player.albumListModel
 
-    onVisibleChanged:
-    {
-        player.albumListModel.updateList();
-    }
-
 
             delegate:
     Item {
     width: cellWidth
     height: cellHeight
+    property AlbumView album: obj
+    MouseArea
+    {
+        anchors.fill: parent
+        anchors.margins: 5
+        anchors.centerIn: parent
+        onClicked: player.addAlbumToPlaylist(album)
     Image {
     anchors.fill: parent
-    anchors.margins: 5
-    anchors.centerIn: parent
     source: obj.jacket
+    }
     }
 
     }

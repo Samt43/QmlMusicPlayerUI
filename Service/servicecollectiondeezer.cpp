@@ -1,9 +1,16 @@
 #include "servicecollectiondeezer.h"
 #include <QImage>
+#include "Player/audiostreammediaplayer.h"
 
-ServiceCollectionDeezer::ServiceCollectionDeezer(QString idCollection,QObject* o):AbstractServiceCollection(idCollection),mDaoDeezer(idCollection),mDeezerMediaPlayer(o)
+ServiceCollectionDeezer::ServiceCollectionDeezer(QString idCollection,QObject* o):AbstractServiceCollection(idCollection),mDaoDeezer(idCollection)
 {
-    QObject::connect(o, SIGNAL(accessTokenAvailable(QString)),this, SLOT(newAccessTokenIsAvailable(QString)));
+    mQmlPlayerItem = NULL;
+    if (o!=NULL)
+    {
+        QObject::connect(o, SIGNAL(accessTokenAvailable(QString)),this, SLOT(newAccessTokenIsAvailable(QString)));
+        mQmlPlayerItem = o;
+    }
+    mPlayer = new AudioStreamMediaPlayer;
 }
 
 QList<ArtistView *> ServiceCollectionDeezer::getAllArtists()
@@ -13,7 +20,12 @@ QList<ArtistView *> ServiceCollectionDeezer::getAllArtists()
 
 QList<QSharedPointer<SongView> > ServiceCollectionDeezer::getAllSongs()
 {
-    return mDaoDeezer.getAllSongs();
+    return mDaoDeezer.getAllSongs(mAccessToken);
+}
+
+QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongsByAlbum(int albumId)
+{
+    return mDaoDeezer.searchSongsByAlbum(albumId);
 }
 
 QList<AlbumView *> ServiceCollectionDeezer::getAllAlbums()
@@ -56,13 +68,18 @@ ArtistView *ServiceCollectionDeezer::getArtistFromId(int id)
 
   AbstractMediaPlayer * ServiceCollectionDeezer::getMediaPlayer()
   {
-      return &mDeezerMediaPlayer;
+      return mPlayer;
   }
 
   void ServiceCollectionDeezer::newAccessTokenIsAvailable(QString token)
   {
       if (token!="")
       {
+          delete mPlayer;
+          // Login success, tracks can now be read in full length !
+          mPlayer = new DeezerMediaPlayer(mQmlPlayerItem);
           mAccessToken = token;
+          mDaoDeezer.setOnly30sAvailable(false);
+          emit AllCollectionHasChanged(this);
       }
   }

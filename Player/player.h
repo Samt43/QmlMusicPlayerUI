@@ -11,6 +11,8 @@
 #include "View/songview.h"
 #include "View/artistview.h"
 
+#include "Service/abstractservicecollection.h"
+
 class Player : public QObject
 {
     Q_OBJECT
@@ -28,9 +30,10 @@ public:
     enum PlayerState {playState,pauseState};
 
     Q_INVOKABLE virtual bool play(int index);
-    Q_INVOKABLE virtual bool addSongToPlaylist(SongView* s);
     Q_INVOKABLE virtual bool playImmediatly(SongView* s);
     Q_INVOKABLE virtual void pause();
+    Q_INVOKABLE virtual bool addSongToPlaylist(SongView* s);
+    Q_INVOKABLE virtual bool addAlbumToPlaylist(AlbumView *a);
     Q_INVOKABLE virtual void clearPlaylist();
 
     PlayerState getState() {
@@ -48,7 +51,7 @@ public:
 
 public slots:
     Q_INVOKABLE bool playNextSong();
-
+    void ReloadServiceCollection(AbstractServiceCollection * s);
 
 
 signals:

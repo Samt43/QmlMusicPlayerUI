@@ -1,15 +1,14 @@
-#ifndef SERVICECOLLECTIONDEEZER_H
-#define SERVICECOLLECTIONDEEZER_H
-#include <QObject>
+#ifndef SERVICECOLLECTIONXML_H
+#define SERVICECOLLECTIONXML_H
 #include "abstractservicecollection.h"
-#include "Dao/daodeezercollection.h"
-#include "Player/DeezerPlayer/deezermediaplayer.h"
+#include "Dao/daocollection.h"
+#include "Player/audiostreammediaplayer.h"
 
-class ServiceCollectionDeezer : public AbstractServiceCollection
+class ServiceCollectionXML : public AbstractServiceCollection
 {
     Q_OBJECT
-public:
-    ServiceCollectionDeezer(QString idCollection, QObject *o);
+public:  
+    ServiceCollectionXML(QString idCollection, QObject *parent =0);
     QList<ArtistView *> getAllArtists();
     QList<QSharedPointer<SongView> > getAllSongs();
     QList<AlbumView *> getAllAlbums();
@@ -22,16 +21,14 @@ public:
     const QImage getJacketFromAlbum(AlbumView *a);
     const QImage getJacketFromArtist(ArtistView *a);
 
+signals:
 
-
-   private slots:
-   void newAccessTokenIsAvailable(QString);
+public slots:
 
 protected:
-    DAODeezerCollection mDaoDeezer;
-    AbstractMediaPlayer * mPlayer;
-    QString mAccessToken;
-    QObject * mQmlPlayerItem;
+    DAOCollection mDaoXmlCollection;
+    AudioStreamMediaPlayer mAudioStreamMediaPlayer;
+
 };
 
-#endif // SERVICECOLLETIONDEEZER_H
+#endif // SERVICECOLLECTIONXML_H

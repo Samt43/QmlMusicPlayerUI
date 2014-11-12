@@ -1,7 +1,6 @@
 #include "player.h"
 #include <QDebug>
 #include "Dao/daocollection.h"
-#include "Service/abstractservicecollection.h"
 #include "Service/collectionmanager.h"
 #include "Player/audiostreammediaplayer.h"
 #include "Player/DeezerPlayer/deezermediaplayer.h"
@@ -22,14 +21,13 @@ Player::Player(QObject *parent) :
 
     foreach (AbstractServiceCollection *s, all) {
         mPlaylistModel->addSongs(s->getAllSongs());
+        connect(s,SIGNAL(AllCollectionHasChanged(AbstractServiceCollection*)),this,SLOT(ReloadServiceCollection(AbstractServiceCollection*)));
+
     }
 
     mAbstractMediaPlayer = NULL;
     mNowPlayingAlbum = NULL;
     mNowPlayingArtist = NULL;
-
-
-
 
 }
 
@@ -74,6 +72,14 @@ bool Player::addSongToPlaylist(SongView * s)
     return true;
 
 }
+
+bool Player::addAlbumToPlaylist(AlbumView * a)
+{
+    QList<QSharedPointer<SongView> > l = CollectionManager::getInstance()->getServiceCollection(a->getCollectionId())->searchSongsByAlbum(a->getItemId());
+    mPlaylistModel->addSongs(l);
+
+}
+
 
 bool Player::play(int index)
 {
@@ -147,4 +153,11 @@ SearchTrackModel * Player::getSearchTrackModel()
 AlbumListModel * Player::getAlbumListModel()
 {
     return mAlbumListModel;
+}
+
+void Player::ReloadServiceCollection(AbstractServiceCollection *s)
+{
+    mPlaylistModel->clearPlaylist();
+    mPlaylistModel->addSongs(s->getAllSongs());
+
 }

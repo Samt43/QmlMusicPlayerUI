@@ -11,11 +11,11 @@
 #include "View/artistview.h"
 #include <QTimer>
 #include <QImage>
+#include <curl/curl.h>
 
 DAODeezerCollection::DAODeezerCollection(QString idCollection):mCollectionId(idCollection)
 {
-
-
+    mOnly30sAvailable = true;
 }
 
 
@@ -37,7 +37,7 @@ QList<AlbumView *> DAODeezerCollection::getAllAlbums(QString token)
     }
     else
     {
-        j = getJsonObject(QUrl("http://api.deezer.com/user/me/albums?access_token="+token));
+        j = getJsonObject(QUrl("http://api.deezer.com/user/me/albums&access_token="+token));
         a = j["data"].toArray();
     }
 
@@ -53,14 +53,22 @@ QList<AlbumView *> DAODeezerCollection::getAllAlbums(QString token)
 }
 
 
-QList<QSharedPointer<SongView> > DAODeezerCollection::getAllSongs()
+QList<QSharedPointer<SongView> > DAODeezerCollection::getAllSongs(QString token)
 {
     QList<QSharedPointer<SongView> > songs;
-    //QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=500"));
-    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/playlist/216322211"));
+    QJsonArray a;
+    if (token =="")
+    {
+    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/editorial/0/charts&limit=200"));
+    a = j["tracks"].toObject()["data"].toArray();
+    }
+    else
+    {
+    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/user/me/charts&limit=200&access_token="+token));
+    a = j["data"].toArray();
+    }
 
 
-    QJsonArray a = j["tracks"].toObject()["data"].toArray();
     QJsonArray::iterator  it;
 
     for (it=a.begin();it!=a.end();it++)
@@ -129,9 +137,22 @@ QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByArtist(QStrin
 {
     return QList<QSharedPointer<SongView> >();
 }
-QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByAlbum(QString s)
+
+
+QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByAlbum(int idAlbum)
 {
-    return QList<QSharedPointer<SongView> >();
+    QList<QSharedPointer<SongView> > songs;
+    QJsonObject j = getJsonObject(QUrl("https://api.deezer.com/album/"+QString::number(idAlbum)+"/tracks"));
+    QJsonArray a = j["data"].toArray();
+    QJsonArray::iterator  it;
+
+    for (it=a.begin();it!=a.end();it++)
+    {
+        int id = (*it).toObject().value("id").toInt();
+        songs.append(getSongFromId(id));
+    }
+    return songs;
+
 }
 
 
@@ -141,12 +162,16 @@ QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObj
     QString title = songObject.value("title").toString();
     QString url = songObject.value("preview").toString();
     int id = songObject.value("id").toInt();
+    int duration =0;
 
-#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
-    int duration = songObject.value("duration").toInt();
-#else
-    int duration = 30;
-#endif
+    if (mOnly30sAvailable)
+    {
+        duration = 30;
+    }
+    else
+    {
+        duration = songObject.value("duration").toInt();
+    }
 
     QJsonObject albumJs = songObject.value("album").toObject();
     QString abName = albumJs.value("title").toString();
@@ -162,7 +187,6 @@ QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObj
     return s;
 
 }
-
 
 
 
@@ -184,42 +208,85 @@ ArtistView *DAODeezerCollection::getArtistFromJson(QJsonObject artistObject)
 }
 
 
+struct MemoryStruct {
+  char *memory;
+  size_t size;
+};
+
+static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
+{
+  size_t realsize = size * nmemb;
+  struct MemoryStruct *mem = (struct MemoryStruct *)userp;
+
+  mem->memory = (char*)realloc(mem->memory, mem->size + realsize + 1);
+  if(mem->memory == NULL) {
+    /* out of memory! */
+    printf("not enough memory (realloc returned NULL)\n");
+    return 0;
+  }
+
+  memcpy(&(mem->memory[mem->size]), contents, realsize);
+  mem->size += realsize;
+  mem->memory[mem->size] = 0;
+
+  return realsize;
+}
+
 QJsonObject DAODeezerCollection::getJsonObject(QUrl url)
 {
-    QJsonObject jsonObjRetour;
-    // create custom temporary event loop on stack
-    QEventLoop eventLoop;
-    QNetworkAccessManager networkManager;
+    // We use curl because the function is truly blocking, contrary to the trick with QEventLoop that create a lot of problems...
 
-    QObject::connect(&networkManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
+      CURL *curl_handle;
+      CURLcode res;
+      QJsonObject jsonObjRetour;
 
-    //QUrl url("http://api.deezer.com/editorial/0/charts");
-    QNetworkRequest request;
-    request.setUrl(url);
+      struct MemoryStruct chunk;
 
-    QNetworkReply* currentReply = networkManager.get(request);  // GET
-    eventLoop.exec(); // blocks stack until "finished()" has been called
+      chunk.memory = (char *)malloc(1);  /* will be grown as needed by the realloc above */
+      chunk.size = 0;    /* no data at this point */
 
-    if (currentReply->error() == QNetworkReply::NoError) {
+      curl_global_init(CURL_GLOBAL_ALL);
 
-        QString strReply = (QString)currentReply->readAll();
+      /* init the curl session */
+      curl_handle = curl_easy_init();
 
-        //parse json
+      /* specify URL to get */
+      curl_easy_setopt(curl_handle, CURLOPT_URL, url.toString().toStdString().c_str());
+
+      /* send all data to this function  */
+      curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+
+      /* we pass our 'chunk' struct to the callback function */
+      curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
+
+      /* some servers don't like requests that are made without a user-agent
+         field, so we provide one */
+      curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+
+      /* get it! */
+      res = curl_easy_perform(curl_handle);
+
+      /* check for errors */
+      if(res != CURLE_OK) {
+        fprintf(stderr, "curl_easy_perform() failed: %s\n",
+                curl_easy_strerror(res));
+      }
+      else {
+        QString strReply(chunk.memory);
         QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
-
         jsonObjRetour = jsonResponse.object();
 
+      }
 
+      /* cleanup curl stuff */
+      curl_easy_cleanup(curl_handle);
 
-        delete currentReply;
-    }
-    else {
+      if(chunk.memory)
+        free(chunk.memory);
 
-        delete currentReply;
-    }
-
-    return jsonObjRetour;
-
+      /* we're done with libcurl, so clean it up */
+      curl_global_cleanup();
+     return jsonObjRetour;
 }
 
 const QImage DAODeezerCollection::getJacketFromAlbum( AlbumView *a)
@@ -230,6 +297,11 @@ const QImage DAODeezerCollection::getJacketFromAlbum( AlbumView *a)
 const QImage DAODeezerCollection::getJacketFromArtist( ArtistView *a)
 {
     return getImageFromUrl(a->getJacket());
+}
+
+void DAODeezerCollection::setOnly30sAvailable(bool b)
+{
+    mOnly30sAvailable = b;
 }
 
 

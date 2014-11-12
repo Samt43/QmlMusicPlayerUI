@@ -17,16 +17,17 @@ public:
     DAODeezerCollection(QString idCollection);
     QList<ArtistView *> getAllArtists();
     QList<AlbumView *> getAllAlbums(QString token);
-    QList<QSharedPointer<SongView> > getAllSongs();
+    QList<QSharedPointer<SongView> > getAllSongs(QString token);
     QList<ArtistView *> searchArtists(QString s);
     QList<QSharedPointer<SongView> > searchSongs(QString s);
     QList<QSharedPointer<SongView> > searchSongsByArtist(QString s);
-    QList<QSharedPointer<SongView> > searchSongsByAlbum(QString s);
+    QList<QSharedPointer<SongView> > searchSongsByAlbum(int idAlbum);
     QSharedPointer<SongView> getSongFromId(int id);
     AlbumView * getAlbumFromId(int id);
     ArtistView *getArtistFromId(int id);
     const QImage getJacketFromAlbum(AlbumView *a);
     const QImage getJacketFromArtist(ArtistView *a);
+    void setOnly30sAvailable(bool b);
 
 protected:
     QJsonObject getJsonObject(QUrl url);
@@ -39,6 +40,7 @@ protected:
     QMap<int,ArtistView *> mapArtist;
     QMap<int, AlbumView *> mapAlbum;
     QString mCollectionId;
+    bool mOnly30sAvailable;
 
 
 };

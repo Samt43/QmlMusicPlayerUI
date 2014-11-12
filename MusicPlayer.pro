@@ -2,6 +2,8 @@ TEMPLATE = app
 
 QT += qml quick widgets xml svg multimedia
 
+LIBS += -lcurl
+
 QTPLUGIN += qsvg
 SOURCES += main.cpp \
     FakeMusicCollection/Model/album.cpp \
@@ -24,7 +26,8 @@ SOURCES += main.cpp \
     View/songview.cpp \
     Player/searchtrackmodel.cpp \
     Player/albumlistmodel.cpp \
-    Service/servicecollectiondeezer.cpp
+    Service/servicecollectiondeezer.cpp \
+    Service/servicecollectionxml.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -63,6 +66,8 @@ HEADERS += \
     Player/searchtrackmodel.h \
     Player/albumlistmodel.h \
     Service/abstractservicecollection.h \
-    Service/servicecollectiondeezer.h
+    Service/servicecollectiondeezer.h \
+    Service/servicecollectionxml.h
 
-OTHER_FILES +=
+OTHER_FILES += \
+    Readme.txt
