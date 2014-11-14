@@ -6,12 +6,16 @@ import AlbumView 1.0
 
 
 GridView {
-    property variant mod
+    property variant mod:player.albumListModel
     property int modelcurrentIndex: 0
-    signal albumClicked(AlbumView track,int indexAlbum)
-    signal albumDoubleClicked(AlbumView track,int indexAlbum)
+    signal albumClicked(AlbumView a)
     anchors.fill: parent
-    model: player.albumListModel
+    model: mod
+
+    onAlbumClicked:
+    {
+        player.addAlbumToPlaylist(a)
+    }
 
 
             delegate:
@@ -24,7 +28,7 @@ GridView {
         anchors.fill: parent
         anchors.margins: 5
         anchors.centerIn: parent
-        onClicked: player.addAlbumToPlaylist(album)
+        onClicked: albumClicked(album)
     Image {
     anchors.fill: parent
     source: obj.jacket

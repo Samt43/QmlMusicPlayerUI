@@ -18,6 +18,7 @@
 #include "Player/searchtrackmodel.h"
 #include "Player/albumlistmodel.h"
 #include "Service/collectionmanager.h"
+#include "Player/playlistlistmodel.h"
 
 #include <QtQml>
 
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<AudioStreamMediaPlayer>("AudioStreamMediaPlayer", 1, 0, "AudioStreamMediaPlayer");
     qmlRegisterType<SearchTrackModel>("SearchTrackModel", 1, 0, "SearchTrackModel");
     qmlRegisterType<AlbumListModel>("AlbumListModel", 1, 0, "AlbumListModel");
+    qmlRegisterType<PlaylistListModel>("PlaylistListModel", 1, 0, "PlaylistListModel");
 
     QQmlApplicationEngine engine;
 

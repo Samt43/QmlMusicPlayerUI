@@ -53,6 +53,34 @@ QList<AlbumView *> DAODeezerCollection::getAllAlbums(QString token)
 }
 
 
+QList<AlbumView *> DAODeezerCollection::getAllPlaylist(QString token)
+{
+    QList<AlbumView *> playlists;
+    QJsonObject j;
+    QJsonArray a;
+    if (token =="")
+    {    j = getJsonObject(QUrl("http://api.deezer.com/radio/"));
+        a = j["data"].toArray();
+    }
+    else
+    {
+        j = getJsonObject(QUrl("http://api.deezer.com/user/me/playlists&access_token="+token));
+        a = j["data"].toArray();
+    }
+
+    QJsonArray::iterator  it;
+
+    for (it=a.begin();it!=a.end();it++)
+    {
+        playlists.append(getPlaylistFromJson((*it).toObject()));
+    }
+
+    return playlists;
+
+}
+
+
+
 QList<QSharedPointer<SongView> > DAODeezerCollection::getAllSongs(QString token)
 {
     QList<QSharedPointer<SongView> > songs;
@@ -155,6 +183,23 @@ QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByAlbum(int idA
 
 }
 
+QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByPlaylist(int playlistId)
+{
+    QList<QSharedPointer<SongView> > songs;
+    QJsonArray a;
+
+    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/playlist/"+QString::number(playlistId)+"/tracks&limit=3000"));
+    a = j["data"].toArray();
+
+    QJsonArray::iterator  it;
+
+    for (it=a.begin();it!=a.end();it++)
+    {
+        songs.append(getSongFromJson((*it).toObject()));
+    }
+    return songs;
+}
+
 
 QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObject)
 {
@@ -189,6 +234,13 @@ QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObj
 }
 
 
+AlbumView *DAODeezerCollection::getPlaylistFromJson(QJsonObject albumObject)
+{
+    int id = albumObject.value("id").toInt();
+    AlbumView * ab = new AlbumView(id,mCollectionId,albumObject["title"].toString(),albumObject["picture"].toString()+"?size=big");
+    mapAlbum[id] = ab;
+    return ab;
+}
 
 AlbumView *DAODeezerCollection::getAlbumFromJson(QJsonObject albumObject)
 {

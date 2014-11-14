@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     Player/searchtrackmodel.cpp \
     Player/albumlistmodel.cpp \
     Service/servicecollectiondeezer.cpp \
-    Service/servicecollectionxml.cpp
+    Service/servicecollectionxml.cpp \
+    Player/playlistlistmodel.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -67,7 +68,8 @@ HEADERS += \
     Player/albumlistmodel.h \
     Service/abstractservicecollection.h \
     Service/servicecollectiondeezer.h \
-    Service/servicecollectionxml.h
+    Service/servicecollectionxml.h \
+    Player/playlistlistmodel.h
 
 OTHER_FILES += \
     Readme.txt

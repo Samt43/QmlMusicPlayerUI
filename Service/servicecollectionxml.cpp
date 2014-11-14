@@ -58,7 +58,17 @@ ArtistView *ServiceCollectionXML::getArtistFromId(int id)
       return QList<QSharedPointer<SongView> >();
   }
 
+  QList<QSharedPointer<SongView> > ServiceCollectionXML::searchSongsByPlaylist(int playlistId)
+  {
+      return QList<QSharedPointer<SongView> >();
+  }
+
   AbstractMediaPlayer * ServiceCollectionXML::getMediaPlayer()
   {
       return &mAudioStreamMediaPlayer;
+  }
+
+  QList<AlbumView *> ServiceCollectionXML::getAllPlaylist()
+  {
+      return QList<AlbumView *> ();
   }

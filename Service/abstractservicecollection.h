@@ -27,8 +27,10 @@ public:
     }
 
     virtual QList<ArtistView *> getAllArtists() = 0;
+    virtual QList<AlbumView *> getAllPlaylist()=0;
     virtual QList<QSharedPointer<SongView> > getAllSongs() = 0;
     virtual QList<QSharedPointer<SongView> > searchSongsByAlbum(int albumId) = 0;
+    virtual QList<QSharedPointer<SongView> > searchSongsByPlaylist(int playlistId) = 0;
     virtual QList<AlbumView *> getAllAlbums() = 0;
     virtual QList<QSharedPointer<SongView> > searchSongs(QString s) = 0;
     virtual AlbumView *getAlbumFromId(int id) = 0;

@@ -5,6 +5,7 @@
 #include "playlistmodel.h"
 #include "searchtrackmodel.h"
 #include "Player/albumlistmodel.h"
+#include "Player/playlistlistmodel.h"
 
 #include "abstractmediaplayer.h"
 #include "searchtrackmodel.h"
@@ -17,6 +18,7 @@ class Player : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(PlaylistModel * playlistModel READ getPlaylistModel CONSTANT)
+    Q_PROPERTY(PlaylistListModel * playlistListModel READ getPlaylistListModel CONSTANT)
     Q_PROPERTY(SearchTrackModel * searchTrackModel READ getSearchTrackModel CONSTANT)
     Q_PROPERTY(AlbumListModel * albumListModel READ getAlbumListModel CONSTANT)
     Q_PROPERTY(SongView * nowPlayingSong READ getNowPlayingSong NOTIFY nowPlayingSongHasChanged)
@@ -34,6 +36,7 @@ public:
     Q_INVOKABLE virtual void pause();
     Q_INVOKABLE virtual bool addSongToPlaylist(SongView* s);
     Q_INVOKABLE virtual bool addAlbumToPlaylist(AlbumView *a);
+    Q_INVOKABLE virtual bool addPlaylistToPlaylist(AlbumView *a);
     Q_INVOKABLE virtual void clearPlaylist();
 
     PlayerState getState() {
@@ -44,6 +47,7 @@ public:
     PlaylistModel * getPlaylistModel();
     SearchTrackModel * getSearchTrackModel();
     AlbumListModel * getAlbumListModel();
+    PlaylistListModel *  getPlaylistListModel();
     SongView * getNowPlayingSong();
     ArtistView *getNowPlayingArtist();
     AlbumView *getNowPlayingAlbum();
@@ -71,6 +75,7 @@ protected:
     PlaylistModel * mPlaylistModel;
     SearchTrackModel * mSearchTrackModel;
     AlbumListModel * mAlbumListModel;
+    PlaylistListModel * mPlaylistListModel;
     AbstractMediaPlayer * mAbstractMediaPlayer;
     PlayerState mState;
     ArtistView * mNowPlayingArtist;

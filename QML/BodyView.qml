@@ -31,6 +31,10 @@ SplitView {
             centralView.insertTab(4,"ToImplement",searchView)
             centralView.insertTab(5,"ArtistsView",artistView)
             centralView.insertTab(6,"AlbumView",albumView)
+            centralView.insertTab(7,"ToImplement",searchView)
+            centralView.insertTab(8,"ToImplement",searchView)
+            centralView.insertTab(9,"PlaylistView",listplaylistView)
+
 
         }
 
@@ -48,6 +52,18 @@ SplitView {
     Component {
         id:trackView
         PlaylistView{
+
+        }
+
+    }
+    Component {
+        id:listplaylistView
+        AlbumView{
+            mod: player.playlistListModel
+            onAlbumClicked:
+            {
+                player.addPlaylistToPlaylist(a)
+            }
 
         }
 

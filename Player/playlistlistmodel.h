@@ -1,15 +1,16 @@
-#ifndef ALBUMLISTMODEL_H
-#define ALBUMLISTMODEL_H
+#ifndef PLAYLISTLISTMODEL_H
+#define PLAYLISTLISTMODEL_H
 
 #include <QAbstractListModel>
 #include "View/albumview.h"
 #include <qmutex.h>
 
-class AlbumListModel : public QAbstractListModel
+class PlaylistListModel : public QAbstractListModel
 {
+
     Q_OBJECT
 public:
-    explicit AlbumListModel(QObject *parent = 0);
+    explicit PlaylistListModel(QObject *parent = 0);
     QVariant data(const QModelIndex &index, int role) const;
     int rowCount(const QModelIndex &parent) const;
     QHash<int, QByteArray> roleNames() const;
@@ -20,10 +21,6 @@ public:
 protected:
     QList<AlbumView *> mAlbums;
 
-signals:
-
-public slots:
-
 };
 
-#endif // ALBUMLISTMODEL_H
+#endif // PLAYLISTLISTMODEL_H

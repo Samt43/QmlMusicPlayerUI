@@ -16,6 +16,7 @@ Player::Player(QObject *parent) :
     mAlbumListModel = new AlbumListModel;
     mSearchTrackModel = new SearchTrackModel;
     mPlaylistModel = new PlaylistModel;
+    mPlaylistListModel = new PlaylistListModel;
 
     QMap<QString,AbstractServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
 
@@ -34,6 +35,11 @@ Player::Player(QObject *parent) :
 PlaylistModel * Player::getPlaylistModel()
 {
     return mPlaylistModel;
+}
+
+PlaylistListModel * Player::getPlaylistListModel()
+{
+    return mPlaylistListModel;
 }
 
 
@@ -80,6 +86,13 @@ bool Player::addAlbumToPlaylist(AlbumView * a)
 
 }
 
+
+bool Player::addPlaylistToPlaylist(AlbumView * a)
+{
+    QList<QSharedPointer<SongView> > l = CollectionManager::getInstance()->getServiceCollection(a->getCollectionId())->searchSongsByPlaylist(a->getItemId());
+    mPlaylistModel->addSongs(l);
+
+}
 
 bool Player::play(int index)
 {

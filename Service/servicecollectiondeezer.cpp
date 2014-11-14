@@ -28,9 +28,20 @@ QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongsByAlbum(int
     return mDaoDeezer.searchSongsByAlbum(albumId);
 }
 
+QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongsByPlaylist(int playlistId)
+{
+    return mDaoDeezer.searchSongsByPlaylist(playlistId);
+}
+
 QList<AlbumView *> ServiceCollectionDeezer::getAllAlbums()
 {
     return mDaoDeezer.getAllAlbums(mAccessToken);
+}
+
+
+QList<AlbumView *> ServiceCollectionDeezer::getAllPlaylist()
+{
+    return mDaoDeezer.getAllPlaylist(mAccessToken);
 }
 
 QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongs(QString s)
