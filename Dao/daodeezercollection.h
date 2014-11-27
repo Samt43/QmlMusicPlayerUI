@@ -5,14 +5,17 @@
 #include <QMap>
 #include <QNetworkAccessManager>
 #include <QMutex>
+#include <QThread>
+#include <QObject>
 
-
+#include "networkworker.h"
 class ArtistView;
 class SongView;
 class AlbumView;
 
-class DAODeezerCollection
+class DAODeezerCollection : QObject
 {
+    Q_OBJECT
 public:
     DAODeezerCollection(QString idCollection);
     QList<ArtistView *> getAllArtists();
@@ -45,9 +48,9 @@ protected:
     QMap<int, AlbumView *> mapAlbum;
     QString mCollectionId;
     bool mOnly30sAvailable;
+    NetworkWorker mNetworkWorker;
+    QThread mThreadNetworkWorker;
 
-protected slots:
-    void slotAllSongsReadyRead();
 
 
 

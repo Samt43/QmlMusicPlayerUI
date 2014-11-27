@@ -2,7 +2,6 @@ TEMPLATE = app
 
 QT += qml quick widgets xml svg multimedia
 
-LIBS += -lcurl
 
 QTPLUGIN += qsvg
 SOURCES += main.cpp \
@@ -28,7 +27,8 @@ SOURCES += main.cpp \
     Player/albumlistmodel.cpp \
     Service/servicecollectiondeezer.cpp \
     Service/servicecollectionxml.cpp \
-    Player/playlistlistmodel.cpp
+    Player/playlistlistmodel.cpp \
+    Dao/networkworker.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
@@ -69,7 +69,8 @@ HEADERS += \
     Service/abstractservicecollection.h \
     Service/servicecollectiondeezer.h \
     Service/servicecollectionxml.h \
-    Player/playlistlistmodel.h
+    Player/playlistlistmodel.h \
+    Dao/networkworker.h
 
 OTHER_FILES += \
     Readme.txt

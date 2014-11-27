@@ -1,8 +1,5 @@
 #include "daodeezercollection.h"
 #include <QUrl>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <qeventloop.h>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -11,11 +8,12 @@
 #include "View/artistview.h"
 #include <QTimer>
 #include <QImage>
-#include <curl/curl.h>
 
 DAODeezerCollection::DAODeezerCollection(QString idCollection):mCollectionId(idCollection)
 {
     mOnly30sAvailable = true;
+    mNetworkWorker.moveToThread(&mThreadNetworkWorker);
+    mThreadNetworkWorker.start();
 }
 
 
@@ -262,88 +260,17 @@ ArtistView *DAODeezerCollection::getArtistFromJson(QJsonObject artistObject)
 }
 
 
-struct MemoryStruct {
-  char *memory;
-  size_t size;
-};
-
-static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
-{
-  size_t realsize = size * nmemb;
-  struct MemoryStruct *mem = (struct MemoryStruct *)userp;
-
-  mem->memory = (char*)realloc(mem->memory, mem->size + realsize + 1);
-  if(mem->memory == NULL) {
-    /* out of memory! */
-    printf("not enough memory (realloc returned NULL)\n");
-    return 0;
-  }
-
-  memcpy(&(mem->memory[mem->size]), contents, realsize);
-  mem->size += realsize;
-  mem->memory[mem->size] = 0;
-
-  return realsize;
-}
-
-
-
-
 
 QJsonObject DAODeezerCollection::getJsonObject(QUrl url)
 {
     // We use curl because the function is truly blocking, contrary to the trick with QEventLoop that create a lot of problems...
 
-      CURL *curl_handle;
-      CURLcode res;
+
       QJsonObject jsonObjRetour;
 
-      struct MemoryStruct chunk;
+      metaObject()->invokeMethod(&mNetworkWorker,"getJsonObject",Qt::QueuedConnection,Q_RETURN_ARG(QJsonObject, jsonObjRetour),
+                                 Q_ARG(QUrl,   url));
 
-      chunk.memory = (char *)malloc(1);  /* will be grown as needed by the realloc above */
-      chunk.size = 0;    /* no data at this point */
-
-      curl_global_init(CURL_GLOBAL_ALL);
-
-      /* init the curl session */
-      curl_handle = curl_easy_init();
-
-      /* specify URL to get */
-      curl_easy_setopt(curl_handle, CURLOPT_URL, url.toString().toStdString().c_str());
-
-      /* send all data to this function  */
-      curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
-
-      /* we pass our 'chunk' struct to the callback function */
-      curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
-
-      /* some servers don't like requests that are made without a user-agent
-         field, so we provide one */
-      curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
-
-      /* get it! */
-      res = curl_easy_perform(curl_handle);
-
-      /* check for errors */
-      if(res != CURLE_OK) {
-        fprintf(stderr, "curl_easy_perform() failed: %s\n",
-                curl_easy_strerror(res));
-      }
-      else {
-        QString strReply(chunk.memory);
-        QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
-        jsonObjRetour = jsonResponse.object();
-
-      }
-
-      /* cleanup curl stuff */
-      curl_easy_cleanup(curl_handle);
-
-      if(chunk.memory)
-        free(chunk.memory);
-
-      /* we're done with libcurl, so clean it up */
-      curl_global_cleanup();
      return jsonObjRetour;
 }
 
@@ -365,11 +292,6 @@ void DAODeezerCollection::setOnly30sAvailable(bool b)
 
 const QImage DAODeezerCollection::getImageFromUrl(QUrl url)
 {
-    QEventLoop eventLoop;
-
-    QTimer t;
-    t.singleShot(1000,&eventLoop,SLOT(quit()));
-    eventLoop.exec();
 
     QImage im;
     //    QObject::connect(&mNetworkManager, SIGNAL(finished(QNetworkReply*)), &eventLoop, SLOT(quit()));
