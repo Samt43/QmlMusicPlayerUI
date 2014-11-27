@@ -33,7 +33,7 @@ Item {
             width: 1280
             height: 720
             id: webview2
-            url: "https://connect.deezer.com/oauth/auth.php?app_id=144391&format=popup&perms=basic_access,manage_library&redirect_uri=http://localhost:3000&response_type=token"
+            url: "http://connect.deezer.com/oauth/auth.php?app_id=144391&format=popup&perms=basic_access,manage_library&redirect_uri=http://localhost:3000&response_type=token"
             anchors.fill: parent
             onUrlChanged:
             {

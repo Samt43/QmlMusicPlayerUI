@@ -96,9 +96,13 @@ ArtistView *ServiceCollectionDeezer::getArtistFromId(int id)
   {
       if (token!="")
       {
+
+        #if defined(Q_OS_LINUX)
           delete mPlayer;
-          // Login success, tracks can now be read in full length !
+          // Login success, tracks can now be read in full length on linux !
           mPlayer = new DeezerMediaPlayer(mQmlPlayerItem);
+        #endif
+
           mAccessToken = token;
           mDaoDeezer.setOnly30sAvailable(false);
 
@@ -142,11 +146,15 @@ ArtistView *ServiceCollectionDeezer::getArtistFromId(int id)
 
   bool ServiceCollectionDeezer::loveThisSong(SongView *s)
   {
-      bool b = mDaoDeezer.AddSongToPlaylist(s->getItemId(),mLovedTracksPlaylist->getItemId(),mAccessToken);
-      updateLoveTracksDictionnary();
-      if (isLovedTrack(s))
+      bool b = false;
+      if (mLovedTracksPlaylist!= NULL)
       {
-          s->setIsLoved(true);
+          b = mDaoDeezer.AddSongToPlaylist(s->getItemId(),mLovedTracksPlaylist->getItemId(),mAccessToken);
+          updateLoveTracksDictionnary();
+          if (isLovedTrack(s))
+          {
+              s->setIsLoved(true);
+          }
       }
       return b;
   }

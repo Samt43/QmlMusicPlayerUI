@@ -168,7 +168,7 @@ QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByArtist(QStrin
 QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByAlbum(int idAlbum)
 {
     QList<QSharedPointer<SongView> > songs;
-    QJsonObject j = getJsonObject(QUrl("https://api.deezer.com/album/"+QString::number(idAlbum)+"/tracks"));
+    QJsonObject j = getJsonObject(QUrl("http://api.deezer.com/album/"+QString::number(idAlbum)+"/tracks"));
     QJsonArray a = j["data"].toArray();
     QJsonArray::iterator  it;
 
@@ -268,7 +268,7 @@ QJsonObject DAODeezerCollection::getJsonObject(QUrl url)
 
       QJsonObject jsonObjRetour;
 
-      metaObject()->invokeMethod(&mNetworkWorker,"getJsonObject",Qt::QueuedConnection,Q_RETURN_ARG(QJsonObject, jsonObjRetour),
+      metaObject()->invokeMethod(&mNetworkWorker,"getJsonObject",Qt::BlockingQueuedConnection,Q_RETURN_ARG(QJsonObject, jsonObjRetour),
                                  Q_ARG(QUrl,   url));
 
      return jsonObjRetour;

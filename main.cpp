@@ -40,13 +40,13 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     // Load Deezer collection
-#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+#if !defined(Q_OS_ANDROID)
     QQmlApplicationEngine engineDeezer;
     engineDeezer.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
     QObject *rootObject = engineDeezer.rootObjects().first();
     CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",rootObject));
 #else
-    // Only 30s for windows and android
+    // android : no authentification...
     CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",NULL));
 #endif
 
