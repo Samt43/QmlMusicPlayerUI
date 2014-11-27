@@ -30,6 +30,7 @@ public:
     const QImage getJacketFromAlbum(AlbumView *a);
     const QImage getJacketFromArtist(ArtistView *a);
     void setOnly30sAvailable(bool b);
+    bool AddSongToPlaylist(int idSong,int idPlaylist, QString token);
 
 protected:
     QJsonObject getJsonObject(QUrl url);
@@ -44,6 +45,10 @@ protected:
     QMap<int, AlbumView *> mapAlbum;
     QString mCollectionId;
     bool mOnly30sAvailable;
+
+protected slots:
+    void slotAllSongsReadyRead();
+
 
 
 };

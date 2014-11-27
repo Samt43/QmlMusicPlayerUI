@@ -22,6 +22,7 @@ public:
     AbstractMediaPlayer * getMediaPlayer();
     const QImage getJacketFromAlbum(AlbumView *a);
     const QImage getJacketFromArtist(ArtistView *a);
+    bool loveThisSong(SongView * s);
 
 signals:
 

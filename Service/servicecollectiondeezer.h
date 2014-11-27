@@ -23,6 +23,8 @@ public:
     AbstractMediaPlayer * getMediaPlayer();
     const QImage getJacketFromAlbum(AlbumView *a);
     const QImage getJacketFromArtist(ArtistView *a);
+    bool loveThisSong(SongView * s);
+
 
 
 
@@ -30,10 +32,15 @@ public:
    void newAccessTokenIsAvailable(QString);
 
 protected:
+    bool isLovedTrack(SongView * s);
+    AlbumView * mLovedTracksPlaylist;
+    void updateLoveParameterFromList(QList<QSharedPointer<SongView> > l);
+    void updateLoveTracksDictionnary();
     DAODeezerCollection mDaoDeezer;
     AbstractMediaPlayer * mPlayer;
     QString mAccessToken;
     QObject * mQmlPlayerItem;
+    QSet<int> mLovedTracks;
 };
 
 #endif // SERVICECOLLETIONDEEZER_H

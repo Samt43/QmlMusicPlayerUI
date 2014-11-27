@@ -72,3 +72,8 @@ ArtistView *ServiceCollectionXML::getArtistFromId(int id)
   {
       return QList<AlbumView *> ();
   }
+
+  bool ServiceCollectionXML::loveThisSong(SongView *s)
+  {
+      return false;
+  }

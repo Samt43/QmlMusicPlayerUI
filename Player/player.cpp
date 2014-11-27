@@ -174,3 +174,8 @@ void Player::ReloadServiceCollection(AbstractServiceCollection *s)
     mPlaylistModel->addSongs(s->getAllSongs());
 
 }
+
+bool Player::loveThisSong(SongView *s)
+{
+    return CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->loveThisSong(s);
+}

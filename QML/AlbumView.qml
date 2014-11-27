@@ -6,6 +6,8 @@ import AlbumView 1.0
 
 
 GridView {
+
+
     property variant mod:player.albumListModel
     property int modelcurrentIndex: 0
     signal albumClicked(AlbumView a)
@@ -32,6 +34,35 @@ GridView {
     Image {
     anchors.fill: parent
     source: obj.jacket
+
+    Item
+    {
+        anchors.bottom: parent.bottom
+        height: titlealbum.contentHeight
+        width: parent.width
+
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        opacity: 0.5
+
+    }
+
+    Text {
+        id : titlealbum
+        text: obj.name
+        wrapMode: Text.Wrap
+        anchors.fill: parent
+        color: "white"
+        horizontalAlignment : Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        font.bold: true
+
+    }
+
+
+    }
+
     }
     }
 

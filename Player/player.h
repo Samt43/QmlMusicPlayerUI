@@ -37,6 +37,7 @@ public:
     Q_INVOKABLE virtual bool addSongToPlaylist(SongView* s);
     Q_INVOKABLE virtual bool addAlbumToPlaylist(AlbumView *a);
     Q_INVOKABLE virtual bool addPlaylistToPlaylist(AlbumView *a);
+    Q_INVOKABLE virtual bool loveThisSong(SongView *s);
     Q_INVOKABLE virtual void clearPlaylist();
 
     PlayerState getState() {

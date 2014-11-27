@@ -71,6 +71,22 @@ ScrollView{
                             source: obj.albumCover
                             smooth: true
                             asynchronous: false
+
+                            MouseArea {
+                             onClicked: player.loveThisSong(obj)
+                             anchors.fill: parent
+                            }
+
+                            Image {
+                                source: (obj.isLoved?"Coeur.svg":"Coeur2.svg")
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                                height: 15
+                                width: 15
+                                sourceSize.width:  20
+                                sourceSize.height:  20
+                                opacity: 0.8
+                            }
                         }
                     }
 

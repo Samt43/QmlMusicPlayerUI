@@ -39,6 +39,7 @@ public:
     virtual AbstractMediaPlayer * getMediaPlayer() = 0;
     virtual const QImage getJacketFromAlbum(AlbumView *a) = 0;
     virtual const QImage getJacketFromArtist(ArtistView *a) = 0;
+    virtual bool loveThisSong(SongView * s) = 0;
 
 signals:
     void AllCollectionHasChanged(AbstractServiceCollection *);

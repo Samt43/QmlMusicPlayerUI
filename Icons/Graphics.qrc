@@ -13,5 +13,7 @@
         <file>edit-clear.svgz</file>
         <file>document-save.svgz</file>
         <file>edit-find.svgz</file>
+        <file>Coeur.svg</file>
+        <file>Coeur2.svg</file>
     </qresource>
 </RCC>

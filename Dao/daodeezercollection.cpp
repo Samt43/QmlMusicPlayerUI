@@ -218,6 +218,7 @@ QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObj
         duration = songObject.value("duration").toInt();
     }
 
+
     QJsonObject albumJs = songObject.value("album").toObject();
     QString abName = albumJs.value("title").toString();
     QString abCover = albumJs.value("cover").toString()+"?size=big";
@@ -228,6 +229,7 @@ QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObj
     int atID = artistJs.value("id").toInt();
 
     QSharedPointer<SongView> s(new SongView(id,mCollectionId,title,abID,abName,QUrl(abCover),atID,atName,duration,QUrl(url)));
+
 
     return s;
 
@@ -283,6 +285,10 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
 
   return realsize;
 }
+
+
+
+
 
 QJsonObject DAODeezerCollection::getJsonObject(QUrl url)
 {
@@ -391,5 +397,14 @@ const QImage DAODeezerCollection::getImageFromUrl(QUrl url)
     //    imgReply->deleteLater();
 
     return im;
+
+}
+
+bool DAODeezerCollection::AddSongToPlaylist(int idSong,int idPlaylist, QString token)
+{
+
+    qDebug()<<"http://api.deezer.com/playlist/"+QString::number(idPlaylist)+"/tracks?songs="+QString::number(idSong)+"&access_token="+token+"&request_method=POST";
+    getJsonObject(QUrl("http://api.deezer.com/playlist/"+QString::number(idPlaylist)+"/tracks?songs="+QString::number(idSong)+"&access_token="+token+"&request_method=POST"));
+    return true;
 
 }
