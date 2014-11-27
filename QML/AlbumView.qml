@@ -2,7 +2,7 @@ import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
 import AlbumView 1.0
-
+import QtQuick.Window 2.2
 
 
 GridView {
@@ -13,6 +13,10 @@ GridView {
     signal albumClicked(AlbumView a)
     anchors.fill: parent
     model: mod
+
+
+    cellHeight:  Screen.height / 7
+    cellWidth: cellHeight
 
     onAlbumClicked:
     {
@@ -34,6 +38,7 @@ GridView {
     Image {
     anchors.fill: parent
     source: obj.jacket
+    id : imgAlbum
 
     Item
     {
@@ -57,6 +62,7 @@ GridView {
         horizontalAlignment : Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.bold: true
+        font.pixelSize: imgAlbum.height/7
 
     }
 

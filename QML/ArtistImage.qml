@@ -31,6 +31,7 @@ Image {
         horizontalAlignment : Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.bold: true
+        font.pixelSize: artistImage.height/4
 
     }
 

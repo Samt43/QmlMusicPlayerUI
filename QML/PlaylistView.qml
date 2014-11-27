@@ -40,6 +40,11 @@ Item
     RowLayout {
         anchors.fill: parent
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: player.clearPlaylist()
+        }
+
         Image {
             Layout.alignment: Qt.AlignLeft
             Layout.fillHeight: true
@@ -58,10 +63,6 @@ Item
             sourceSize.width:  width
             sourceSize.height:  height
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: player.clearPlaylist()
-            }
 
         }
 
