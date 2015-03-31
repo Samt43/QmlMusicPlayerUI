@@ -16,6 +16,7 @@ ApplicationWindow {
     visible: true
     SystemPalette {id: syspal}
     color: syspal.window
+    title: "MetaMusicPlayer : Don't care about sources, just search and listen !"
 
     // 5.3.2 for android
     //visibility: "FullScreen"

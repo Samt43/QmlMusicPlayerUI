@@ -14,7 +14,7 @@ class Album : public AbstractCollectionItem
     Q_OBJECT
 
 public:
-    explicit Album(int id,QString idCollection, QString Name, Artist * m , QUrl jacket, QObject *parent=0);
+    explicit Album(QString id,QString idCollection, QString Name, Artist * m , QUrl jacket, QObject *parent=0);
     Album(QObject *parent = 0);
     QList<Song *> getSongs() const;
     Artist * getArtist() const;

@@ -8,7 +8,7 @@ class AbstractCollectionItem : public QObject
     Q_OBJECT
 
 public:
-    explicit AbstractCollectionItem(int itemId,QString CollectionId,QObject *parent = 0):QObject(parent),mItemID(itemId),mCollectionID(CollectionId)
+    explicit AbstractCollectionItem(QString itemId,QString CollectionId,QObject *parent = 0):QObject(parent),mItemID(itemId),mCollectionID(CollectionId)
     {}
 
     explicit AbstractCollectionItem(QObject *parent = 0) : QObject(parent)
@@ -19,7 +19,7 @@ public:
         return mCollectionID;
     }
 
-    int getItemId() const
+    QString getItemId() const
     {
         return mItemID;
     }
@@ -30,7 +30,7 @@ signals:
 public slots:
 
 protected :
-    long mItemID;
+    QString mItemID;
     QString mCollectionID;
 
 };

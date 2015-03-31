@@ -1,8 +1,10 @@
 #include "servicecollectionxml.h"
 #include <QImage>
+#include <QSharedPointer>
 
 ServiceCollectionXML::ServiceCollectionXML(QString idCollection, QObject* parent):AbstractServiceCollection(idCollection,parent),mDaoXmlCollection(":/music.xml",idCollection)
 {
+    mIsActive = true;
 }
 
 QList<ArtistView *> ServiceCollectionXML::getAllArtists()
@@ -26,13 +28,13 @@ QList<QSharedPointer<SongView> > ServiceCollectionXML::searchSongs(QString s)
 }
 
 
-AlbumView *ServiceCollectionXML::getAlbumFromId(int id)
+AlbumView *ServiceCollectionXML::getAlbumFromId(QString id)
 {
     return mDaoXmlCollection.getAlbumFromId(id);
 
 }
 
-ArtistView *ServiceCollectionXML::getArtistFromId(int id)
+ArtistView *ServiceCollectionXML::getArtistFromId(QString id)
 {
     return mDaoXmlCollection.getArtistFromId(id);
 
@@ -48,17 +50,17 @@ ArtistView *ServiceCollectionXML::getArtistFromId(int id)
       return mDaoXmlCollection.getJacketFromArtist(a);
   }
 
-  QSharedPointer<SongView> ServiceCollectionXML::getSongFromId(int id)
+  QSharedPointer<SongView> ServiceCollectionXML::getSongFromId(QString id)
   {
       return mDaoXmlCollection.getSongFromId(id);
   }
 
-  QList<QSharedPointer<SongView> > ServiceCollectionXML::searchSongsByAlbum(int albumId)
+  QList<QSharedPointer<SongView> > ServiceCollectionXML::searchSongsByAlbum(QString albumId)
   {
       return QList<QSharedPointer<SongView> >();
   }
 
-  QList<QSharedPointer<SongView> > ServiceCollectionXML::searchSongsByPlaylist(int playlistId)
+  QList<QSharedPointer<SongView> > ServiceCollectionXML::searchSongsByPlaylist(QString playlistId)
   {
       return QList<QSharedPointer<SongView> >();
   }

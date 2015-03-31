@@ -12,7 +12,7 @@ class ArtistView : public AbstractCollectionItemView
     Q_PROPERTY(QUrl jacket READ getJacket CONSTANT)
 
 public:
-    explicit ArtistView(int id,QString collectionID,QString Name, QString Infos, QUrl img,QObject *parent=0);
+    explicit ArtistView(QString id,QString collectionID,QString Name, QString Infos, QUrl img,QObject *parent=0);
     ArtistView(QObject *parent = 0);
 
     const QString& getName() const;

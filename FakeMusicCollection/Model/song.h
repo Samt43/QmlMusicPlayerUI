@@ -16,7 +16,7 @@ class Song : public AbstractCollectionItem
     Q_OBJECT
 
 public:
-    explicit Song(int id, QString collectionID, QString name, int Duration, Album * a, QUrl url, QObject *parent=0);
+    explicit Song(QString id, QString collectionID, QString name, int Duration, Album * a, QUrl url, QObject *parent=0);
     Song(QObject *parent = 0);
     int getDuration();
     const QString getName();

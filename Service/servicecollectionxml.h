@@ -14,11 +14,11 @@ public:
     QList<AlbumView *> getAllAlbums();
     QList<AlbumView *> getAllPlaylist();
     QList<QSharedPointer<SongView> > searchSongs(QString s);
-    QList<QSharedPointer<SongView> > searchSongsByAlbum(int albumId);
-    QList<QSharedPointer<SongView> > searchSongsByPlaylist(int playlistId);
-    AlbumView *getAlbumFromId(int id);
-    ArtistView * getArtistFromId(int id);
-    QSharedPointer<SongView> getSongFromId(int id);
+    QList<QSharedPointer<SongView> > searchSongsByAlbum(QString albumId);
+    QList<QSharedPointer<SongView> > searchSongsByPlaylist(QString playlistId);
+    AlbumView *getAlbumFromId(QString id);
+    ArtistView * getArtistFromId(QString id);
+    QSharedPointer<SongView> getSongFromId(QString id);
     AbstractMediaPlayer * getMediaPlayer();
     const QImage getJacketFromAlbum(AlbumView *a);
     const QImage getJacketFromArtist(ArtistView *a);

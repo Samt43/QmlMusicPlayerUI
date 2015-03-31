@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QtXml/qdom.h>
 #include <QFile>
+#include <QSharedPointer>
 #include "FakeMusicCollection/Model/collection.h"
 #include "FakeMusicCollection/Model/album.h"
 #include "FakeMusicCollection/Model/artist.h"
@@ -14,6 +15,11 @@
 
 DAOCollection::DAOCollection(QString path, QString sCollectionID) : mCollection(sCollectionID)
 {
+
+    QTime time = QTime::fromString("PT1M12S", "PTm'M's'S'");
+    // time is 12:01.00
+    qDebug()<<time.isValid();
+    qDebug()<<time.minute();
     if (openCollection(path))
         qDebug()<< "Collection is opened !!";
     else
@@ -49,7 +55,7 @@ bool DAOCollection::openCollection(QString path)
       // We know how to treat appearance and geometry
       if (child.tagName() == "artist")
       {
-        Artist * a = new Artist(child.attribute("id").toInt(),mCollection.getCollectionId(),child.attribute("name"),child.attribute("infos"),QUrl(child.attribute("image")));
+        Artist * a = new Artist(child.attribute("id"),mCollection.getCollectionId(),child.attribute("name"),child.attribute("infos"),QUrl(child.attribute("image")));
         // We traverse children
         QDomElement albums=child.firstChild().toElement();
         while(!albums.isNull())
@@ -57,14 +63,14 @@ bool DAOCollection::openCollection(QString path)
 
             if (albums.tagName() == "album")
             {
-                Album * ab = new Album(child.attribute("id").toInt(),mCollection.getCollectionId(),albums.attribute("title"),a,QUrl(albums.attribute("image")));
+                Album * ab = new Album(child.attribute("id"),mCollection.getCollectionId(),albums.attribute("title"),a,QUrl(albums.attribute("image")));
 
                 QDomElement songs=albums.firstChild().toElement();
                 while(!songs.isNull())
                 {
                     if (songs.tagName() == "song")
                     {
-                    Song * s = new Song(child.attribute("id").toInt(),mCollection.getCollectionId(),songs.attribute("title"),1000,ab,QUrl());
+                    Song * s = new Song(child.attribute("id"),mCollection.getCollectionId(),songs.attribute("title"),1000,ab,QUrl());
                     ab->addSong(s);
                     }
                     songs = songs.nextSiblingElement();
@@ -147,12 +153,12 @@ QList<AlbumView *> DAOCollection::getAllAlbums()
 
 
 
-QSharedPointer<SongView> DAOCollection::getSongFromId(int id)
+QSharedPointer<SongView> DAOCollection::getSongFromId(QString id)
 {
     return QSharedPointer<SongView>();
 }
 
-AlbumView *DAOCollection::getAlbumFromId(int id)
+AlbumView *DAOCollection::getAlbumFromId(QString id)
 {
     QList< Artist *> artists = mCollection.getArtists();
     foreach ( Artist * a, artists) {
@@ -167,7 +173,7 @@ AlbumView *DAOCollection::getAlbumFromId(int id)
     return NULL;
 }
 
-ArtistView * DAOCollection::getArtistFromId(int id)
+ArtistView * DAOCollection::getArtistFromId(QString id)
 {
     QList< Artist *> artists = mCollection.getArtists();
     foreach ( Artist * a, artists) {

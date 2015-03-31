@@ -1,5 +1,6 @@
 #include "audiostreammediaplayer.h"
-#include<QDebug>
+#include <QDebug>
+#include <QSharedPointer>
 #include "View/songview.h"
 
 AudioStreamMediaPlayer::AudioStreamMediaPlayer()

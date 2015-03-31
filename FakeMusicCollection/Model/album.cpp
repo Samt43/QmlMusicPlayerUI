@@ -1,7 +1,7 @@
 #include "album.h"
 
 
-Album::Album(int id,QString idCollection,QString Name, Artist * m ,QUrl jacket, QObject *parent) :AbstractCollectionItem(id,idCollection,parent),mArtist(m),mName(Name),mJacket(jacket)
+Album::Album(QString id,QString idCollection,QString Name, Artist * m ,QUrl jacket, QObject *parent) :AbstractCollectionItem(id,idCollection,parent),mArtist(m),mName(Name),mJacket(jacket)
 {
 }
 

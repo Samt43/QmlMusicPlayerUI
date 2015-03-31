@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets xml svg multimedia
+QT += qml quick widgets xml svg multimedia webengine
 
 
 QTPLUGIN += qsvg
@@ -28,12 +28,16 @@ SOURCES += main.cpp \
     Service/servicecollectiondeezer.cpp \
     Service/servicecollectionxml.cpp \
     Player/playlistlistmodel.cpp \
-    Dao/networkworker.cpp
+    Dao/networkworker.cpp \
+    Dao/daoyoutubecollection.cpp \
+    Service/servicecollectionyoutube.cpp \
+    Player/YoutubePlayer/youtubemediaplayer.cpp
 
 RESOURCES += QML/qml.qrc \
     Icons/Graphics.qrc \
     FakeMusicCollection/FakeMusicCollection.qrc \
-    Player/DeezerPlayer/DeezerRessources.qrc
+    Player/DeezerPlayer/DeezerRessources.qrc \
+    Player/YoutubePlayer/YoutubeRessources.qrc
 
 CONFIG+=qml_debug
 
@@ -70,7 +74,10 @@ HEADERS += \
     Service/servicecollectiondeezer.h \
     Service/servicecollectionxml.h \
     Player/playlistlistmodel.h \
-    Dao/networkworker.h
+    Dao/networkworker.h \
+    Dao/daoyoutubecollection.h \
+    Service/servicecollectionyoutube.h \
+    Player/YoutubePlayer/youtubemediaplayer.h
 
 OTHER_FILES += \
     Readme.txt

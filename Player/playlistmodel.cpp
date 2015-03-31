@@ -1,6 +1,7 @@
 #include "playlistmodel.h"
 #include "Service/abstractservicecollection.h"
 #include <QVariant>
+#include <QSharedPointer>
 #include "View/songview.h"
 
 PlaylistModel::PlaylistModel(QObject *parent) :

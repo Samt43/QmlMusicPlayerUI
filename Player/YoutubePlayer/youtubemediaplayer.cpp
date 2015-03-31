@@ -1,11 +1,10 @@
-#include "deezermediaplayer.h"
+#include "youtubemediaplayer.h"
 #include "View/songview.h"
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include<QDebug>
-#include "networkcookiejar.h"
 
-DeezerMediaPlayer::DeezerMediaPlayer(QObject *qmlItemPlayer):mQmlItemPlayer(qmlItemPlayer)
+YoutubeMediaPlayer::YoutubeMediaPlayer(QObject *qmlItemPlayer):mQmlItemPlayer(qmlItemPlayer)
 {
 
 //    mView  = new QWebView();
@@ -26,9 +25,9 @@ DeezerMediaPlayer::DeezerMediaPlayer(QObject *qmlItemPlayer):mQmlItemPlayer(qmlI
 
 
 
-bool DeezerMediaPlayer::play(QSharedPointer<SongView>s)
+bool YoutubeMediaPlayer::play(QSharedPointer<SongView>s)
 {
-    qDebug()<<"Now Playing !! : "+ s->getName() + s->getItemId();
+    qDebug()<<"Now Playing !! : "+ s->getName();
 
     QVariant returnedValue;
     QMetaObject::invokeMethod(mQmlItemPlayer, "play",
@@ -45,13 +44,13 @@ bool DeezerMediaPlayer::play(QSharedPointer<SongView>s)
 //    emit playNewSong(QUrl("qrc:/deezer/deezer.html?SongID=" + s->getItemId()));
 }
 
-void DeezerMediaPlayer::pause()
+void YoutubeMediaPlayer::pause()
 {
 
     mCurrentTime.stop();
 }
 
-void DeezerMediaPlayer::stop()
+void YoutubeMediaPlayer::stop()
 {
     QVariant returnedValue;
     QMetaObject::invokeMethod(mQmlItemPlayer, "stop",
@@ -60,18 +59,18 @@ void DeezerMediaPlayer::stop()
 
 }
 
-void DeezerMediaPlayer::updatePlayingTime()
+void YoutubeMediaPlayer::updatePlayingTime()
 {
     emit CurrentTimeHasChanged();
 
 }
 
-int DeezerMediaPlayer::getCurrentTime()
+int YoutubeMediaPlayer::getCurrentTime()
 {
     return (mCurrentTime.interval() - mCurrentTime.remainingTime())/1000.f;
 }
 
-void DeezerMediaPlayer::songIsFinished()
+void YoutubeMediaPlayer::songIsFinished()
 {
     mRefreshTime.stop();
     emit SongHasFinished();

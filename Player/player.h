@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <QObject>
+#include <QSharedPointer>
 #include "playlistmodel.h"
 #include "searchtrackmodel.h"
 #include "Player/albumlistmodel.h"
@@ -34,6 +35,7 @@ public:
     Q_INVOKABLE virtual bool play(int index);
     Q_INVOKABLE virtual bool playImmediatly(SongView* s);
     Q_INVOKABLE virtual void pause();
+    Q_INVOKABLE virtual void stop();
     Q_INVOKABLE virtual bool addSongToPlaylist(SongView* s);
     Q_INVOKABLE virtual bool addAlbumToPlaylist(AlbumView *a);
     Q_INVOKABLE virtual bool addPlaylistToPlaylist(AlbumView *a);

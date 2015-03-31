@@ -8,9 +8,21 @@
 NetworkWorker::NetworkWorker(QObject *parent) :
     QObject(parent)
 {
+    moveToThread(&mThreadNetworkWorker);
+    mThreadNetworkWorker.start();
 }
 
+
 QJsonObject NetworkWorker::getJsonObject(QUrl url)
+{
+    QJsonObject jsonObjRetour;
+    metaObject()->invokeMethod(this,"getJsonObjectSlot",Qt::BlockingQueuedConnection,Q_RETURN_ARG(QJsonObject, jsonObjRetour),
+                               Q_ARG(QUrl,   url));
+
+   return jsonObjRetour;
+}
+
+QJsonObject NetworkWorker::getJsonObjectSlot(QUrl url)
 {
 
     QJsonObject jsonObjRetour;

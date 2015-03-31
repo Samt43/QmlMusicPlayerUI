@@ -10,7 +10,7 @@ class Artist : public AbstractCollectionItem
     Q_OBJECT
 
 public:
-    explicit Artist(int id,QString collectionID,QString Name, QString Infos, QUrl img,QObject *parent=0);
+    explicit Artist(QString id,QString collectionID,QString Name, QString Infos, QUrl img,QObject *parent=0);
     Artist(QObject *parent = 0);
 
     QList<Album *> getAlbums() const;

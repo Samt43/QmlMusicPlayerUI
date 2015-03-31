@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QtWebEngine/qtwebengineglobal.h>
 #include "FakeMusicCollection/Model/album.h"
 #include "Dao/daocollection.h"
 #include "Dao/daodeezercollection.h"
@@ -8,6 +9,7 @@
 #include "Service/jacketprovider.h"
 #include "Service/servicecollectiondeezer.h"
 #include "Service/servicecollectionxml.h"
+#include "Service/servicecollectionyoutube.h"
 
 #include "View/songview.h"
 #include "View/artistview.h"
@@ -15,6 +17,7 @@
 
 #include "Player/audiostreammediaplayer.h"
 #include "Player/DeezerPlayer/deezermediaplayer.h"
+#include "Player/YoutubePlayer/youtubemediaplayer.h"
 #include "Player/searchtrackmodel.h"
 #include "Player/albumlistmodel.h"
 #include "Service/collectionmanager.h"
@@ -25,7 +28,7 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-
+    QtWebEngine::initialize();
 
     qmlRegisterType<Player>("Player", 1, 0, "Player");
     qmlRegisterType<PlaylistModel>("PlaylistModel", 1, 0, "PlaylistModel");
@@ -41,10 +44,13 @@ int main(int argc, char *argv[])
 
     // Load Deezer collection
 #if !defined(Q_OS_ANDROID)
-    QQmlApplicationEngine engineDeezer;
-    engineDeezer.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
-    QObject *rootObject = engineDeezer.rootObjects().first();
-    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",rootObject));
+    QQmlApplicationEngine enginePlayers;
+    enginePlayers.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
+    enginePlayers.load(QUrl(QStringLiteral("qrc:///YoutubeQML.qml")));
+    QObject *deezerPlayer = enginePlayers.rootObjects()[0];
+    QObject *youtubePlayer = enginePlayers.rootObjects()[1];
+    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",deezerPlayer));
+    CollectionManager::getInstance()->addCollection(new ServiceCollectionYoutube("Youtube",youtubePlayer));
 #else
     // android : no authentification...
     CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",NULL));
@@ -61,4 +67,5 @@ int main(int argc, char *argv[])
     //engine.addImageProvider("jacket", new JacketProvider);
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
     return app.exec();
+
 }

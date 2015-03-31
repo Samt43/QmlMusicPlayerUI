@@ -113,7 +113,7 @@ ScrollView{
                         }
 
 
-                        Text { text: song.albumName + '-'+ song.artistName
+                        Text { text: song.albumName + '-'+ song.artistName + '-'+ song.collectionID
                             color: (listContext.currentIndex === index ? 'white':'grey' )
                             Layout.fillWidth: true
                             Layout.fillHeight: true

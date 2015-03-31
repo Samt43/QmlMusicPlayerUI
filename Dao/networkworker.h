@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include <QObject>
 #include <QUrl>
+#include <QThread>
 
 class NetworkWorker : public QObject
 {
@@ -10,12 +11,14 @@ class NetworkWorker : public QObject
 public:
     explicit NetworkWorker(QObject *parent = 0);
 
+    // Bolcking method to get a Json object
+    QJsonObject getJsonObject(QUrl url);
 
-signals:
+protected :
+     QThread mThreadNetworkWorker;
 
-public slots:
-     QJsonObject getJsonObject(QUrl url);
-
+protected slots:
+     QJsonObject getJsonObjectSlot(QUrl url);
 };
 
 #endif // NETWORKWORKER_H

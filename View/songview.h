@@ -21,7 +21,7 @@ class SongView : public AbstractCollectionItemView
     Q_PROPERTY(bool isLoved READ getIsLoved WRITE setIsLoved NOTIFY isLovedChanged)
 
 public:
-    explicit SongView(int id, QString collectionID, QString name, int albumId, QString albumName, QUrl albumCover, int artistID, QString artistName, int Duration, QUrl url, QObject *parent=0);
+    explicit SongView(QString id, QString collectionID, QString name, QString albumId, QString albumName, QUrl albumCover, QString artistID, QString artistName, int Duration, QUrl url, QObject *parent=0);
     SongView(QObject *parent = 0);
     virtual ~SongView();
     int getDuration();
@@ -31,8 +31,8 @@ public:
     double getNote();
     QUrl getSongUrl();
     QUrl getAlbumCover();
-    int getAlbumId();
-    int getArtistId();
+    QString getAlbumId();
+    QString getArtistId();
     bool getIsLoved();
     void setIsLoved(bool b);
 
@@ -46,9 +46,9 @@ protected :
     QString mName;
     int mDuration;
     QUrl mSongUrl;
-    int mAlbumId;
+    QString mAlbumId;
     QString mAlbumName;
-    int mArtistId;
+    QString mArtistId;
     QString mArtistName;
     QUrl mAlbumCover;
     double mNote;

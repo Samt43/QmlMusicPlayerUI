@@ -2,7 +2,7 @@
 #include<qalgorithms.h>
 #include <QDebug>
 
-Song::Song(int id, QString collectionID, QString name, int Duration, Album * a, QUrl url, QObject *parent) :AbstractCollectionItem(id,collectionID,parent),mName(name),
+Song::Song(QString id, QString collectionID, QString name, int Duration, Album * a, QUrl url, QObject *parent) :AbstractCollectionItem(id,collectionID,parent),mName(name),
     mAlbum(a),mDuration(Duration),mSongUrl(url)
 {
     mNote = qrand() % 5 + 1;

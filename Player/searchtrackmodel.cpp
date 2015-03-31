@@ -1,3 +1,4 @@
+#include <QSharedPointer>
 #include "searchtrackmodel.h"
 #include "Service/collectionmanager.h"
 #include "View/songview.h"

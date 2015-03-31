@@ -1,6 +1,7 @@
 #ifndef SEARCHTRACKMODEL_H
 #define SEARCHTRACKMODEL_H
 #include <QAbstractListModel>
+#include <QSharedPointer>
 
 #include "View/songview.h"
 

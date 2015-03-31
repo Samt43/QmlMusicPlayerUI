@@ -28,7 +28,7 @@ Item{
 
 Item
 {
-    height: parent.height /20
+    height: parent.height /40
     width: parent.width
     anchors.bottom: parent.bottom
 

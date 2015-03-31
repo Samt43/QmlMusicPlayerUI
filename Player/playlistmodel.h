@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 #include "View/songview.h"
-
+#include <QSharedPointer>
 
 
 class PlaylistModel : public QAbstractListModel

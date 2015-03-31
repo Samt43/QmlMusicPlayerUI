@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>YoutubeQML.qml</file>
+    </qresource>
+</RCC>

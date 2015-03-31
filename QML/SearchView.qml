@@ -20,7 +20,8 @@ ColumnLayout
             height: parent.height - parent.height /7
             width: parent.width - parent.width / 5
             anchors.centerIn: parent
-            onTextChanged: player.searchTrackModel.SearchSongs(text)
+            id: textFieldSearch
+            onAccepted:  player.searchTrackModel.SearchSongs(text)
 
             Image {
                 Layout.alignment: Qt.AlignLeft
@@ -31,6 +32,12 @@ ColumnLayout
                 source: "edit-find.svgz"
                 sourceSize.width:  width
                 sourceSize.height:  height
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: player.searchTrackModel.SearchSongs(textFieldSearch.text)
+
+                }
 
             }
         }

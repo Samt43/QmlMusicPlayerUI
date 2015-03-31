@@ -24,9 +24,9 @@ public:
     QList<QSharedPointer<SongView> > searchSongs(QString s);
     QList<QSharedPointer<SongView> > searchSongsByArtist(QString s);
     QList<QSharedPointer<SongView> > searchSongsByAlbum(QString s);
-    virtual QSharedPointer<SongView> getSongFromId(int id);
-    AlbumView * getAlbumFromId(int id);
-    ArtistView * getArtistFromId(int id);
+    virtual QSharedPointer<SongView> getSongFromId(QString id);
+    AlbumView * getAlbumFromId(QString id);
+    ArtistView * getArtistFromId(QString id);
     const QImage getJacketFromAlbum(AlbumView *a);
     const QImage getJacketFromArtist(ArtistView *a);
 

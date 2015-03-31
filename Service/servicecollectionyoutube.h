@@ -1,16 +1,15 @@
-#ifndef SERVICECOLLECTIONDEEZER_H
-#define SERVICECOLLECTIONDEEZER_H
+#ifndef SERVICECOLLECTIONYOUTUBE_H
+#define SERVICECOLLECTIONYOUTUBE_H
 #include <QObject>
-#include <QSet>
 #include "abstractservicecollection.h"
-#include "Dao/daodeezercollection.h"
+#include "Dao/daoyoutubecollection.h"
 #include "Player/DeezerPlayer/deezermediaplayer.h"
 
-class ServiceCollectionDeezer : public AbstractServiceCollection
+class ServiceCollectionYoutube : public AbstractServiceCollection
 {
     Q_OBJECT
 public:
-    ServiceCollectionDeezer(QString idCollection, QObject *o);
+    ServiceCollectionYoutube(QString idCollection, QObject *o);
     QList<ArtistView *> getAllArtists();
     QList<QSharedPointer<SongView> > getAllSongs();
     QList<AlbumView *> getAllAlbums();
@@ -28,20 +27,19 @@ public:
 
 
 
+signals:
 
-   private slots:
-   void newAccessTokenIsAvailable(QString);
+public slots:
+
+private slots:
+void newAccessTokenIsAvailable(QString);
 
 protected:
-    bool isLovedTrack(SongView * s);
-    AlbumView * mLovedTracksPlaylist;
-    void updateLoveParameterFromList(QList<QSharedPointer<SongView> > l);
-    void updateLoveTracksDictionnary();
-    DAODeezerCollection mDaoDeezer;
+    DaoYoutubeCollection mDaoYoutube;
     AbstractMediaPlayer * mPlayer;
     QString mAccessToken;
     QObject * mQmlPlayerItem;
-    QSet<QString> mLovedTracks;
+
 };
 
-#endif // SERVICECOLLETIONDEEZER_H
+#endif // SERVICECOLLECTIONYOUTUBE_H

@@ -1,5 +1,6 @@
 #include "servicecollectiondeezer.h"
 #include <QImage>
+#include <QSharedPointer>
 #include "Player/audiostreammediaplayer.h"
 #include "View/albumview.h"
 
@@ -13,6 +14,7 @@ ServiceCollectionDeezer::ServiceCollectionDeezer(QString idCollection,QObject* o
         mQmlPlayerItem = o;
     }
     mPlayer = new AudioStreamMediaPlayer;
+    mIsActive = true;
 }
 
 QList<ArtistView *> ServiceCollectionDeezer::getAllArtists()
@@ -27,14 +29,14 @@ QList<QSharedPointer<SongView> > ServiceCollectionDeezer::getAllSongs()
     return l;
 }
 
-QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongsByAlbum(int albumId)
+QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongsByAlbum(QString albumId)
 {
     QList<QSharedPointer<SongView> >  l = mDaoDeezer.searchSongsByAlbum(albumId);
     updateLoveParameterFromList(l);
     return l;
 }
 
-QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongsByPlaylist(int playlistId)
+QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongsByPlaylist(QString playlistId)
 {
     QList<QSharedPointer<SongView> >  l = mDaoDeezer.searchSongsByPlaylist(playlistId);
     updateLoveParameterFromList(l);
@@ -60,13 +62,13 @@ QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongs(QString s)
 }
 
 
-AlbumView *ServiceCollectionDeezer::getAlbumFromId(int id)
+AlbumView *ServiceCollectionDeezer::getAlbumFromId(QString id)
 {
     return mDaoDeezer.getAlbumFromId(id);
 
 }
 
-ArtistView *ServiceCollectionDeezer::getArtistFromId(int id)
+ArtistView *ServiceCollectionDeezer::getArtistFromId(QString id)
 {
     return mDaoDeezer.getArtistFromId(id);
 
@@ -82,7 +84,7 @@ ArtistView *ServiceCollectionDeezer::getArtistFromId(int id)
       return mDaoDeezer.getJacketFromArtist(a);
   }
 
-  QSharedPointer<SongView> ServiceCollectionDeezer::getSongFromId(int id)
+  QSharedPointer<SongView> ServiceCollectionDeezer::getSongFromId(QString id)
   {
       return mDaoDeezer.getSongFromId(id);
   }
@@ -169,3 +171,4 @@ ArtistView *ServiceCollectionDeezer::getArtistFromId(int id)
 
       }
   }
+

@@ -11,7 +11,7 @@ class AlbumView : public AbstractCollectionItemView
     Q_PROPERTY(QUrl jacket READ getJacket CONSTANT)
 
 public:
-    explicit AlbumView(int id,QString idCollection, QString Name, QUrl jacket, QObject *parent=0);
+    explicit AlbumView(QString id,QString idCollection, QString Name, QUrl jacket, QObject *parent=0);
     AlbumView(QObject *parent = 0);
     const QString& getName() const;
     QUrl getJacket() const;

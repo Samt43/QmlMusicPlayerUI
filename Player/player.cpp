@@ -96,16 +96,20 @@ bool Player::addPlaylistToPlaylist(AlbumView * a)
 
 bool Player::play(int index)
 {
-
+    if (mAbstractMediaPlayer != NULL)
+    {
+    mAbstractMediaPlayer->stop();
+    }
     if (mPlaylistModel->setNowPlayingSong(index))
     {
+
         QSharedPointer<SongView>s  = mPlaylistModel->getNowPlayingSong();
 
         if (mAbstractMediaPlayer != CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getMediaPlayer())
         {
             if (mAbstractMediaPlayer)
             {
-                mAbstractMediaPlayer->stop();
+
                 disconnect(mAbstractMediaPlayer);
             }
             mAbstractMediaPlayer = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getMediaPlayer();
@@ -131,6 +135,12 @@ void Player::pause()
 {
     mAbstractMediaPlayer->pause();
 }
+
+void Player::stop()
+{
+    mAbstractMediaPlayer->stop();
+}
+
 
 int Player::getCurrentTime()
 {
