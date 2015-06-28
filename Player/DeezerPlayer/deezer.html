@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
         <script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>
@@ -29,13 +30,16 @@
   <div class="bar" style="width: 0%;"></div>
 </div>
 <script>
+var channel = [];
         $(document).ready(function(){
                 $("#controlers input").attr('disabled', true);
                 $("#slider_seek").click(function(evt,arg){
                         var left = evt.offsetX;
                         console.log(evt.offsetX, $(this).width(), evt.offsetX/$(this).width());
                         DZ.player.seek((evt.offsetX/$(this).width()) * 100);
-                });
+
+
+});
         });
         function event_listener_append() {
                 var pre = document.getElementById('event_listener');
@@ -59,6 +63,34 @@
 
                 var id = getUrlVars()["SongID"];
                 DZ.player.playTracks([id]);
+                        console.log("logtest !!!!345556");
+
+
+                            channel = new QWebChannel(navigator.qtWebChannelTransport, function(channel) {
+                            // all published objects are available in channel.objects under
+                            // the identifier set in their attached WebChannel.id property
+                event_listener_append('AAAAAA');
+                            // access a property
+                            // alert(channelDeezerPlayer.hello);
+
+                            event_listener_append(channel.objects.channelDeezerPlayer);
+                          // Connect to a signal:
+                            channel.objects.channelDeezerPlayer.pause.connect(function() {
+                                // This callback will be invoked whenever the signal is emitted on the C++/QML side.
+                                event_listener_append('stop !!!');
+                                DZ.player.stop();
+                            });
+
+                            channel.objects.channelDeezerPlayer.play.connect(function() {
+                                // This callback will be invoked whenever the signal is emitted on the C++/QML side.
+                                event_listener_append('play !!!');
+                                DZ.player.stop();
+                            });
+
+
+                        });
+                event_listener_append('webchannel !!!');
+
         }
         DZ.init({
 		appId  : '144391',

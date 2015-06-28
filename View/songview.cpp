@@ -75,5 +75,5 @@ QString SongView::getArtistId()
 
 SongView::~SongView()
 {
-    qDebug()<<"Song destructed";
+    //qDebug()<<"Song destructed";
 }

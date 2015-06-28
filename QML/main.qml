@@ -21,8 +21,6 @@ ApplicationWindow {
     // 5.3.2 for android
     //visibility: "FullScreen"
 
-
-
     Column
     {
 

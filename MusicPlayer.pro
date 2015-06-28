@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets xml svg multimedia webengine
+QT += qml quick widgets xml svg multimedia webengine webchannel
 
 
 QTPLUGIN += qsvg

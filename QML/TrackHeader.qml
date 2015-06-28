@@ -262,6 +262,10 @@ Rectangle
                     sourceSize.height:  height
 
                 }
+                MouseArea {
+                    Layout.fillHeight: true
+                    Layout.preferredWidth: height
+                    onClicked: player.pause()
                 Image {
                     Layout.fillHeight: true
                     Layout.preferredWidth: height
@@ -269,7 +273,7 @@ Rectangle
                     sourceSize.width:  width
                     sourceSize.height:  height
 
-                }
+                }}
                 MouseArea {
                     Layout.fillHeight: true
                     Layout.preferredWidth: height

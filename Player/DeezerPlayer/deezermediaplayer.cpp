@@ -47,7 +47,9 @@ bool DeezerMediaPlayer::play(QSharedPointer<SongView>s)
 
 void DeezerMediaPlayer::pause()
 {
-
+    QVariant returnedValue;
+    QMetaObject::invokeMethod(mQmlItemPlayer, "pause",
+            Q_RETURN_ARG(QVariant, returnedValue));
     mCurrentTime.stop();
 }
 

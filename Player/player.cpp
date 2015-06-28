@@ -133,12 +133,19 @@ bool Player::play(int index)
 
 void Player::pause()
 {
+    if (mAbstractMediaPlayer != NULL)
+    {
     mAbstractMediaPlayer->pause();
+    }
+
 }
 
 void Player::stop()
 {
+    if (mAbstractMediaPlayer != NULL)
+    {
     mAbstractMediaPlayer->stop();
+    }
 }
 
 
