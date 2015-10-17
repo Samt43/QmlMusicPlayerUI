@@ -22,20 +22,22 @@ SplitView {
 
         id:centralView
         currentIndex: centralViewCurrentIndex
+
         Component.onCompleted:
         {
             centralView.insertTab(0,"TrackView",trackView)
-            centralView.insertTab(1,"SearchView",searchView)
-            centralView.insertTab(2,"ToImplement",searchView)
+            centralView.insertTab(1,"Collection",collectionDetails)
+            centralView.insertTab(2,"SearchView",searchView)
             centralView.insertTab(3,"ToImplement",searchView)
             centralView.insertTab(4,"ToImplement",searchView)
-            centralView.insertTab(5,"ArtistsView",artistView)
-            centralView.insertTab(6,"AlbumView",albumView)
-            centralView.insertTab(7,"ToImplement",searchView)
+            centralView.insertTab(5,"ToImplement",searchView)
+            centralView.insertTab(6,"ArtistsView",artistView)
+            centralView.insertTab(7,"AlbumView",albumView)
             centralView.insertTab(8,"ToImplement",searchView)
-            centralView.insertTab(9,"PlaylistView",listplaylistView)
-
-
+            centralView.insertTab(9,"ToImplement",searchView)
+            centralView.insertTab(10,"PlaylistView",listplaylistView)
+            centralView.insertTab(11,"ToImplement",searchView)
+            centralView.insertTab(12,"Collections",collectionView)
         }
 
 
@@ -87,6 +89,21 @@ SplitView {
     Component {
         id:albumView
         AlbumView{
+
+        }
+
+    }
+
+    Component {
+        id:collectionView
+        CollectionView{
+
+        }
+
+    }
+    Component {
+        id:collectionDetails
+        CollectionDetails{
 
         }
 

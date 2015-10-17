@@ -4,28 +4,21 @@
 
 #include "Player/YoutubePlayer/youtubemediaplayer.h"
 
-ServiceCollectionYoutube::ServiceCollectionYoutube(QString idCollection, QObject *o) :AbstractServiceCollection(idCollection),mDaoYoutube(idCollection)
+ServiceCollectionYoutube::ServiceCollectionYoutube(QString idCollection) :AbstractServiceCollection(idCollection),mDaoYoutube(idCollection)
 {
-    mQmlPlayerItem = o;
     mPlayer = new YoutubeMediaPlayer(mQmlPlayerItem);
-    if (o!=NULL)
-    {
-        QObject::connect(o, SIGNAL(accessTokenAvailable(QString)),this, SLOT(newAccessTokenIsAvailable(QString)));
-        mQmlPlayerItem = o;
-    }
+    //if (o!=NULL)
+    //{
+    //    QObject::connect(o, SIGNAL(accessTokenAvailable(QString)),this, SLOT(newAccessTokenIsAvailable(QString)));
+    //    mQmlPlayerItem = o;
+    //}
     mIsActive = false;
 }
 
-void ServiceCollectionYoutube::newAccessTokenIsAvailable(QString token)
+void ServiceCollectionYoutube::newAccessTokenIsAvailable()
 {
-    if (token!="")
-    {
-
-        mAccessToken = token;
         mIsActive = true;
-
         emit AllCollectionHasChanged(this);
-    }
 }
 
 
@@ -107,5 +100,16 @@ bool ServiceCollectionYoutube::loveThisSong(SongView *s)
     bool b = false;
     return b;
 }
+
+QString ServiceCollectionYoutube::getAuthentificationURL()
+{
+    return "https://accounts.google.com/o/oauth2/auth?client_id=695385711703-eb77na74rn361gkguftgvg0dfrtia0mg.apps.googleusercontent.com&redirect_uri=http://localhost/oauth2callback&scope=https://www.googleapis.com/auth/youtube&response_type=token";
+}
+
+QUrl ServiceCollectionYoutube::getQmlViewURL()
+{
+    return QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml"));
+}
+
 
 

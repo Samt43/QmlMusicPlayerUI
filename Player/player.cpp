@@ -18,13 +18,16 @@ Player::Player(QObject *parent) :
     mPlaylistModel = new PlaylistModel;
     mPlaylistListModel = new PlaylistListModel;
 
-    QMap<QString,AbstractServiceCollection *> all = CollectionManager::getInstance()->getAllAvailableServiceCollection();
+    /*
+    QMap<QString,AbstractServiceCollection *> all = getCollectionListModel()->getAllAvailableServiceCollection();
 
     foreach (AbstractServiceCollection *s, all) {
         mPlaylistModel->addSongs(s->getAllSongs());
         connect(s,SIGNAL(AllCollectionHasChanged(AbstractServiceCollection*)),this,SLOT(ReloadServiceCollection(AbstractServiceCollection*)));
 
     }
+    */
+
 
     mAbstractMediaPlayer = NULL;
     mNowPlayingAlbum = NULL;
@@ -56,6 +59,11 @@ ArtistView *Player::getNowPlayingArtist()
 AlbumView *Player::getNowPlayingAlbum()
 {
     return mNowPlayingAlbum;
+}
+
+CollectionManager * Player::getCollectionListModel()
+{
+    CollectionManager::getInstance();
 }
 
 bool Player::playImmediatly(SongView * s)
@@ -94,27 +102,41 @@ bool Player::addPlaylistToPlaylist(AlbumView * a)
 
 }
 
+AbstractServiceCollection * Player::getCurrentServiceCollection()
+{
+    AbstractServiceCollection * retour = NULL;
+    QSharedPointer<SongView> s  = mPlaylistModel->getNowPlayingSong();
+    if (!s.isNull())
+    {
+        retour = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId());
+    }
+
+    return retour;
+}
+
 bool Player::play(int index)
 {
     if (mAbstractMediaPlayer != NULL)
     {
-    mAbstractMediaPlayer->stop();
+        mAbstractMediaPlayer->stop();
     }
     if (mPlaylistModel->setNowPlayingSong(index))
     {
 
         QSharedPointer<SongView>s  = mPlaylistModel->getNowPlayingSong();
 
-        if (mAbstractMediaPlayer != CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getMediaPlayer())
+        if (mAbstractMediaPlayer != getCurrentServiceCollection()->getMediaPlayer() || mAbstractMediaPlayer == NULL)
         {
             if (mAbstractMediaPlayer)
             {
-
                 disconnect(mAbstractMediaPlayer);
             }
+
+            emit nowcollectionHasChanged();
             mAbstractMediaPlayer = CollectionManager::getInstance()->getServiceCollection(s->getCollectionId())->getMediaPlayer();
             connect(mAbstractMediaPlayer,SIGNAL(SongHasFinished()),this,SLOT(playNextSong()));
             connect(mAbstractMediaPlayer,SIGNAL(CurrentTimeHasChanged()),this,SLOT(updateCurrentTime()));
+
         }
 
         mAbstractMediaPlayer->play(s);

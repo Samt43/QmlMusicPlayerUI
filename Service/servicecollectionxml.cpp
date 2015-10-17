@@ -79,3 +79,8 @@ ArtistView *ServiceCollectionXML::getArtistFromId(QString id)
   {
       return false;
   }
+
+  QUrl ServiceCollectionXML::getQmlViewURL()
+  {
+      return QUrl(QStringLiteral("qrc:///ArtistImage.qml"));
+  }

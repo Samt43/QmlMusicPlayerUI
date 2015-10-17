@@ -184,18 +184,27 @@ QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByAlbum(QString
 
 }
 
-QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByPlaylist(QString playlistId)
+QList<QSharedPointer<SongView> > DAODeezerCollection::searchSongsByPlaylist(QString playlistId, QString token)
 {
     QList<QSharedPointer<SongView> > songs;
     QJsonArray a;
 
-    QJsonObject j = mNetworkWorker.getJsonObject(QUrl("http://api.deezer.com/playlist/"+playlistId+"/tracks&limit=3000"));
+    QString url = "http://api.deezer.com/playlist/"+playlistId+"/tracks&limit=3000";
+
+    if (token!="")
+    {
+        url +="&access_token="+token;
+    }
+
+    QJsonObject j = mNetworkWorker.getJsonObject(QUrl(url));
+    qDebug()<<j;
     a = j["data"].toArray();
 
     QJsonArray::iterator  it;
 
     for (it=a.begin();it!=a.end();it++)
     {
+        qDebug()<<(*it).toObject();
         songs.append(getSongFromJson((*it).toObject()));
     }
     return songs;
@@ -224,11 +233,11 @@ QSharedPointer<SongView>DAODeezerCollection::getSongFromJson(QJsonObject songObj
     QString abName = albumJs.value("title").toString();
     QString abCover = albumJs.value("cover").toString()+"?size=big";
     QString abID = QString::number(albumJs.value("id").toInt());
-    qDebug()<<albumJs;
+    //qDebug()<<albumJs;
     QJsonObject artistJs = songObject.value("artist").toObject();
     QString atName = artistJs.value("name").toString();
     QString atID = QString::number(artistJs.value("id").toInt());
-
+    qDebug()<< id;
     QSharedPointer<SongView> s(new SongView(id,mCollectionId,title,abID,abName,QUrl(abCover),atID,atName,duration,QUrl(url)));
 
 
@@ -314,9 +323,18 @@ const QImage DAODeezerCollection::getImageFromUrl(QUrl url)
 
 bool DAODeezerCollection::AddSongToPlaylist(QString idSong,QString idPlaylist, QString token)
 {
-
     qDebug()<<"http://api.deezer.com/playlist/"+idPlaylist+"/tracks?songs="+idSong+"&access_token="+token+"&request_method=POST";
     mNetworkWorker.getJsonObject(QUrl("http://api.deezer.com/playlist/"+idPlaylist+"/tracks?songs="+idSong+"&access_token="+token+"&request_method=POST"));
+    return true;
+
+}
+
+
+bool DAODeezerCollection::RemoveSongToPlaylist(QString idSong,QString idPlaylist, QString token)
+{
+
+    qDebug()<<"http://api.deezer.com/playlist/"+idPlaylist+"/tracks?songs="+idSong+"&access_token="+token+"&request_method=DELETE";
+    mNetworkWorker.getJsonObject(QUrl("http://api.deezer.com/playlist/"+idPlaylist+"/tracks?songs="+idSong+"&access_token="+token+"&request_method=DELETE"));
     return true;
 
 }

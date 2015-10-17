@@ -7,6 +7,7 @@
 #include "searchtrackmodel.h"
 #include "Player/albumlistmodel.h"
 #include "Player/playlistlistmodel.h"
+#include "Service/collectionmanager.h"
 
 #include "abstractmediaplayer.h"
 #include "searchtrackmodel.h"
@@ -22,6 +23,8 @@ class Player : public QObject
     Q_PROPERTY(PlaylistListModel * playlistListModel READ getPlaylistListModel CONSTANT)
     Q_PROPERTY(SearchTrackModel * searchTrackModel READ getSearchTrackModel CONSTANT)
     Q_PROPERTY(AlbumListModel * albumListModel READ getAlbumListModel CONSTANT)
+    Q_PROPERTY(CollectionManager * collectionListModel READ getCollectionListModel CONSTANT)
+    Q_PROPERTY(AbstractServiceCollection * currentServiceCollection READ getCurrentServiceCollection NOTIFY currentServiceCollectionHasChanged)
     Q_PROPERTY(SongView * nowPlayingSong READ getNowPlayingSong NOTIFY nowPlayingSongHasChanged)
     Q_PROPERTY(AlbumView * nowPlayingAlbum READ getNowPlayingAlbum NOTIFY nowPlayingAlbumHasChanged)
     Q_PROPERTY(ArtistView * nowPlayingArtist READ getNowPlayingArtist NOTIFY nowPlayingArtistHasChanged)
@@ -51,9 +54,11 @@ public:
     SearchTrackModel * getSearchTrackModel();
     AlbumListModel * getAlbumListModel();
     PlaylistListModel *  getPlaylistListModel();
+    CollectionManager * getCollectionListModel();
     SongView * getNowPlayingSong();
     ArtistView *getNowPlayingArtist();
     AlbumView *getNowPlayingAlbum();
+    AbstractServiceCollection * getCurrentServiceCollection();
     int getCurrentTime();
 
 public slots:
@@ -65,8 +70,10 @@ signals:
     void nowPlayingSongHasChanged();
     void nowPlayingArtistHasChanged();
     void nowPlayingAlbumHasChanged();
+    void nowcollectionHasChanged();
     void stateChanged();
     void CurrentTimeHasChanged();
+    void currentServiceCollectionHasChanged();
 
 public slots:
 

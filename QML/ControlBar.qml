@@ -40,6 +40,9 @@ ListView {
             name: "Now Playing"
         }
         ListElement {
+            name: "Collection Details"
+        }
+        ListElement {
             name: "Search"
         }
         ListElement {
@@ -68,6 +71,9 @@ ListView {
         }
         ListElement {
             name: "Audio Streams"
+        }
+        ListElement {
+            name: "Collections"
         }
     }
 

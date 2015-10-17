@@ -9,7 +9,7 @@ class ServiceCollectionYoutube : public AbstractServiceCollection
 {
     Q_OBJECT
 public:
-    ServiceCollectionYoutube(QString idCollection, QObject *o);
+    ServiceCollectionYoutube(QString idCollection);
     QList<ArtistView *> getAllArtists();
     QList<QSharedPointer<SongView> > getAllSongs();
     QList<AlbumView *> getAllAlbums();
@@ -17,6 +17,7 @@ public:
     QList<QSharedPointer<SongView> > searchSongs(QString s);
     QList<QSharedPointer<SongView> > searchSongsByAlbum(QString albumId);
     QList<QSharedPointer<SongView> > searchSongsByPlaylist(QString playlistId);
+    QString getAuthentificationURL();
     AlbumView *getAlbumFromId(QString id);
     ArtistView * getArtistFromId(QString id);
     QSharedPointer<SongView> getSongFromId(QString id);
@@ -24,20 +25,19 @@ public:
     const QImage getJacketFromAlbum(AlbumView *a);
     const QImage getJacketFromArtist(ArtistView *a);
     bool loveThisSong(SongView * s);
-
+    QUrl getQmlViewURL();
 
 
 signals:
 
 public slots:
 
-private slots:
-void newAccessTokenIsAvailable(QString);
+
 
 protected:
+    void newAccessTokenIsAvailable();
     DaoYoutubeCollection mDaoYoutube;
     AbstractMediaPlayer * mPlayer;
-    QString mAccessToken;
     QObject * mQmlPlayerItem;
 
 };

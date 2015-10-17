@@ -1,7 +1,16 @@
-import QtQuick 2.0
+import QtQuick 2.2
+import QtQuick.Layouts 1.1
 
-Rectangle {
-    width: 100
-    height: 62
+
+Item {
+    anchors.fill: parent
+    id : collectionDetails
+    objectName : "collectionDetails"
+    ConnectionView {
+
+
+    }
+
+
 }
 

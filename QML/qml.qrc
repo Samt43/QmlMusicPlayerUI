@@ -14,5 +14,9 @@
         <file>BodyView.qml</file>
         <file>FomatTools.js</file>
         <file>ArtistImage.qml</file>
+        <file>CollectionView.qml</file>
+        <file>CollectionDetails.qml</file>
+        <file>ConnectionView.qml</file>
+        <file>PlayerViewer.qml</file>
     </qresource>
 </RCC>

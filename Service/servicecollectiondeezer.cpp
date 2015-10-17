@@ -1,19 +1,18 @@
 #include "servicecollectiondeezer.h"
 #include <QImage>
 #include <QSharedPointer>
+#include <QQmlComponent>
+#include <QQuickItem>
 #include "Player/audiostreammediaplayer.h"
 #include "View/albumview.h"
 
-ServiceCollectionDeezer::ServiceCollectionDeezer(QString idCollection,QObject* o):AbstractServiceCollection(idCollection),mDaoDeezer(idCollection)
+ServiceCollectionDeezer::ServiceCollectionDeezer(QString idCollection, QQmlApplicationEngine * qmlEngine):AbstractServiceCollection(idCollection),mDaoDeezer(idCollection)
 {
-    mQmlPlayerItem = NULL;
     mLovedTracksPlaylist = NULL;
-    if (o!=NULL)
-    {
-        QObject::connect(o, SIGNAL(accessTokenAvailable(QString)),this, SLOT(newAccessTokenIsAvailable(QString)));
-        mQmlPlayerItem = o;
-    }
-    mPlayer = new AudioStreamMediaPlayer;
+    mPlayer = new DeezerMediaPlayer();
+
+    connect(mPlayer,SIGNAL(newAccessToken(QString)),SLOT(newAccessToken(QString)));
+    mDaoDeezer.setOnly30sAvailable(false);
     mIsActive = true;
 }
 
@@ -38,7 +37,7 @@ QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongsByAlbum(QSt
 
 QList<QSharedPointer<SongView> > ServiceCollectionDeezer::searchSongsByPlaylist(QString playlistId)
 {
-    QList<QSharedPointer<SongView> >  l = mDaoDeezer.searchSongsByPlaylist(playlistId);
+    QList<QSharedPointer<SongView> >  l = mDaoDeezer.searchSongsByPlaylist(playlistId,mAccessToken);
     updateLoveParameterFromList(l);
     return l;
 }
@@ -94,24 +93,20 @@ ArtistView *ServiceCollectionDeezer::getArtistFromId(QString id)
       return mPlayer;
   }
 
-  void ServiceCollectionDeezer::newAccessTokenIsAvailable(QString token)
+  void ServiceCollectionDeezer::newAccessTokenIsAvailable()
   {
-      if (token!="")
-      {
-
+/*
         #if defined(Q_OS_LINUX)
           delete mPlayer;
           // Login success, tracks can now be read in full length on linux !
-          mPlayer = new DeezerMediaPlayer(mQmlPlayerItem);
+          mPlayer = new DeezerMediaPlayer();
         #endif
-
-          mAccessToken = token;
+*/
           mDaoDeezer.setOnly30sAvailable(false);
 
           updateLoveTracksDictionnary();
 
           emit AllCollectionHasChanged(this);
-      }
   }
 
   void ServiceCollectionDeezer::updateLoveTracksDictionnary()
@@ -123,13 +118,13 @@ ArtistView *ServiceCollectionDeezer::getArtistFromId(QString id)
           if (a->getName() == "Loved tracks")
           {
               mLovedTracksPlaylist = a;
+
               QList<QSharedPointer<SongView> > lo = searchSongsByPlaylist(a->getItemId());
 
               foreach (QSharedPointer<SongView> sv, lo) {
                   mLovedTracks.insert(sv->getItemId());
               }
-
-
+              break;
           }
 
       }
@@ -151,11 +146,23 @@ ArtistView *ServiceCollectionDeezer::getArtistFromId(QString id)
       bool b = false;
       if (mLovedTracksPlaylist!= NULL)
       {
-          b = mDaoDeezer.AddSongToPlaylist(s->getItemId(),mLovedTracksPlaylist->getItemId(),mAccessToken);
+          if (isLovedTrack(s))
+          {
+              b = mDaoDeezer.RemoveSongToPlaylist(s->getItemId(),mLovedTracksPlaylist->getItemId(),mAccessToken);
+          }
+          else
+          {
+              b = mDaoDeezer.AddSongToPlaylist(s->getItemId(),mLovedTracksPlaylist->getItemId(),mAccessToken);
+          }
+
           updateLoveTracksDictionnary();
           if (isLovedTrack(s))
           {
               s->setIsLoved(true);
+          }
+          else
+          {
+              s->setIsLoved(false);
           }
       }
       return b;
@@ -170,5 +177,32 @@ ArtistView *ServiceCollectionDeezer::getArtistFromId(QString id)
           }
 
       }
+  }
+
+  QString ServiceCollectionDeezer::getAuthentificationURL()
+  {
+
+      return "http://connect.deezer.com/oauth/auth.php?app_id=144391&format=popup&redirect_uri=http://files.mathieu-tournier.fr/deezer.hmtl&response_type=token&perms=email";
+      //return "http://connect.deezer.com/oauth/auth.php?app_id=144391&format=popup&perms=basic_access,manage_library&redirect_uri=http://localhost:3000&response_type=token";
+  }
+
+  QUrl ServiceCollectionDeezer::getQmlViewURL()
+  {
+      QUrl retour;
+
+      //if (mAccessToken !="")
+      //{
+      //    retour = QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml"));
+      //}
+      //else
+      {
+          retour = QUrl(QStringLiteral("qrc:///ArtistImage.qml"));
+      }
+      return retour;
+  }
+
+  void ServiceCollectionDeezer::newAccessToken(QString token)
+  {
+        setAccessToken(token);
   }
 

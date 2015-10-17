@@ -1,15 +1,12 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
-#include <QtWebEngine/qtwebengineglobal.h>
 #include "FakeMusicCollection/Model/album.h"
 #include "Dao/daocollection.h"
 #include "Dao/daodeezercollection.h"
 #include "Dao/daocollection.h"
 #include "Player/player.h"
 #include "Service/jacketprovider.h"
-#include "Service/servicecollectiondeezer.h"
-#include "Service/servicecollectionxml.h"
-#include "Service/servicecollectionyoutube.h"
+
 
 #include "View/songview.h"
 #include "View/artistview.h"
@@ -28,7 +25,8 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    QtWebEngine::initialize();
+
+    CollectionManager::getInstance();
 
     qmlRegisterType<Player>("Player", 1, 0, "Player");
     qmlRegisterType<PlaylistModel>("PlaylistModel", 1, 0, "PlaylistModel");
@@ -39,31 +37,14 @@ int main(int argc, char *argv[])
     qmlRegisterType<SearchTrackModel>("SearchTrackModel", 1, 0, "SearchTrackModel");
     qmlRegisterType<AlbumListModel>("AlbumListModel", 1, 0, "AlbumListModel");
     qmlRegisterType<PlaylistListModel>("PlaylistListModel", 1, 0, "PlaylistListModel");
+    qmlRegisterType<CollectionManager>("CollectionManager", 1, 0, "CollectionManager");
+
 
     QQmlApplicationEngine engine;
-
-    // Load Deezer collection
-#if !defined(Q_OS_ANDROID)
-    QQmlApplicationEngine enginePlayers;
-    enginePlayers.load(QUrl(QStringLiteral("qrc:///DeezerQMLWebkitPlayer.qml")));
-    enginePlayers.load(QUrl(QStringLiteral("qrc:///YoutubeQML.qml")));
-    QObject *deezerPlayer = enginePlayers.rootObjects()[0];
-    QObject *youtubePlayer = enginePlayers.rootObjects()[1];
-    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",deezerPlayer));
-    CollectionManager::getInstance()->addCollection(new ServiceCollectionYoutube("Youtube",youtubePlayer));
-#else
-    // android : no authentification...
-    CollectionManager::getInstance()->addCollection(new ServiceCollectionDeezer("Deezer",NULL));
-#endif
-
-    // load xml fake collection
-    CollectionManager::getInstance()->addCollection(new ServiceCollectionXML("Local XML"));
-
-
+    CollectionManager::getInstance()->setQmlEngine(&engine);
+    CollectionManager::getInstance()->initializeCollections();
     Player p;
     engine.rootContext()->setContextProperty("player",&p);
-
-
     //engine.addImageProvider("jacket", new JacketProvider);
     engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
     return app.exec();

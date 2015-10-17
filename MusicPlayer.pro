@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets xml svg multimedia webengine webchannel
+QT += qml quick widgets xml svg multimedia webchannel websockets
 
 
 QTPLUGIN += qsvg
@@ -19,6 +19,8 @@ SOURCES += main.cpp \
     Player/audiostreammediaplayer.cpp \
     Player/DeezerPlayer/deezermediaplayer.cpp \
     Player/DeezerPlayer/networkcookiejar.cpp \
+    Player/DeezerPlayer/websocketclientwrapper.cpp \
+    Player/DeezerPlayer/websockettransport.cpp \
     View/albumview.cpp \
     View/artistview.cpp \
     View/collectionview.cpp \
@@ -63,6 +65,8 @@ HEADERS += \
     Player/audiostreammediaplayer.h \
     Player/DeezerPlayer/deezermediaplayer.h \
     Player/DeezerPlayer/networkcookiejar.h \
+    Player/DeezerPlayer/websocketclientwrapper.h \
+    Player/DeezerPlayer/websockettransport.h \
     View/abstractcollectionitemview.h \
     View/albumview.h \
     View/artistview.h \
@@ -78,6 +82,12 @@ HEADERS += \
     Dao/daoyoutubecollection.h \
     Service/servicecollectionyoutube.h \
     Player/YoutubePlayer/youtubemediaplayer.h
+
+copydata.commands = $(COPY_DIR) $$system_path($$PWD/Player/DeezerPlayer) $$system_path($$OUT_PWD)
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
 
 OTHER_FILES += \
     Readme.txt

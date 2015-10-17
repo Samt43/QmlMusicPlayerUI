@@ -23,7 +23,7 @@ public:
     QList<QSharedPointer<SongView> > searchSongs(QString s);
     QList<QSharedPointer<SongView> > searchSongsByArtist(QString s);
     QList<QSharedPointer<SongView> > searchSongsByAlbum(QString idAlbum);
-    QList<QSharedPointer<SongView> > searchSongsByPlaylist(QString playlistId);
+    QList<QSharedPointer<SongView> > searchSongsByPlaylist(QString playlistId, QString token);
     QSharedPointer<SongView> getSongFromId(QString id);
     AlbumView * getAlbumFromId(QString id);
     ArtistView *getArtistFromId(QString id);
@@ -31,6 +31,7 @@ public:
     const QImage getJacketFromArtist(ArtistView *a);
     void setOnly30sAvailable(bool b);
     bool AddSongToPlaylist(QString idSong,QString idPlaylist, QString token);
+    bool RemoveSongToPlaylist(QString idSong,QString idPlaylist, QString token);
 
 protected:
     const QImage getImageFromUrl(QUrl url);

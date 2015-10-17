@@ -7,10 +7,11 @@ import "FomatTools.js" as Formater
 
 Rectangle
 {
-
     property int controlbarProportion: win.height*7/100
     signal toogleView()
     state: "minimized"
+
+
 
     states: [
         State {
@@ -70,6 +71,7 @@ Rectangle
         color: "black"
         anchors.fill: trackHeader
         opacity: 0.5
+
     }
 
 
@@ -120,6 +122,7 @@ Rectangle
                         }
                     }
 
+
                     ColumnLayout {
                         id : textLayout
                         Layout.fillWidth: true
@@ -158,6 +161,7 @@ Rectangle
                         }
 
                     }
+
 
 
                     Item {
@@ -212,9 +216,17 @@ Rectangle
 
                     }
 
+
+                    PlayerViewer
+                    {
+                        Layout.preferredWidth: parent.width * 20/100
+                        Layout.preferredHeight: parent.height * 85/100
+                    }
                 }
 
             }
+
+
 
         }
 

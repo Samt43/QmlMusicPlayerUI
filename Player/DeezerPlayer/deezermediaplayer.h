@@ -4,30 +4,41 @@
 #include <QUrl>
 #include <QObject>
 #include <QTimer>
+#include <QtWebSockets/QWebSocketServer>
+#include <QWebChannel>
+
+#include "websocketclientwrapper.h"
+#include "websockettransport.h"
 
 
 class DeezerMediaPlayer : public AbstractMediaPlayer
 {
     Q_OBJECT
 public:
-    DeezerMediaPlayer(QObject * qmlItemPlayer);
+    DeezerMediaPlayer();
     bool play(QSharedPointer<SongView> s);
     void pause();
     void stop();
     int getCurrentTime();
 
 public slots:
-    void updatePlayingTime();
+    void updatePlayingTime(double time);
+    void setAccessToken(QString token);
+    void songIsFinished();
 
-
+signals:
+    void playSong(QString);
+    void pauseSong();
+    void newAccessToken(QString);
 
 protected:
-    QObject * mQmlItemPlayer;
-    QTimer mCurrentTime;
-    QTimer mRefreshTime;
+    QWebSocketServer * mServer;
+    WebSocketClientWrapper * mWebSocketClientWrapper;
+    QWebChannel * mWebChannel;
+    double mCurrentTime;
+    double mTotalDuration;
 
-private slots:
-    void songIsFinished();
+
 };
 
 #endif // DEEZERMEDIAPLAYER_H

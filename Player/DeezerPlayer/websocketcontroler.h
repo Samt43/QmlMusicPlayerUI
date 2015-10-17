@@ -1,16 +1,16 @@
-#ifndef YoutubeMediaPlayer_H
-#define YoutubeMediaPlayer_H
+#ifndef DEEZERMEDIAPLAYER_H
+#define DEEZERMEDIAPLAYER_H
 #include "../abstractmediaplayer.h"
 #include <QUrl>
 #include <QObject>
 #include <QTimer>
 
 
-class YoutubeMediaPlayer : public AbstractMediaPlayer
+class DeezerMediaPlayer : public AbstractMediaPlayer
 {
     Q_OBJECT
 public:
-    YoutubeMediaPlayer(QObject * qmlItemPlayer);
+    DeezerMediaPlayer(QObject * qmlItemPlayer);
     bool play(QSharedPointer<SongView> s);
     void pause();
     void stop();
@@ -30,4 +30,4 @@ private slots:
     void songIsFinished();
 };
 
-#endif // YoutubeMediaPlayer_H
+#endif // DEEZERMEDIAPLAYER_H

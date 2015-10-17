@@ -4,16 +4,7 @@
         <script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>
-
-        <style type="text/css">
-                .progressbarplay {
-                        cursor:pointer;overflow: hidden;height: 8px;margin-bottom: 8px;background-color: #F7F7F7;background-image: -moz-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: -ms-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: -webkit-gradient(linear,0 0,0 100%,from(whiteSmoke),to(#F9F9F9));background-image: -webkit-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: -o-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: linear-gradient(top,whiteSmoke,#F9F9F9);background-repeat: repeat-x;filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5',endColorstr='#f9f9f9',GradientType=0);-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);-webkit-border-radius: 6px;-moz-border-radius: 6px;border-radius: 6px;
-                }
-                .progressbarplay .bar {
-                        cursor:pointer;background: #4496C6;width: 0;height: 8px;color: white;font-size: 12px;text-align: center;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);-webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);-moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;-webkit-transition: width .6s ease;-moz-transition: width .6s ease;-ms-transition: width .6s ease;-o-transition: width .6s ease;transition: width .6s ease;
-                }
-        </style>
+        <script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>  
 </head>
 <body>
 <div id="dz-root"></div>
@@ -22,15 +13,11 @@
         <input type="button" onclick="DZ.player.pause(); return false;" value="pause"/>
         <input type="button" onclick="DZ.player.prev(); return false;" value="prev"/>
         <input type="button" onclick="DZ.player.next(); return false;" value="next"/>
-        <br/>
-        <input type="button" onclick="DZ.player.setVolume(80); return false;" value="set Volume 80"/>
-        <br/><br/><br/>
 </div>
 <div id="slider_seek" class="progressbarplay" style="">
   <div class="bar" style="width: 0%;"></div>
 </div>
 <script>
-var channel = [];
         $(document).ready(function(){
                 $("#controlers input").attr('disabled', true);
                 $("#slider_seek").click(function(evt,arg){
@@ -52,45 +39,30 @@ var channel = [];
         function onPlayerLoaded() {
                 $("#controlers input").attr('disabled', false);
                 event_listener_append('player_loaded');
+                initializeWebsocket();
+
+                //DZ.login(function(response) {
+                //        if (response.authResponse) {
+                //                console.log('Welcome!  Fetching your information.... ');
+                //                DZ.api('/user/me?access_token=frqApRR6kY55ab98918a315db5spzt355ab98918a34eCyJCMoY', function(response) {
+                //                        console.log('Good to see you, ' + response.name + '.');
+                //                });
+                //        } else {
+                //                console.log('User cancelled login or did not fully authorize.');
+                //        }
+                //}, {perms: 'basic_access,email'});
+
                 DZ.Event.subscribe('current_track', function(arg){
                         event_listener_append('current_track', arg.index, arg.track.title, arg.track.album.title);
                 });
                 DZ.Event.subscribe('player_position', function(arg){
                         event_listener_append('position', arg[0], arg[1]);
                         $("#slider_seek").find('.bar').css('width', (100*arg[0]/arg[1]) + '%');
+                        window.websocketcontroller.updatePlayingTime(arg[0]);
                 });
-
-
-                var id = getUrlVars()["SongID"];
-                DZ.player.playTracks([id]);
-                        console.log("logtest !!!!345556");
-
-
-                            channel = new QWebChannel(navigator.qtWebChannelTransport, function(channel) {
-                            // all published objects are available in channel.objects under
-                            // the identifier set in their attached WebChannel.id property
-                event_listener_append('AAAAAA');
-                            // access a property
-                            // alert(channelDeezerPlayer.hello);
-
-                            event_listener_append(channel.objects.channelDeezerPlayer);
-                          // Connect to a signal:
-                            channel.objects.channelDeezerPlayer.pause.connect(function() {
-                                // This callback will be invoked whenever the signal is emitted on the C++/QML side.
-                                event_listener_append('stop !!!');
-                                DZ.player.stop();
-                            });
-
-                            channel.objects.channelDeezerPlayer.play.connect(function() {
-                                // This callback will be invoked whenever the signal is emitted on the C++/QML side.
-                                event_listener_append('play !!!');
-                                DZ.player.stop();
-                            });
-
-
-                        });
-                event_listener_append('webchannel !!!');
-
+                DZ.Event.subscribe('track_end', function(arg){
+                        window.websocketcontroller.songIsFinished();
+                });
         }
         DZ.init({
 		appId  : '144391',
@@ -109,10 +81,59 @@ function getUrlVars() {
     });
     return vars;
   }
+
+  
+    function initializeWebsocket() {
+        event_listener_append("WebSocket !!!");
+        var baseUrl = (/[?&]webChannelBaseUrl=([A-Za-z0-9\-:/\.]+)/.exec(location.search)[1]);
+        event_listener_append("Connecting to WebSocket server at " + baseUrl + ".");
+        var socket = new WebSocket(baseUrl);
+
+        socket.onclose = function()
+        {
+            console.error("web channel closed");
+        };
+        socket.onerror = function(error)
+        {
+            console.error("web channel error: " + error);
+        };
+        socket.onopen = function()
+        {
+            event_listener_append("WebSocket connected, setting up QWebChannel.");
+            new QWebChannel(socket, function(channel) {
+                // make dialog object accessible globally
+                window.websocketcontroller = channel.objects.websocketcontroller;
+
+                websocketcontroller.playSong.connect(function(song) {
+                    event_listener_append("Play song :" + song);
+                    DZ.player.playTracks([song]);
+                    
+                });
+
+                websocketcontroller.pauseSong.connect(function() {
+                    event_listener_append("Pause");
+                    DZ.player.pause();
+
+                });
+
+
+
+                event_listener_append("Connected to WebChannel, ready to send/receive messages!");
+            });
+        }
+    }
+    //END SETUP
      
 
 </script><br/>
 event_listener : <br/>
 <pre id="event_listener" style="height:100px;overflow:auto;"></pre>
+
+<div style="width:320px; height:480px;">
+
+
+<svg id="svg1" width="100%" height="100%" src="Coeur.svg" >
+</div>
+
 </body>
 </html>

@@ -83,6 +83,7 @@ ApplicationWindow {
             id:bodyView
             width: parent.width
             height: parent.height *(1-parent.headerProportionSize) * parent.layoutDisposition
+
         }
 
 
